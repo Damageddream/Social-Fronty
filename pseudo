@@ -1,0 +1,29 @@
+Login page
+ - form Login
+ - sign up as guest
+ - if already logged in -> navigate to wall
+
+ Wall Page
+ - list af all posts (user and his friends)
+ - or all users and freind invitatos or already friends
+
+ User Page
+ - name, profil photo, all post of user
+
+Components:
+
+    Add new Post
+    - form
+
+    Add new comment 
+    - form
+
+    Post:
+        - title, text, name, author, comments, likes
+    Comment:
+        - text, author, likes
+    Friend requests - 
+       - dusplay of friends requests, accept or decline
+
+    
+
