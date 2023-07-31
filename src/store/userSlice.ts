@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import UserI from "../interfaces/userI";
+import UserI, {UserApiObject} from "../interfaces/userI";
 
 const userSlice = createSlice({
   name: "user",
@@ -8,11 +8,11 @@ const userSlice = createSlice({
     name: "",
   },
   reducers: {
-    loggedIn(state) {
-      state.loggedIn = !state.loggedIn;
+    loggedIn(state, action) {
+      state.loggedIn = action.payload as boolean
     },
     setUserInfo(state, action) {
-      const user: UserI = action.payload as UserI;
+      const user: UserI = action.payload as UserApiObject;
       state.name = user.name;
     },
   },

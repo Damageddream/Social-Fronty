@@ -6,9 +6,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Wall />} />
-        <Route path="/login" element={<LogIn />} />
-  
+        <Route path="/" element={<LogIn />} />
+        <Route path="/wall" element={<Wall />} />
       </Routes>
     </Router>
   );
