@@ -6,6 +6,7 @@ const initialState: UserInitialState = {
   name: "",
   photo: "",
   id: null,
+  token: "",
 };
 
 const userSlice = createSlice({
@@ -20,6 +21,7 @@ const userSlice = createSlice({
       state.name = user.name;
       state.photo = user.photo;
       state.id = user._id;
+      state.token = user.token;
     },
   },
 });

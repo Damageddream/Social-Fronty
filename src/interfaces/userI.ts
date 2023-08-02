@@ -2,6 +2,7 @@ interface UserI {
     name: string;
     photo: string;
     _id: string;
+    token: string;
 }
 
 
@@ -12,12 +13,14 @@ export interface UserApiObject {
     name: string;
     facebook_id: string;
     photo: string;
+    token: string;
 }
 
 export interface UserReduxI {
     name: string;
     loggedIn: boolean;
     photo: string;
+    token: string;
 }
 
 export interface UserApiLoginObject {
@@ -32,4 +35,5 @@ export interface UserInitialState {
     name: string;
     photo: string;
     id: string | null;
+    token: string;
 }
