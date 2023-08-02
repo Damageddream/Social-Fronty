@@ -3,19 +3,22 @@ import { UserReduxI, UserApiLoginObject } from "./interfaces/userI";
 import { RootState } from "./store/store";
 import { uiActions } from "./store/uiSlice";
 import { userActions } from "./store/userSlice";
+import { modalActions } from "./store/modalSlice";
 import { useEffect } from "react";
-import { serverUrl } from "./utilities/URLs"
+import { serverUrl } from "./utilities/URLs";
 import { useNavigate } from "react-router-dom";
+import AddPost from "./components/AddPost";
 
 const Wall: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
+  const modal = useSelector((state: RootState) => state.modal);
 
   // fetch user data from facebook auth, and set user with usreslice
   const getUser = async () => {
-    const response = await fetch(serverUrl+"/sucess", {
+    const response = await fetch(serverUrl + "/sucess", {
       credentials: "include",
       headers: {
         Accept: "application/json",
@@ -49,9 +52,28 @@ const Wall: React.FC = () => {
   return (
     <>
       <h1> Wall</h1>
-      {user.loggedIn && <div>{user.name}</div>}
-      <button onClick={()=>{navigate("/")}}>back</button>
+      {user.loggedIn && (
+        <div>
+          {user.name}
+          <img src={user.photo} alt="user profile picture" />
+        </div>
+      )}
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        back
+      </button>
       {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+      <button
+        onClick={() => {
+          dispatch(modalActions.showModal());
+        }}
+      >
+        Add new post
+      </button>
+      {modal.show && <AddPost />}
     </>
   );
 };
