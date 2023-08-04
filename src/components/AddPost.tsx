@@ -22,6 +22,7 @@ const AddPost: React.FC = () => {
 
   // function for sending POST request, to create new post
   const addPost = async () => {
+    const token = localStorage.getItem("token")
     const formData: PostI = {
       title,
       text,
@@ -33,7 +34,7 @@ const AddPost: React.FC = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${token as string}`
       },
       body: JSON.stringify(formData),
     });

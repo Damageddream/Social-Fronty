@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { serverUrl } from "./utilities/URLs";
 import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
+import Test from "./components/Test";
 
 const Wall: React.FC = () => {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ const Wall: React.FC = () => {
     const data = (await response.json()) as UserApiLoginObject;
     dispatch(userActions.loggedIn(true));
     dispatch(userActions.setUserInfo(data.user));
+    localStorage.setItem("token", data.token)
+
   };
   // get user data from facebook after inital render.
   useEffect(() => {
@@ -74,6 +77,7 @@ const Wall: React.FC = () => {
         Add new post
       </button>
       {modal.show && <AddPost />}
+      <Test />
     </>
   );
 };
