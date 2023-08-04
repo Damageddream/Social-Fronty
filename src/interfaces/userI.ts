@@ -27,8 +27,7 @@ export interface UserApiLoginObject {
     sucess: string;
     message: string;
     user: UserApiObject;
-    token: string;
-
+    token: string;  
 }
 
 export interface UserInitialState {
