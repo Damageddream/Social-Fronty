@@ -33,7 +33,7 @@ const Wall: React.FC = () => {
     const data = (await response.json()) as UserApiLoginObject;
     dispatch(userActions.loggedIn(true));
     dispatch(userActions.setUserInfo(data.user));
-    localStorage.setItem("token", data.token)
+    localStorage.setItem("token", data.token as string)
 
   };
   // get user data from facebook after inital render.
