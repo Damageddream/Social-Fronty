@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { serverUrl } from "./utilities/URLs";
 import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
-import Test from "./components/Test";
+
 
 const Wall: React.FC = () => {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const Wall: React.FC = () => {
         Add new post
       </button>
       {modal.show && <AddPost />}
-      <Test />
+      <button onClick={()=>navigate("/invite")}>Add new friends</button>
     </>
   );
 };

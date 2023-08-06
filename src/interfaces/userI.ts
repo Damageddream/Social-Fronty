@@ -2,7 +2,9 @@ interface UserI {
     name: string;
     photo: string;
     _id: string;
-    token: string;
+    friends: UserI[];
+    invites: string[];
+
 }
 
 
@@ -13,21 +15,26 @@ export interface UserApiObject {
     name: string;
     facebook_id: string;
     photo: string;
-    token: string;
+    friends: UserI[];
+    invites: string[];
+
 }
 
 export interface UserReduxI {
     name: string;
     loggedIn: boolean;
     photo: string;
-    token: string;
+    friends: UserI[];
+    invites: string[];
+
 }
 
 export interface UserApiLoginObject {
     sucess: string;
     message: string;
     user: UserApiObject;
-    token: string;  
+    token: string;
+
 }
 
 export interface UserInitialState {
@@ -35,5 +42,11 @@ export interface UserInitialState {
     name: string;
     photo: string;
     id: string | null;
-    token: string;
+    friends: UserI[];
+    invites: string[];
+}
+
+export interface NoFriendsI {
+    success: boolean,
+    noFriends: UserI[],
 }
