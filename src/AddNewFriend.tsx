@@ -33,10 +33,10 @@ const AddNewFriend: React.FC = () => {
         const response = await fetch(serverUrl + "/users/nofriends", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token as string}`,
-              },
-            body: JSON.stringify(id)
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token as string}`
+            },
+            body: JSON.stringify({id})
         })
         if(!response.ok) {
             uiActions.setError("Failed to send invite")
@@ -61,7 +61,7 @@ const AddNewFriend: React.FC = () => {
           <div key={stranger._id}>
             <img src={stranger.photo} alt="profile picture" />
             <div>{stranger.name}</div>
-            <button onClick={()=>inviteHandler(stranger._id)}>Invite to friends</button>
+            <button onClick={()=>{inviteHandler(stranger._id)}}>Invite to friends</button>
           </div>
         );
       })}
