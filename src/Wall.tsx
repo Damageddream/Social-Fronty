@@ -77,7 +77,8 @@ const Wall: React.FC = () => {
         Add new post
       </button>
       {modal.show && <AddPost />}
-      <button onClick={()=>navigate("/invite")}>Add new friends</button>
+      <button onClick={()=>navigate("/invite")}>Search for friend</button>
+      <button onClick={()=>navigate("/invites")}>Add new friends</button>
     </>
   );
 };

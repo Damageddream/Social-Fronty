@@ -8,6 +8,7 @@ const initialState: UserInitialState = {
   id: null,
   friends: [],
   invites: [],
+  invitesSent: [],
 
 };
 
@@ -23,7 +24,9 @@ const userSlice = createSlice({
       state.name = user.name;
       state.photo = user.photo;
       state.id = user._id;
-
+      state.friends = user.friends;
+      state.invites = user.invites;
+      state.invitesSent = user.invitesSent;
     },
   },
 });

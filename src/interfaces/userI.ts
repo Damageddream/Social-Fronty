@@ -4,6 +4,7 @@ interface UserI {
     _id: string;
     friends: UserI[];
     invites: string[];
+    invitesSent: string[];
 
 }
 
@@ -17,6 +18,7 @@ export interface UserApiObject {
     photo: string;
     friends: UserI[];
     invites: string[];
+    invitesSent: string[];
 
 }
 
@@ -26,6 +28,7 @@ export interface UserReduxI {
     photo: string;
     friends: UserI[];
     invites: string[];
+    invitesSent: string[];
 
 }
 
@@ -44,6 +47,19 @@ export interface UserInitialState {
     id: string | null;
     friends: UserI[];
     invites: string[];
+    invitesSent: string[];
+
+}
+
+export interface UserWithInvites {
+    loggedIn: boolean;
+    name: string;
+    photo: string;
+    id: string | null;
+    friends: UserI[];
+    invites: UserI[];
+    invitesSent: string[];
+
 }
 
 export interface NoFriendsI {
