@@ -24,6 +24,7 @@ const LogIn: React.FC = () => {
     <div>
       <button onClick={facebook}>Login with facebook</button>
       <button onClick={()=>{navigate("/register")}}>Register user</button>
+      <button onClick={()=>navigate("/login")}>Log In</button>
     </div>
   );
 };
