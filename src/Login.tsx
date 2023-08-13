@@ -29,7 +29,7 @@ const LogInNoFacebook: React.FC = () => {
       dispatch(userActions.loggedIn(true));
       dispatch(userActions.setUserInfo(data.user));
       localStorage.setItem("token", data.token);
-      navigate('/')
+     
     }
   };
 
@@ -38,6 +38,7 @@ const LogInNoFacebook: React.FC = () => {
     login().catch((err) => {
         dispatch(uiActions.setError("Failed to login"));
       });
+    navigate('/')
   };
 
   return (
