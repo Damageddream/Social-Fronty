@@ -5,6 +5,7 @@ import AddNewFriend from "./AddNewFriend";
 import Invites from "./Invites";
 import Register from "./RegisterUser";
 import LogInNoFacebook from "./Login";
+import LoginWithFacebook from "./LogInWithFacebook";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/invite" element={<AddNewFriend />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogInNoFacebook />} />
+        <Route path="/loginFacebook" element={<LoginWithFacebook />} />
       </Routes>
     </Router>
   );

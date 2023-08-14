@@ -18,39 +18,39 @@ const Wall: React.FC = () => {
   const modal = useSelector((state: RootState) => state.modal);
 
   // fetch user data from facebook auth, and set user with usreslice
-  const getUser = async () => {
-    const response = await fetch(serverUrl + "/sucess", {
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-        "Access-Control-Allow-Credentials": "true",
-      },
-    });
-    if (!response.ok) {
-      dispatch(uiActions.setError("Failed to login with facebook"));
-    }
-    const data = (await response.json()) as UserApiLoginObject;
-    dispatch(userActions.loggedIn(true));
-    dispatch(userActions.setUserInfo(data.user));
-    localStorage.setItem("token", data.token)
+  // const getUser = async () => {
+  //   const response = await fetch(serverUrl + "/sucess", {
+  //     credentials: "include",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-type": "application/json",
+  //       "Access-Control-Allow-Credentials": "true",
+  //     },
+  //   });
+  //   if (!response.ok) {
+  //     dispatch(uiActions.setError("Failed to login with facebook"));
+  //   }
+  //   const data = (await response.json()) as UserApiLoginObject;
+  //   dispatch(userActions.loggedIn(true));
+  //   dispatch(userActions.setUserInfo(data.user));
+  //   localStorage.setItem("token", data.token)
 
-  };
+  // };
   // get user data from facebook after inital render.
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        await getUser();
-      } catch (err) {
-        dispatch(uiActions.setError("Failed to login with facebook"));
-      }
-    };
-    if (!user.loggedIn || user.name === "") {
-      fetchUser().catch((err) => {
-        dispatch(uiActions.setError("Failed to login with facebook"));
-      });
-    }
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       await getUser();
+  //     } catch (err) {
+  //       dispatch(uiActions.setError("Failed to login with facebook"));
+  //     }
+  //   };
+  //   if (!user.loggedIn || user.name === "") {
+  //     fetchUser().catch((err) => {
+  //       dispatch(uiActions.setError("Failed to login with facebook"));
+  //     });
+  //   }
+  // }, [dispatch, user]);
 
   return (
     <>

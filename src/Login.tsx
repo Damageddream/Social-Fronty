@@ -38,7 +38,7 @@ const LogInNoFacebook: React.FC = () => {
     login().catch((err) => {
         dispatch(uiActions.setError("Failed to login"));
       });
-    navigate('/')
+    navigate('/wall')
   };
 
   return (
