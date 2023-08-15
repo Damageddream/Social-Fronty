@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { UserReduxI, UserApiLoginObject } from "./interfaces/userI";
+import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
-import { uiActions } from "./store/uiSlice";
-import { userActions } from "./store/userSlice";
+
 import { modalActions } from "./store/modalSlice";
-import { useEffect } from "react";
-import { serverUrl } from "./utilities/URLs";
+
 import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
 
