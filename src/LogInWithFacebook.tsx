@@ -46,6 +46,7 @@ const LoginWithFacebook: React.FC = () => {
         dispatch(uiActions.setError("Failed to login with facebook"));
         navigate('/wall')
       });
+      navigate('/wall')
     }
   }, [dispatch, user]);
 
