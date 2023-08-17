@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
-
 import { modalActions } from "./store/modalSlice";
-
 import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
 
@@ -77,6 +75,7 @@ const Wall: React.FC = () => {
       {modal.show && <AddPost />}
       <button onClick={()=>navigate("/invite")}>Search for friend</button>
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
+      <button onClick={()=>navigate("/friends")}>Your friends</button>
      
     </>
   );
