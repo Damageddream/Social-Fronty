@@ -4,6 +4,9 @@ import { RootState } from "./store/store";
 import { modalActions } from "./store/modalSlice";
 import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
+import { serverUrl } from "./utilities/URLs";
+import { useEffect, useState } from "react";
+import { PostI } from "./interfaces/postI";
 
 
 const Wall: React.FC = () => {
@@ -13,40 +16,25 @@ const Wall: React.FC = () => {
   const ui = useSelector((state: RootState) => state.ui);
   const modal = useSelector((state: RootState) => state.modal);
 
-  // fetch user data from facebook auth, and set user with usreslice
-  // const getUser = async () => {
-  //   const response = await fetch(serverUrl + "/sucess", {
-  //     credentials: "include",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-type": "application/json",
-  //       "Access-Control-Allow-Credentials": "true",
-  //     },
-  //   });
-  //   if (!response.ok) {
-  //     dispatch(uiActions.setError("Failed to login with facebook"));
-  //   }
-  //   const data = (await response.json()) as UserApiLoginObject;
-  //   dispatch(userActions.loggedIn(true));
-  //   dispatch(userActions.setUserInfo(data.user));
-  //   localStorage.setItem("token", data.token)
+  const [posts, setPosts] = useState<PostI[]>() 
 
-  // };
-  // get user data from facebook after inital render.
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       await getUser();
-  //     } catch (err) {
-  //       dispatch(uiActions.setError("Failed to login with facebook"));
-  //     }
-  //   };
-  //   if (!user.loggedIn || user.name === "") {
-  //     fetchUser().catch((err) => {
-  //       dispatch(uiActions.setError("Failed to login with facebook"));
-  //     });
-  //   }
-  // }, [dispatch, user]);
+  const getUsersPosts = async () => {
+    const token = localStorage.getItem("token")
+    const response = await fetch(serverUrl + "/posts/wall", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token as string}`,
+      }
+    })
+    const data = (await response.json()) as PostI[];
+    setPosts(data)
+  }
+
+  useEffect(()=>{
+    getUsersPosts().catch(() => {
+      console.error("Failed to fetch posts");
+    });
+  },[])
 
   return (
     <>
@@ -76,6 +64,13 @@ const Wall: React.FC = () => {
       <button onClick={()=>navigate("/invite")}>Search for friend</button>
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
       <button onClick={()=>navigate("/friends")}>Your friends</button>
+      {posts && posts.map((post)=> {
+        return(<div>
+          {post.title}
+          {post.text}
+          {post.author}
+        </div>)
+      })}
      
     </>
   );
