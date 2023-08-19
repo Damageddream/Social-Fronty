@@ -66,3 +66,14 @@ export interface NoFriendsI {
     success: boolean,
     noFriends: UserI[],
 }
+
+export interface UserNoObjectID {
+    _id: string;
+    name: string;
+    facebook_id: string;
+    photo: string;
+    friends: UserI[];
+    invites: string[];
+    invitesSent: string[];
+
+}
