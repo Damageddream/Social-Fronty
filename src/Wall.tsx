@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
 import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
-import { PostI } from "./interfaces/postI";
+import { PostI, PostDataFromApi } from "./interfaces/postI";
 
 
 const Wall: React.FC = () => {
@@ -20,14 +20,15 @@ const Wall: React.FC = () => {
 
   const getUsersPosts = async () => {
     const token = localStorage.getItem("token")
-    const response = await fetch(serverUrl + "/posts/wall", {
+    const response = await fetch(serverUrl + "/wall", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token as string}`,
       }
     })
-    const data = (await response.json()) as PostI[];
-    setPosts(data)
+    const data = (await response.json()) as PostDataFromApi;
+    console.log(data)
+    setPosts(data.posts)
   }
 
   useEffect(()=>{
@@ -64,13 +65,13 @@ const Wall: React.FC = () => {
       <button onClick={()=>navigate("/invite")}>Search for friend</button>
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
       <button onClick={()=>navigate("/friends")}>Your friends</button>
-      {posts && posts.map((post)=> {
+      {posts ? posts.map((post)=> {
         return(<div>
           {post.title}
           {post.text}
           {post.author}
         </div>)
-      })}
+      }): <div>No Posts</div>}
      
     </>
   );

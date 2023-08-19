@@ -15,3 +15,8 @@ export interface CommentI {
     post: string;
 }
 
+export interface PostDataFromApi {
+    success: boolean;
+    message: string;
+    posts: PostI[]
+}
