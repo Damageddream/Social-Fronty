@@ -2,7 +2,7 @@ export interface  PostI {
     title: string;
     text: string;
     author: string;
-    timestamp: Date;
+    timestamp:string;
     likes: string[]
     _id?: number;
 }

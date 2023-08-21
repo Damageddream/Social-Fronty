@@ -27,7 +27,7 @@ const Wall: React.FC = () => {
       }
     })
     const data = (await response.json()) as PostDataFromApi;
-    console.log(data)
+    console.log(data.posts[0])
     setPosts(data.posts)
   }
 
@@ -66,10 +66,11 @@ const Wall: React.FC = () => {
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
       <button onClick={()=>navigate("/friends")}>Your friends</button>
       {posts ? posts.map((post)=> {
-        return(<div>
+        return(<div key={post._id}>
           {post.title}
           {post.text}
           {post.author}
+          {post.timestamp}
         </div>)
       }): <div>No Posts</div>}
      
