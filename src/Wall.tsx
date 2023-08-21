@@ -7,6 +7,7 @@ import AddPost from "./components/AddPost";
 import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
 import { PostI, PostDataFromApi } from "./interfaces/postI";
+import timeFormatter from "./utilities/timeFormatter";
 
 
 const Wall: React.FC = () => {
@@ -70,7 +71,7 @@ const Wall: React.FC = () => {
           {post.title}
           {post.text}
           {post.author}
-          {post.timestamp}
+          {}
         </div>)
       }): <div>No Posts</div>}
      
