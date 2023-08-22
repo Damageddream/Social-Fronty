@@ -67,7 +67,7 @@ const Wall: React.FC = () => {
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
       <button onClick={()=>navigate("/friends")}>Your friends</button>
       {posts ? posts.map((post)=> {
-        return(<div key={post._id}>
+        return(<div key={post._id} onClick={()=>navigate(`/posts/${post._id?.toString() as string}`)}>
           {post.title}
           {post.text}
           {post.author}
