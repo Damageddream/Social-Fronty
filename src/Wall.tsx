@@ -7,10 +7,12 @@ import AddPost from "./components/AddPost";
 import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
 import { PostI, PostDataFromApi } from "./interfaces/postI";
+import useCheckUser from "./customHooks/useCheckUser";
 import timeFormatter from "./utilities/timeFormatter";
 
 
 const Wall: React.FC = () => {
+  useCheckUser()
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
