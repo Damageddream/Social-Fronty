@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import UserI, { UserApiObject, UserInitialState } from "../interfaces/userI";
+import UserI, { UserApiObject, UserInitialState, UserJWT } from "../interfaces/userI";
 
 const initialState: UserInitialState = {
   loggedIn: false,
@@ -9,6 +9,7 @@ const initialState: UserInitialState = {
   friends: [],
   invites: [],
   invitesSent: [],
+  friendsS: [],
 
 };
 
@@ -28,6 +29,15 @@ const userSlice = createSlice({
       state.invites = user.invites;
       state.invitesSent = user.invitesSent;
     },
+    setUserFromJWT(state, action) {
+      const user = action.payload as UserJWT;
+      state.name = user.name;
+      state.photo = user.photo;
+      state.id = user._id;
+      state.friendsS = user.friends;
+      state.invites = user.invites;
+      state.invitesSent = user.invitesSent;
+    }
   },
 });
 

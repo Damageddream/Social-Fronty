@@ -6,7 +6,6 @@ import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
 
 const LogIn: React.FC = () => {
-
   const navigate = useNavigate()
   const user: UserReduxI = useSelector((state: RootState)=> state.user)
 
@@ -15,6 +14,7 @@ const LogIn: React.FC = () => {
   };
 
   useEffect(()=>{
+    
     if(user.loggedIn){
       navigate("/wall")
     }

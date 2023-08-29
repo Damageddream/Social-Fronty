@@ -22,6 +22,17 @@ export interface UserApiObject {
 
 }
 
+export interface UserJWT {
+    _id: string;
+    name: string;
+    facebook_id?: string;
+    photo: string;
+    friends: string[];
+    invites: string[];
+    invitesSent: string[];
+    __v: number;
+}
+
 export interface UserReduxI {
     name: string;
     loggedIn: boolean;
