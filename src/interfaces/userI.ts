@@ -59,6 +59,7 @@ export interface UserInitialState {
     friends: UserI[];
     invites: string[];
     invitesSent: string[];
+    friendsS: string[];
 
 }
 
