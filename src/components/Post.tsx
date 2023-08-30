@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { serverUrl } from "../utilities/URLs";
-import { PostI } from "../interfaces/postI";
+import { PostDisplayI } from "../interfaces/postI";
+import AddComment from "./AddComment";
 
 const Post: React.FC = () => {
 
 const paramId = useParams()
-const [post, setPost] = useState<PostI>()
+const [post, setPost] = useState<PostDisplayI>()
 
 const getPost = async () => {
     const token = localStorage.getItem("token")
@@ -17,7 +18,7 @@ const getPost = async () => {
             Authorization: `Bearer ${token as string}`,
         }
     })
-    const data = (await response.json()) as PostI
+    const data = (await response.json()) as PostDisplayI
     setPost(data)
 }
 
@@ -29,10 +30,13 @@ useEffect(()=>{
 
 
     return (
+        <>
         <div className="post">
-            {post && <div>{post.title}{post.author}{post.text}</div>}
+            {post && <div>{post.title}{post.author}{post.text}
+            <><AddComment postID={post._id.toString()} /></></div>}
             {!post && <div>There is no post with that id</div>}
         </div>
+        </>
     )
 }
 
