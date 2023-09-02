@@ -73,7 +73,6 @@ const Wall: React.FC = () => {
           {post.title}
           {post.text}
           {post.author}
-          {}
         </div>)
       }): <div>No Posts</div>}
      

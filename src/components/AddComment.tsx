@@ -21,6 +21,7 @@ const AddComment: React.FC<{ postID: string }> = ({ postID }) => {
     const token = localStorage.getItem('token')
     const formData: CommentI = {
         text,
+        post: postID,
     }
     const response = await fetch(serverUrl + `/posts/${postID}/comments`, {
       method: "POST",
