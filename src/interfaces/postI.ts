@@ -1,3 +1,5 @@
+import { CommentDisplayI } from "./commentI";
+
 export interface  PostI {
     title: string;
     text: string;
@@ -14,6 +16,7 @@ export interface  PostDisplayI {
     timestamp:string;
     likes: string[]
     _id: number;
+    comments: CommentDisplayI[];
 }
 
 // export interface CommentI {
