@@ -41,7 +41,7 @@ const Post: React.FC = () => {
             {post.title}
             {post.author}
             {post.text}
-            {post.comments.length < 0 ? (
+            {post.comments.length > 0 ? (
               post.comments.map((comment) => {
                 return (
                   <div key={comment._id}>

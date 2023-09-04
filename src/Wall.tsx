@@ -8,11 +8,13 @@ import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
 import { PostI, PostDataFromApi } from "./interfaces/postI";
 import useCheckUser from "./customHooks/useCheckUser";
-import timeFormatter from "./utilities/timeFormatter";
+import useLike from "./customHooks/useLike";
 
 
 const Wall: React.FC = () => {
+
   useCheckUser()
+  const [like] = useLike()
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
@@ -30,7 +32,6 @@ const Wall: React.FC = () => {
       }
     })
     const data = (await response.json()) as PostDataFromApi;
-    console.log(data.posts[0])
     setPosts(data.posts)
   }
 
@@ -39,6 +40,8 @@ const Wall: React.FC = () => {
       console.error("Failed to fetch posts");
     });
   },[])
+
+
 
   return (
     <>
@@ -69,10 +72,15 @@ const Wall: React.FC = () => {
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
       <button onClick={()=>navigate("/friends")}>Your friends</button>
       {posts ? posts.map((post)=> {
-        return(<div key={post._id} onClick={()=>navigate(`/posts/${post._id?.toString() as string}`)}>
+        return(<div key={post._id} >
+          <div onClick={()=>navigate(`/posts/${post._id.toString()}`)}>
           {post.title}
           {post.text}
           {post.author}
+          </div>
+          <div onClick={()=>like({componentType:'post', id: post._id.toString()})}>Like</div>
+          <div>Comments: {post.comments.length}</div>
+          
         </div>)
       }): <div>No Posts</div>}
      

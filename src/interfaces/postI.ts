@@ -6,7 +6,8 @@ export interface  PostI {
     author: string;
     timestamp:string;
     likes: string[]
-    _id?: number;
+    _id: number;
+    comments: string[];
 }
 
 export interface  PostDisplayI {
