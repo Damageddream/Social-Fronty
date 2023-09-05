@@ -4,10 +4,12 @@ import { serverUrl } from "../utilities/URLs";
 import { PostDisplayI } from "../interfaces/postI";
 import AddComment from "./AddComment";
 import useCheckUser from "../customHooks/useCheckUser";
-
+import useLike from "../customHooks/useLike";
+import PostOptions from "./PostOptions";
 
 const Post: React.FC = () => {
   useCheckUser();
+  const [like] = useLike();
   const paramId = useParams();
   const [post, setPost] = useState<PostDisplayI>();
 
@@ -24,7 +26,6 @@ const Post: React.FC = () => {
     );
     const data = (await response.json()) as PostDisplayI;
     setPost(data);
-    console.log(data)
   };
 
   useEffect(() => {
@@ -38,15 +39,40 @@ const Post: React.FC = () => {
       <div className="post">
         {post && (
           <div>
+            <PostOptions />
             {post.title}
             {post.author}
             {post.text}
+            <div>Likes: {post.likes.length}</div>
+            <button
+              onClick={() =>
+                like({
+                  componentType: "post",
+                  id: post._id.toString(),
+                })
+              }
+            >
+              Like
+            </button>
             {post.comments.length > 0 ? (
               post.comments.map((comment) => {
                 return (
                   <div key={comment._id}>
-                    {comment.author}
-                    {comment.text}
+                    <div>
+                      {comment.author}
+                      {comment.text}
+                    </div>
+                    <div>Likes:{comment.likes.length}</div>
+                    <button
+                      onClick={() =>
+                        like({
+                          componentType: "comment",
+                          id: comment._id.toString(),
+                        })
+                      }
+                    >
+                      Like
+                    </button>
                   </div>
                 );
               })

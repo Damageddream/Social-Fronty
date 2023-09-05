@@ -78,7 +78,7 @@ const Wall: React.FC = () => {
           {post.text}
           {post.author}
           </div>
-          <div onClick={()=>like({componentType:'post', id: post._id.toString()})}>Like</div>
+          <button onClick={()=>like({componentType:'post', id: post._id.toString()})}>Like</button>
           <div>Comments: {post.comments.length}</div>
           
         </div>)

@@ -28,6 +28,23 @@ export default function useLike():[(args: likeArgs)=>void] {
         console.log(response.json());
       }
     }
+    else if(args.componentType === 'comment') {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(serverUrl + `/comments/${args.id}/like`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token as string}`,
+        },
+      });
+      if (!response.ok) {
+        dispatch(uiActions.setError("Liking comment failed"));
+      } else {
+        console.log(response.json());
+      }
+    }
   };
+  
   return [like]
 }
