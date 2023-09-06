@@ -9,7 +9,12 @@ interface UserI {
 }
 
 
+
 export default UserI;
+
+export interface UserDisplayI extends Omit<UserI, 'friends'> {
+    friends: string[];
+}
 
 export interface UserApiObject {
     _id: string;
@@ -34,6 +39,7 @@ export interface UserJWT {
 }
 
 export interface UserReduxI {
+    _id: string;
     name: string;
     loggedIn: boolean;
     photo: string;
@@ -55,7 +61,7 @@ export interface UserInitialState {
     loggedIn: boolean;
     name: string;
     photo: string;
-    id: string | null;
+    _id: string;
     friends: UserI[];
     invites: string[];
     invitesSent: string[];

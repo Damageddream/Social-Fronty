@@ -1,13 +1,18 @@
-import { useState, RefObject } from "react";
+import { useState, RefObject, useEffect } from "react";
 import useOutsideClick from "../customHooks/useOutsideClick";
+import { UserReduxI } from "../interfaces/userI";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
-const PostOptions: React.FC = () => {
-    
-  const [showOptions, setShowOptions] = useState<boolean>(false);
+const PostOptions: React.FC<{ authorId: string }> = ({ authorId }) => {
+  const user: UserReduxI = useSelector((state: RootState) => state.user);
+
+  const [showOptions, setShowOptions] = useState(false);
+  const [userIsAuthor, setUserIsAuthor] = useState(false);
 
   const handleClickOutisde = () => {
-    setShowOptions(false)
-  }
+    setShowOptions(false);
+  };
 
   const ref = useOutsideClick(handleClickOutisde) as RefObject<HTMLDivElement>;
 
@@ -15,15 +20,26 @@ const PostOptions: React.FC = () => {
     setShowOptions(true);
   };
 
+  useEffect(() => {
+    user._id, authorId;
+    if (user._id === authorId) {
+      setUserIsAuthor(true);
+    }
+  }, [authorId, user._id]);
+
   return (
     <>
-      {showOptions ? (
-        <div ref={ref}>
-          <div>Edit</div>
-          <div>Delete</div>
-        </div>
-      ) : (
-        <div onClick={toggleOptions}>Options</div>
+      {userIsAuthor && (
+        <>
+          {showOptions ? (
+            <div ref={ref}>
+              <div>Edit</div>
+              <div>Delete</div>
+            </div>
+          ) : (
+            <div onClick={toggleOptions}>Options</div>
+          )}
+        </>
       )}
     </>
   );

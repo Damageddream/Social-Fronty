@@ -76,7 +76,7 @@ const Wall: React.FC = () => {
           <div onClick={()=>navigate(`/posts/${post._id.toString()}`)}>
           {post.title}
           {post.text}
-          {post.author}
+          {post.author.name}
           </div>
           <button onClick={()=>like({componentType:'post', id: post._id.toString()})}>Like</button>
           <div>Comments: {post.comments.length}</div>

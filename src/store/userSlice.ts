@@ -5,7 +5,7 @@ const initialState: UserInitialState = {
   loggedIn: false,
   name: "",
   photo: "",
-  id: null,
+  _id: "",
   friends: [],
   invites: [],
   invitesSent: [],
@@ -24,7 +24,7 @@ const userSlice = createSlice({
       const user: UserI = action.payload as UserApiObject;
       state.name = user.name;
       state.photo = user.photo;
-      state.id = user._id;
+      state._id = user._id;
       state.friends = user.friends;
       state.invites = user.invites;
       state.invitesSent = user.invitesSent;
@@ -33,7 +33,7 @@ const userSlice = createSlice({
       const user = action.payload as UserJWT;
       state.name = user.name;
       state.photo = user.photo;
-      state.id = user._id;
+      state._id = user._id;
       state.friendsS = user.friends;
       state.invites = user.invites;
       state.invitesSent = user.invitesSent;

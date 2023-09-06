@@ -28,7 +28,7 @@ const AddPost: React.FC = () => {
       text,
       timestamp: new Date(),
       likes: [],
-      author: user.id as string,
+      author: user._id as string,
     };
     const response = await fetch(serverUrl + "/posts", {
       method: "POST",

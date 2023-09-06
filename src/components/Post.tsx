@@ -39,9 +39,9 @@ const Post: React.FC = () => {
       <div className="post">
         {post && (
           <div>
-            <PostOptions />
+            <PostOptions authorId = {post.author._id} />
             {post.title}
-            {post.author}
+            {post.author.name}
             {post.text}
             <div>Likes: {post.likes.length}</div>
             <button
@@ -59,7 +59,7 @@ const Post: React.FC = () => {
                 return (
                   <div key={comment._id}>
                     <div>
-                      {comment.author}
+                      {comment.author.name}
                       {comment.text}
                     </div>
                     <div>Likes:{comment.likes.length}</div>
