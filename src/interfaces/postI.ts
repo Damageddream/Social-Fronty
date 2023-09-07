@@ -11,6 +11,11 @@ export interface  PostI {
     comments: string[];
 }
 
+export interface addEditPostI {
+    title: string;
+    text: string;
+}
+
 export interface  PostDisplayI {
     title: string;
     text: string;

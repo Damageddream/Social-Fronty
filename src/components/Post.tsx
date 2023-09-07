@@ -39,7 +39,7 @@ const Post: React.FC = () => {
       <div className="post">
         {post && (
           <div>
-            <PostOptions authorId = {post.author._id} />
+            <PostOptions authorId = {post.author._id} postId={post._id.toString()} orginalTitle={post.title} orginalText={post.text}  />
             {post.title}
             {post.author.name}
             {post.text}

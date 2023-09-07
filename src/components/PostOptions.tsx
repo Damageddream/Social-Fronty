@@ -1,14 +1,25 @@
 import { useState, RefObject, useEffect } from "react";
 import useOutsideClick from "../customHooks/useOutsideClick";
 import { UserReduxI } from "../interfaces/userI";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { serverUrl } from "../utilities/URLs";
+import { modalActions } from "../store/modalSlice";
+import EditPost from "./EditPost";
 
-const PostOptions: React.FC<{ authorId: string }> = ({ authorId }) => {
+const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: string; orginalText:string   }> = ({
+  authorId,
+  postId,
+  orginalText,
+  orginalTitle
+}) => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
 
   const [showOptions, setShowOptions] = useState(false);
   const [userIsAuthor, setUserIsAuthor] = useState(false);
+
+  const dispatch = useDispatch()
+  const modal = useSelector((state:RootState) => state.modal)
 
   const handleClickOutisde = () => {
     setShowOptions(false);
@@ -27,14 +38,39 @@ const PostOptions: React.FC<{ authorId: string }> = ({ authorId }) => {
     }
   }, [authorId, user._id]);
 
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(serverUrl + `/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token as string}`,
+        },
+      });
+      if (!response.ok) {
+        console.error("deleting post failed");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDeleteClick = () => {
+    handleDelete().catch(() => {
+      console.error("Failed to delete post");
+    });
+  };
+
   return (
     <>
       {userIsAuthor && (
         <>
           {showOptions ? (
             <div ref={ref}>
-              <div>Edit</div>
-              <div>Delete</div>
+              <div onClick={()=>dispatch(modalActions.showModal())}>Edit</div>
+              {modal.show && <EditPost orginalText={orginalText} orginalTitle={orginalTitle} postId={postId} />}
+              <div onClick={handleDeleteClick}>Delete</div>
             </div>
           ) : (
             <div onClick={toggleOptions}>Options</div>
