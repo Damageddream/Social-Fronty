@@ -14,6 +14,8 @@ export interface  PostI {
 export interface addEditPostI {
     title: string;
     text: string;
+    likes: string[];
+    comments: string[] | undefined
 }
 
 export interface  PostDisplayI {

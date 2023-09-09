@@ -22,6 +22,7 @@ const AddComment: React.FC<{ postID: string }> = ({ postID }) => {
     const formData: CommentI = {
         text,
         post: postID,
+        likes: [],
     }
     const response = await fetch(serverUrl + `/posts/${postID}/comments`, {
       method: "POST",

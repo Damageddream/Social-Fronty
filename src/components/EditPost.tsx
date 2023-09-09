@@ -6,7 +6,7 @@ import { PostI, addEditPostI } from "../interfaces/postI";
 import { uiActions } from "../store/uiSlice";
 import { serverUrl } from "../utilities/URLs";
 
-const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:string}> = ({orginalText, orginalTitle, postId}) => {
+const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:string, likes: string[], comments: string[]}> = ({orginalText, orginalTitle, postId, likes, comments}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
@@ -26,6 +26,8 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
     const formData: addEditPostI = {
       title,
       text,
+      likes,
+      comments,
     };
     const response = await fetch(serverUrl + `/posts/${postId}`, {
       method: "PUT",
@@ -45,6 +47,7 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
 
   // showing or hinding modal when redux modal state changes
   useEffect(() => {
+    console.log(comments)
     if (modal.show) {
       dialogRef.current?.showModal();
     } else {

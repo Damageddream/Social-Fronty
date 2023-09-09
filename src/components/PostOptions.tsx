@@ -7,11 +7,13 @@ import { serverUrl } from "../utilities/URLs";
 import { modalActions } from "../store/modalSlice";
 import EditPost from "./EditPost";
 
-const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: string; orginalText:string   }> = ({
+const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: string; orginalText:string; likes:string[]; comments: string[] }> = ({
   authorId,
   postId,
   orginalText,
-  orginalTitle
+  orginalTitle,
+  likes,
+  comments,
 }) => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
 
@@ -69,7 +71,7 @@ const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: st
           {showOptions ? (
             <div ref={ref}>
               <div onClick={()=>dispatch(modalActions.showModal())}>Edit</div>
-              {modal.show && <EditPost orginalText={orginalText} orginalTitle={orginalTitle} postId={postId} />}
+              {modal.show && <EditPost orginalText={orginalText} orginalTitle={orginalTitle} postId={postId} likes={likes} comments={comments} />}
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
           ) : (
