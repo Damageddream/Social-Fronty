@@ -48,12 +48,12 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
   // showing or hinding modal when redux modal state changes
   useEffect(() => {
     console.log(comments)
-    if (modal.show) {
+    if (modal.showPost) {
       dialogRef.current?.showModal();
     } else {
       dialogRef.current?.close();
     }
-  }, [modal.show]);
+  }, [modal.showPost]);
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
@@ -90,7 +90,7 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
       </form>
       <button
         onClick={() => {
-          dispatch(modalActions.hideModal());
+          dispatch(modalActions.hidePostModal());
         }}
       >
         Close modal

@@ -27,6 +27,12 @@ export interface UserApiObject {
 
 }
 
+export interface EditUserI {
+    id: string;
+    name: string;
+    photo?: File | null;
+}
+
 export interface UserJWT {
     _id: string;
     name: string;

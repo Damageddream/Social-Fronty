@@ -3,15 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 const modalSlice = createSlice({
   name: "modal",
   initialState: {
-    show: false,
+    showPost: false,
+    showUser: false,
   },
   reducers: {
-    showModal(state) {
-      state.show = true;
+    showPostModal(state) {
+      state.showPost = true;
     },
-    hideModal(state) {
-      state.show = false;
+    hidePostModal(state) {
+      state.showPost = false;
     },
+    showUserModal(state){
+      state.showUser = true
+    },
+    hideUserModal(state){
+      state.showUser = false
+    }
   },
 });
 

@@ -2,11 +2,11 @@ import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { modalActions } from "../store/modalSlice";
-import { PostI } from "../interfaces/postI";
 import { uiActions } from "../store/uiSlice";
 import { serverUrl } from "../utilities/URLs";
+import { EditUserI } from "../interfaces/userI";
 
-const AddPost: React.FC = () => {
+const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalName, userId}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
@@ -17,26 +17,23 @@ const AddPost: React.FC = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   //states to fill Post form
-  const [title, setTitle] = useState<string>("");
-  const [text, setText] = useState<string>("");
+  const [name, setName] = useState<string>(orginalName);
+  const [file, setFile] = useState<File | null>();
 
   // function for sending POST request, to create new post
-  const addPost = async () => {
+  const editProfile = async () => {
     const token = localStorage.getItem("token")
-    const formData: PostI = {
-      title,
-      text,
-      timestamp: new Date(),
-      likes: [],
-      author: user._id as string,
-    };
-    const response = await fetch(serverUrl + "/posts", {
-      method: "POST",
+    const formData = new FormData()
+    formData.append("name", name)
+    if(file) {
+        formData.append("file", file )
+    }
+    const response = await fetch(serverUrl + `/user/edit/${userId}`, {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token as string}`
       },
-      body: JSON.stringify(formData),
+      body: formData,
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Adding new post failed"));
@@ -48,49 +45,47 @@ const AddPost: React.FC = () => {
 
   // showing or hinding modal when redux modal state changes
   useEffect(() => {
-    if (modal.showPost) {
+    if (modal.showUser) {
       dialogRef.current?.showModal();
     } else {
       dialogRef.current?.close();
     }
-  }, [modal.showPost]);
+  }, [modal.showUser]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files ? e.target.files[0] : null;
+    setFile(selected);
+  };
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
 
-    try {
-      addPost().catch((err) => {
-        dispatch(uiActions.setError("Adding new post failed"));
+    
+        editProfile().catch((err) => {
+        dispatch(uiActions.setError("Editig profile failed"));
       });
-    } catch (err) {
-      dispatch(uiActions.setError("Adding new post failed"));
+ 
     }
-  };
 
   return (
     <dialog ref={dialogRef}>
       <form onSubmit={submitHandler}>
-        <label htmlFor="postTitle">Title:</label>
+        <label htmlFor="name">Name:</label>
         <input
           type="text"
-          id="postTitle"
-          value={title}
+          id="name"
+          value={name}
           onChange={(e) => {
-            setTitle(e.target.value);
+            setName(e.target.value);
           }}
         />
-        <label htmlFor="postText">Text:</label>
-        <input
-          type="text"
-          id="postText"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button type="submit">Add Post</button>
+          <label htmlFor="photo">Photo</label>
+        <input type="file" id="photo" onChange={handleFileChange} />
+        <button type="submit">Edit Profile</button>
       </form>
       <button
         onClick={() => {
-          dispatch(modalActions.hidePostModal());
+          dispatch(modalActions.hideUserModal());
         }}
       >
         Close modal
@@ -99,4 +94,4 @@ const AddPost: React.FC = () => {
   );
 };
 
-export default AddPost;
+export default EditProfile;

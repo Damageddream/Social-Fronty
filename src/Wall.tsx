@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { PostI, PostDataFromApi } from "./interfaces/postI";
 import useCheckUser from "./customHooks/useCheckUser";
 import useLike from "./customHooks/useLike";
+import EditProfile from "./components/EditProfile";
+import ProfileOptions from "./components/ProfileOptions";
 
 
 const Wall: React.FC = () => {
@@ -47,10 +49,14 @@ const Wall: React.FC = () => {
     <>
       <h1> Wall</h1>
       {user.loggedIn && (
+        <>
         <div>
           {user.name}
           <img src={user.photo} alt="user profile picture" />
         </div>
+        <ProfileOptions userId={user._id} />
+        {modal.showUser && <EditProfile orginalName={user.name} userId={user._id} />}
+        </>
       )}
       <button
         onClick={() => {
@@ -62,12 +68,12 @@ const Wall: React.FC = () => {
       {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
       <button
         onClick={() => {
-          dispatch(modalActions.showModal());
+          dispatch(modalActions.showPostModal());
         }}
       >
         Add new post
       </button>
-      {modal.show && <AddPost />}
+      {modal.showPost && <AddPost />}
       <button onClick={()=>navigate("/invite")}>Search for friend</button>
       <button onClick={()=>navigate("/invites")}>Add new friends</button>
       <button onClick={()=>navigate("/friends")}>Your friends</button>
