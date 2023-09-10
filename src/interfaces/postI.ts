@@ -28,14 +28,6 @@ export interface  PostDisplayI {
     comments: CommentDisplayI[];
 }
 
-// export interface CommentI {
-//     text: string;
-//     author: string;
-//     timestamp: Date;
-//     likes: string[];
-//     post: string;
-// }
-
 export interface PostDataFromApi {
     success: boolean;
     message: string;
