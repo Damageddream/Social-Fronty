@@ -11,6 +11,7 @@ import useCheckUser from "./customHooks/useCheckUser";
 import useLike from "./customHooks/useLike";
 import EditProfile from "./components/EditProfile";
 import ProfileOptions from "./components/ProfileOptions";
+import Logout from "./components/Logout";
 
 
 const Wall: React.FC = () => {
@@ -54,6 +55,7 @@ const Wall: React.FC = () => {
           {user.name}
           <img src={user.photo} alt="user profile picture" />
         </div>
+        <Logout />
         <ProfileOptions userId={user._id} />
         {modal.showUser && <EditProfile orginalName={user.name} userId={user._id} />}
         </>

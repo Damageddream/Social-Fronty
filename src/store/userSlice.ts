@@ -37,6 +37,15 @@ const userSlice = createSlice({
       state.friendsS = user.friends;
       state.invites = user.invites;
       state.invitesSent = user.invitesSent;
+    },
+    logOut(state){
+      state.loggedIn = false
+      state.name = "";
+      state.photo = "";
+      state._id = "";
+      state.friends = [];
+      state.invites = [];
+      state.invitesSent = [];
     }
   },
 });
