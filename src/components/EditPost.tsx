@@ -2,7 +2,7 @@ import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { modalActions } from "../store/modalSlice";
-import { PostI, addEditPostI } from "../interfaces/postI";
+import { addEditPostI } from "../interfaces/postI";
 import { uiActions } from "../store/uiSlice";
 import { serverUrl } from "../utilities/URLs";
 
@@ -53,7 +53,7 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
     } else {
       dialogRef.current?.close();
     }
-  }, [modal.showPost]);
+  }, [modal.showPost, comments],);
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
