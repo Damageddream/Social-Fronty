@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
+import useCheckUser from "./customHooks/useCheckUser";
 
 const LogIn: React.FC = () => {
+  useCheckUser()
   const navigate = useNavigate()
   const user: UserReduxI = useSelector((state: RootState)=> state.user)
 

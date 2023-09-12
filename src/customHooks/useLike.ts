@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 
 interface likeArgs {
-    componentType: "post" | "comment";
-    id: string
+  componentType: "post" | "comment";
+  id: string;
 }
 
-export default function useLike():[(args: likeArgs)=>void] {
+export default function useLike(): [(args: likeArgs) => void] {
   const ui = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
   const like = async (args: likeArgs) => {
@@ -27,8 +27,7 @@ export default function useLike():[(args: likeArgs)=>void] {
       } else {
         console.log(response.json());
       }
-    }
-    else if(args.componentType === 'comment') {
+    } else if (args.componentType === "comment") {
       const token = localStorage.getItem("token");
 
       const response = await fetch(serverUrl + `/comments/${args.id}/like`, {
@@ -45,6 +44,6 @@ export default function useLike():[(args: likeArgs)=>void] {
       }
     }
   };
-  
-  return [like]
+
+  return [like];
 }

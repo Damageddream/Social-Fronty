@@ -3,20 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "./store/store";
 import { userActions } from "./store/userSlice";
 import { uiActions } from "./store/uiSlice";
-import { useState, FormEventHandler } from "react";
+import { useState, FormEventHandler, useEffect } from "react";
 import { serverUrl } from "./utilities/URLs";
 import { UserApiLoginObject } from "./interfaces/userI";
 
+
 const LogInNoFacebook: React.FC = () => {
+
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  
 
+  // fetching user data from backend and set user in redux state
   const login = async () => {
+    dispatch(uiActions.startLoading());
     const response = await fetch(serverUrl + "/users/login", {
       method: "POST",
       headers: {
@@ -24,22 +28,52 @@ const LogInNoFacebook: React.FC = () => {
       },
       body: JSON.stringify({ username: username, password: password }),
     });
+    // if response status is not ok, display error message
+    if (!response.ok) {
+      dispatch(uiActions.endLoading());
+      dispatch(uiActions.setError("Login failed"));
+      return;
+    }
+
     if (response.ok) {
-      const data = (await response.json()) as UserApiLoginObject;
-      dispatch(userActions.loggedIn(true));
-      dispatch(userActions.setUserInfo(data.user));
-      localStorage.setItem("token", data.token);
-     
+      try{
+        const data = (await response.json()) as UserApiLoginObject;
+        dispatch(userActions.loggedIn(true));
+        dispatch(userActions.setUserInfo(data.user));
+        localStorage.setItem("token", data.token);
+        dispatch(uiActions.endLoading());
+        navigate("/wall");
+      }catch(err){dispatch(uiActions.setError(err))}
+
     }
   };
 
+  //form submission, validating form
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
-    login().catch((err) => {
-        dispatch(uiActions.setError("Failed to login"));
-      });
-    navigate('/wall')
+    // reseting error info
+    dispatch(uiActions.removeError());
+    // form client validation
+    if (
+      username.length === 0 ||
+      password.length === 0
+    ) {
+      dispatch(uiActions.setError("form rows cannot be empty"));
+      return;
+    }
+    // fetching user
+    login().catch(() => {
+      dispatch(uiActions.setError("Failed to login"));
+      return;
+    });
   };
+
+  //reseting error status
+  useEffect(() => {
+    if (ui.error.errorStatus) {
+      dispatch(uiActions.removeError());
+    }
+  }, []);
 
   return (
     <div>
@@ -62,8 +96,11 @@ const LogInNoFacebook: React.FC = () => {
             setPassword(e.target.value);
           }}
         />
-        <button type="submit">Log In</button>
+
+        {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+        <button type="submit">{ui.loading ? "Loading..." : "Login"}</button>
       </form>
+      <div onClick={() => navigate("/")}>back</div>
     </div>
   );
 };

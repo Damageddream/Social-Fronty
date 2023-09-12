@@ -12,19 +12,21 @@ interface decodedToken {
 }
 
 export default function useCheckUser() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
   const token: string | null = localStorage.getItem("token");
-  
 
   useEffect(() => {
     if (token && user.loggedIn === false) {
-      const decodedToken: decodedToken = jwt(token);    
-      dispatch(userActions.loggedIn(true))
-      dispatch(userActions.setUserFromJWT(decodedToken.user)) 
-    } else if(!token) {
-      navigate('/')
+      const decodedToken: decodedToken = jwt(token);
+      dispatch(userActions.loggedIn(true));
+      dispatch(userActions.setUserFromJWT(decodedToken.user));
+      navigate("/wall");
+    } else if (!token) {
+      navigate("/");
+    } else if (token && user.loggedIn === true) {
+      navigate("/wall");
     }
   }, [dispatch, token, user.loggedIn, navigate]);
 }
