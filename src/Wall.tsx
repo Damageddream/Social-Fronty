@@ -28,6 +28,12 @@ const Wall: React.FC = () => {
   const ui = useSelector((state: RootState) => state.ui);
   const modal = useSelector((state: RootState) => state.modal);
   const [posts, setPosts] = useState<PostI[]>([]);
+  const [postAdded, setPostAdded] = useState(0);
+
+  //Callback to refetch posts after new is added.
+  const refetch = () => {
+    setPostAdded(prev=>prev+1)
+  }
 
   // fetch all posts of user and friends of user
   const getUsersPosts = async () => {
@@ -60,7 +66,7 @@ const Wall: React.FC = () => {
     getUsersPosts().catch(() => {
       console.error("Failed to fetch posts");
     });
-  }, []);
+  }, [postAdded]);
 
   return (
     <>
@@ -86,7 +92,7 @@ const Wall: React.FC = () => {
       >
         Add new post
       </button>
-      {modal.showPost && <AddPost />}
+      {modal.showPost && <AddPost onAddedPost = {refetch} />}
       <button onClick={() => navigate("/invite")}>Search for friend</button>
       <button onClick={() => navigate("/invites")}>Add new friends</button>
       <button onClick={() => navigate("/friends")}>Your friends</button>

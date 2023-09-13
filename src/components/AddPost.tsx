@@ -2,14 +2,13 @@ import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { modalActions } from "../store/modalSlice";
-import { PostI } from "../interfaces/postI";
+import { PostPostI } from "../interfaces/postI";
 import { uiActions } from "../store/uiSlice";
 import { serverUrl } from "../utilities/URLs";
 
-const AddPost: React.FC = () => {
+const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
-  const user = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
 
   const dispatch = useDispatch();
@@ -22,13 +21,12 @@ const AddPost: React.FC = () => {
 
   // function for sending POST request, to create new post
   const addPost = async () => {
+    dispatch(uiActions.removeError());
+    dispatch(uiActions.startLoading())
     const token = localStorage.getItem("token")
-    const formData: PostI = {
+    const formData: PostPostI = {
       title,
       text,
-      timestamp: new Date(),
-      likes: [],
-      author: user._id as string,
     };
     const response = await fetch(serverUrl + "/posts", {
       method: "POST",
@@ -40,9 +38,12 @@ const AddPost: React.FC = () => {
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Adding new post failed"));
-    } else {
-      console.log("sucess");
-      console.log(response.json())
+      dispatch(uiActions.endLoading())
+    } 
+    if(response.ok) {
+      onAddedPost()
+      dispatch(uiActions.endLoading())
+      dispatch(modalActions.hidePostModal())
     }
   };
 
@@ -51,15 +52,16 @@ const AddPost: React.FC = () => {
     if (modal.showPost) {
       dialogRef.current?.showModal();
     } else {
+      dispatch(uiActions.removeError());
       dialogRef.current?.close();
     }
-  }, [modal.showPost]);
+  }, [modal.showPost, dispatch]);
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
 
     try {
-      addPost().catch((err) => {
+      addPost().catch(() => {
         dispatch(uiActions.setError("Adding new post failed"));
       });
     } catch (err) {
@@ -86,15 +88,17 @@ const AddPost: React.FC = () => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button type="submit">Add Post</button>
+        <button type="submit">{ui.loading? "Loading...": "Add Post"}</button>
       </form>
       <button
         onClick={() => {
           dispatch(modalActions.hidePostModal());
+          dispatch(uiActions.removeError());
         }}
       >
         Close modal
       </button>
+      {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
     </dialog>
   );
 };
