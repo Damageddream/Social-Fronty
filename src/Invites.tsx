@@ -10,9 +10,11 @@ const Invites: React.FC = () => {
   const ui = useSelector((state: RootState) => state.ui);
   const [answer, setAnswer] = useState<"accept" | "denie">("accept");
   const [invites, setInvites] = useState<UserI[]>();
+  const [inviteAnswered, setInviteAnswered] = useState(0);
   const token = localStorage.getItem("token");
 
   const getInvites = async () => {
+    dispatch(uiActions.startLoading());
     const response = await fetch(serverUrl + "/users/invites", {
       method: "GET",
       headers: {
@@ -20,8 +22,16 @@ const Invites: React.FC = () => {
         Authorization: `Bearer ${token as string}`,
       },
     });
-    const data = (await response.json()) as UserWithInvites;
-    setInvites(data.invites);
+    if (response.ok) {
+      const data = (await response.json()) as UserWithInvites;
+      setInvites(data.invites);
+      setInviteAnswered((prev) => prev + 1);
+      dispatch(uiActions.endLoading());
+    }
+    if (!response.ok) {
+      dispatch(uiActions.setError("failed to get invites"));
+      dispatch(uiActions.endLoading());
+    }
   };
 
   const answerInvites = async (id: string) => {
@@ -63,7 +73,7 @@ const Invites: React.FC = () => {
     getInvites().catch(() => {
       dispatch(uiActions.setError("Failed to fetch invites"));
     });
-  }, []);
+  }, [inviteAnswered]);
 
   return (
     <div>
