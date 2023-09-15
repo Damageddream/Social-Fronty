@@ -25,7 +25,6 @@ const Invites: React.FC = () => {
     if (response.ok) {
       const data = (await response.json()) as UserWithInvites;
       setInvites(data.invites);
-      setInviteAnswered((prev) => prev + 1);
       dispatch(uiActions.endLoading());
     }
     if (!response.ok) {
@@ -35,6 +34,7 @@ const Invites: React.FC = () => {
   };
 
   const answerInvites = async (id: string) => {
+    dispatch(uiActions.startLoading())
     const response = await fetch(serverUrl + "/users/invites", {
       method: "POST",
       headers: {
@@ -45,6 +45,11 @@ const Invites: React.FC = () => {
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Response to invite failed"));
+      dispatch(uiActions.endLoading())
+    }
+    if(response.ok){
+      setInviteAnswered(prev=>prev+1)
+      dispatch(uiActions.endLoading())
     }
   };
   const clickAccpeptHandler = () => {
@@ -82,24 +87,7 @@ const Invites: React.FC = () => {
         <div>
           {invites.map((invite) => {
             return (
-              <div key={invite._id}>
-                <div>User {invite.name} invited you to be friends</div>
-                <img src={invite.photo} alt="profile picture" />
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    void submitHandler(e);
-                  }}
-                >
-                  <input name="id" type="hidden" value={invite._id} />
-                  <button type="submit" onClick={clickAccpeptHandler}>
-                    accept
-                  </button>
-                  <button type="submit" onClick={clickDenieHandler}>
-                    denie
-                  </button>
-                </form>
-              </div>
+
             );
           })}
         </div>

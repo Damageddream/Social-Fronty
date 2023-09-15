@@ -11,29 +11,24 @@ const AddNewFriend: React.FC = () => {
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
   const [strangers, setStrangers] = useState<UserI[]>();
-  const [inviteSend, setInviteSend] = useState(0)
+  const [inviteSend, setInviteSend] = useState(0);
 
   // getting list of users that are not friends with user sending request
   const fetchStrangers = async () => {
-    try {
-      const response = await fetch(serverUrl + "/users/nofriends", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token as string}`,
-        },
-      });
-      //console.log(await response.json());
-      const data = (await response.json()) as NoFriendsI;
-      setStrangers(data.noFriends);
-    } catch (err) {
-      dispatch(uiActions.setError("Failed to get list of strangers"));
-    }
+    const response = await fetch(serverUrl + "/users/nofriends", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token as string}`,
+      },
+    })
+    const data = (await response.json()) as NoFriendsI;
+    setStrangers(data.noFriends);
   };
 
   const inviteHandler = async (id: string) => {
     dispatch(uiActions.removeError());
-    dispatch(uiActions.startLoading())
+    dispatch(uiActions.startLoading());
     const response = await fetch(serverUrl + "/users/nofriends", {
       method: "POST",
       headers: {
@@ -44,11 +39,11 @@ const AddNewFriend: React.FC = () => {
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Failed to send invite"));
-      dispatch(uiActions.endLoading())
+      dispatch(uiActions.endLoading());
     }
-    if(response.ok){
-      dispatch(uiActions.endLoading())
-      setInviteSend(prev=>prev+1)
+    if (response.ok) {
+      dispatch(uiActions.endLoading());
+      setInviteSend((prev) => prev + 1);
     }
   };
 
