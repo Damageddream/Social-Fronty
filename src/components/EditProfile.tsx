@@ -4,12 +4,11 @@ import { RootState } from "../store/store";
 import { modalActions } from "../store/modalSlice";
 import { uiActions } from "../store/uiSlice";
 import { serverUrl } from "../utilities/URLs";
-import { EditUserI } from "../interfaces/userI";
+
 
 const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalName, userId}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
-  const user = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
 
   const dispatch = useDispatch();
@@ -61,7 +60,7 @@ const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalNa
     e.preventDefault();
 
     
-        editProfile().catch((err) => {
+        editProfile().catch(() => {
         dispatch(uiActions.setError("Editig profile failed"));
       });
  

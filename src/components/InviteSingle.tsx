@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 import { serverUrl } from "../utilities/URLs";
-import { RootState } from "../store/store";
 
 const InviteSingle: React.FC<{
   id: string;
   name: string;
   photo: string;
-  getInvites: ()=>void
+  onResponseAction: ()=>void;
 
-}> = ({id,name, photo, getInvites}) => {
+}> = ({id,name, photo,  onResponseAction}) => {
   const [answer, setAnswer] = useState<"accept" | "denie">("accept");
-  const ui = useSelector((state: RootState) => state.ui);
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const clickAccpeptHandler = () => {
     setAnswer("accept");
@@ -22,9 +21,7 @@ const InviteSingle: React.FC<{
   };
 
   const answerInvites = async (id: string) => {
-    dispatch(uiActions.startLoading())
-    
-    
+    setLoading(true)
     const token = localStorage.getItem("token");
     const response = await fetch(serverUrl+ "/users/invites", {
       method: "POST",
@@ -36,11 +33,11 @@ const InviteSingle: React.FC<{
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Response to invite failed"));
-      dispatch(uiActions.endLoading())
+      setLoading(false)
     }
     if(response.ok){
-      getInvites()
-      dispatch(uiActions.endLoading())
+      onResponseAction()
+      setLoading(false)
     }
   };
 
@@ -60,8 +57,7 @@ const InviteSingle: React.FC<{
   };
 
   return (
-    <>
-      <div key={id}>
+      <div>
         <div>User {name} invited you to be friends</div>
         <img src={photo} alt="profile picture" />
         <form
@@ -77,10 +73,9 @@ const InviteSingle: React.FC<{
           <button type="submit" onClick={clickDenieHandler}>
             decline
           </button>
-          {ui.loading && <div>Loading....</div>}
+          {loading && <div>Loading....</div>}
         </form>
       </div>
-    </>
   );
 };
 

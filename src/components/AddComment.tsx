@@ -6,17 +6,12 @@ import { FormEventHandler, useState } from "react";
 import { CommentI } from "../interfaces/commentI";
 import { serverUrl } from "../utilities/URLs";
 
-const AddComment: React.FC<{ postID: string }> = ({ postID }) => {
+const AddComment: React.FC<{ postID: string, handleAddComment: ()=>void }> = ({ postID, handleAddComment }) => {
   // custom hook that toggle on/off showing form for adding comments
   const [showAddComment, toggleShowAddComment]: [boolean, (value?: boolean) => void] = useToggle(false);
-
-  const user = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
-
   const dispatch = useDispatch();
-
   const [text, setText] = useState<string>("");
-
   const addComment = async () => {
     const token = localStorage.getItem('token')
     const formData: CommentI = {
@@ -35,8 +30,7 @@ const AddComment: React.FC<{ postID: string }> = ({ postID }) => {
     if (!response.ok) {
       dispatch(uiActions.setError("Adding new comment failed"));
     } else {
-      console.log("sucess");
-      console.log(response.json())
+      handleAddComment()
       toggleShowAddComment(false)
     }
   }
@@ -44,7 +38,7 @@ const AddComment: React.FC<{ postID: string }> = ({ postID }) => {
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
     try {
-      addComment().catch((err) => {
+      addComment().catch(() => {
         dispatch(uiActions.setError("Adding new comment failed"))
       });
     } catch (err) {

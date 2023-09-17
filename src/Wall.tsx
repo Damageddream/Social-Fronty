@@ -19,7 +19,7 @@ const Wall: React.FC = () => {
   useCheckUser();
 
   // custom hook, handling fetching data on liking post or comment
-  const [like] = useLike();
+  const [like, likeChanged] = useLike();
 
   //hooks
   const navigate = useNavigate();
@@ -64,9 +64,9 @@ const Wall: React.FC = () => {
   //fetch posts on first render
   useEffect(() => {
     getUsersPosts().catch(() => {
-      console.error("Failed to fetch posts");
+      dispatch(uiActions.setError("Failed to fetch posts"))
     });
-  }, [postAdded]);
+  }, [postAdded,likeChanged]);
 
   return (
     <>
@@ -105,13 +105,17 @@ const Wall: React.FC = () => {
                 {post.text}
                 {post.author.name}
               </div>
+              <div>
               <button
                 onClick={() =>
-                  like({ componentType: "post", id: post._id.toString() })
+                  {like({ componentType: "post", id: post._id.toString() })
+                }
                 }
               >
                 Like
               </button>
+              <div>Likes: {post.likes.length}</div>
+              </div>
               <div onClick={()=>{navigate(`/posts/${post._id.toString()}`)}}>Comments: {post.comments.length}</div>
             </div>
           );

@@ -1,6 +1,6 @@
-import { RootState } from "../store/store";
+import { useState } from "react";
 import { serverUrl } from "../utilities/URLs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 
 interface likeArgs {
@@ -8,8 +8,8 @@ interface likeArgs {
   id: string;
 }
 
-export default function useLike(): [(args: likeArgs) => void] {
-  const ui = useSelector((state: RootState) => state.ui);
+export default function useLike(): [(args: likeArgs) => void, number] {
+  const [likeChanged, setLikeChanged] = useState(0);
   const dispatch = useDispatch();
   const like = async (args: likeArgs) => {
     if (args.componentType === "post") {
@@ -25,7 +25,7 @@ export default function useLike(): [(args: likeArgs) => void] {
       if (!response.ok) {
         dispatch(uiActions.setError("Liking post failed"));
       } else {
-        console.log(response.json());
+        setLikeChanged((prev) => prev + 1);
       }
     } else if (args.componentType === "comment") {
       const token = localStorage.getItem("token");
@@ -40,10 +40,10 @@ export default function useLike(): [(args: likeArgs) => void] {
       if (!response.ok) {
         dispatch(uiActions.setError("Liking comment failed"));
       } else {
-        console.log(response.json());
+        setLikeChanged((prev) => prev + 1);
       }
     }
   };
 
-  return [like];
+  return [like, likeChanged];
 }

@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { serverUrl } from "../utilities/URLs";
 import { PostDisplayI } from "../interfaces/postI";
 import AddComment from "./AddComment";
-import useCheckUser from "../customHooks/useCheckUser";
 import useLike from "../customHooks/useLike";
 import PostOptions from "./PostOptions";
 import CommentOptions from "./CommentOptions";
 
 const Post: React.FC = () => {
-  useCheckUser();
-  const [like] = useLike();
+  const [like, likeChanged] = useLike();
+  const navigate = useNavigate()
   const paramId = useParams();
   const [post, setPost] = useState<PostDisplayI>();
   const [commentsIds, setCommentsIds] = useState<string[]>([])
+  const [commentAdded, setCommentAdded] = useState(0)
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
@@ -37,11 +37,16 @@ const Post: React.FC = () => {
     getPost().catch(() => {
       console.error("Failed to fetch post");
     });
-  }, []);
+  }, [likeChanged, commentAdded]);
+
+  const handleAddComment = () => {
+    setCommentAdded(prev=>prev+1)
+  }
 
   return (
     <>
       <div className="post">
+        <div onClick={()=>navigate('/wall')}>back</div>
         {post && (
           <div>
             <PostOptions authorId = {post.author._id} postId={post._id.toString()} orginalTitle={post.title} orginalText={post.text} likes={post.likes} comments={commentsIds}  />
@@ -86,7 +91,7 @@ const Post: React.FC = () => {
               <div>No comments</div>
             )}
             <>
-              <AddComment postID={post._id.toString()} />
+              <AddComment postID={post._id.toString()} handleAddComment={handleAddComment} />
             </>
           </div>
         )}

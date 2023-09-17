@@ -1,18 +1,22 @@
 import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
 import UserI, { UserWithInvites } from "./interfaces/userI";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uiActions } from "./store/uiSlice";
-import { RootState } from "./store/store";
 import InviteSingle from "./components/InviteSingle";
+import { useNavigate } from "react-router-dom";
 
 const Invites: React.FC = () => {
   const dispatch = useDispatch();
-  const ui = useSelector((state: RootState) => state.ui);
   const [invites, setInvites] = useState<UserI[]>();
+  const [inviteAnswered, setInviteAnswered] = useState(0)
+  const navigate = useNavigate()
 
   const token = localStorage.getItem("token");
 
+  const onResponseAction = () => {
+    setInviteAnswered(prev=>prev+1)
+  }
   const getInvites = async () => {
     dispatch(uiActions.startLoading());
     const response = await fetch(serverUrl + "/users/invites", {
@@ -37,19 +41,22 @@ const Invites: React.FC = () => {
     getInvites().catch(() => {
       dispatch(uiActions.setError("Failed to fetch invites"));
     });
-  }, []);
+  }, [inviteAnswered]);
 
   return (
     <div>
       <h1>Invites to friends: </h1>
+      <div onClick={()=>navigate('/wall')}>back</div>
       {invites && (
-        <div>
+        <>
           {invites.map((invite) => {
             return (
-              <InviteSingle id={invite._id} name={invite.name} photo={invite.photo} getInvites={()=>getInvites()} />
+              <div key={invite._id}>
+              <InviteSingle id={invite._id} name={invite.name} photo={invite.photo}  onResponseAction={onResponseAction} />
+              </div>
             );
           })}
-        </div>
+        </>
       )}
     </div>
   );

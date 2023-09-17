@@ -70,8 +70,8 @@ const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: st
         <>
           {showOptions ? (
             <div ref={ref}>
-              <div onClick={()=>dispatch(modalActions.showModal())}>Edit</div>
-              {modal.show && <EditPost orginalText={orginalText} orginalTitle={orginalTitle} postId={postId} likes={likes} comments={comments} />}
+              <div onClick={()=>dispatch(modalActions.showPostModal())}>Edit</div>
+              {modal.showPost && <EditPost orginalText={orginalText} orginalTitle={orginalTitle} postId={postId} likes={likes} comments={comments} />}
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
           ) : (
