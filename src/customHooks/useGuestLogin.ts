@@ -15,7 +15,7 @@ export default function useGuestLogin() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: "Guest", password: "guest987" }),
+      body: JSON.stringify({ username: "Guest"}),
     });
     if (!response.ok) {
       dispatch(uiActions.endLoading());

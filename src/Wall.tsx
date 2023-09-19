@@ -1,18 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
 import { modalActions } from "./store/modalSlice";
-import { useNavigate } from "react-router-dom";
 import AddPost from "./components/AddPost";
 import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
 import { PostI, PostDataFromApi } from "./interfaces/postI";
 import useCheckUser from "./customHooks/useCheckUser";
 import useLike from "./customHooks/useLike";
-import EditProfile from "./components/EditProfile";
-import ProfileOptions from "./components/ProfileOptions";
-import Logout from "./components/Logout";
 import { uiActions } from "./store/uiSlice";
+import WallNav from "./components/WallNav";
+import ProfileNav from "./components/ProfileNav";
+import PostCard from "./components/PostCard";
 
 const Wall: React.FC = () => {
   // custom hook, checking if user is already logged in
@@ -22,9 +20,7 @@ const Wall: React.FC = () => {
   const [like, likeChanged] = useLike();
 
   //hooks
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user: UserReduxI = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
   const modal = useSelector((state: RootState) => state.modal);
   const [posts, setPosts] = useState<PostI[]>([]);
@@ -32,7 +28,11 @@ const Wall: React.FC = () => {
 
   //Callback to refetch posts after new is added.
   const refetch = () => {
-    setPostAdded(prev=>prev+1)
+    setPostAdded((prev) => prev + 1);
+  };
+
+  const newLikeAdded = (like:number):number => {
+    return like
   }
 
   // fetch all posts of user and friends of user
@@ -55,7 +55,7 @@ const Wall: React.FC = () => {
         dispatch(uiActions.endLoading());
       }
     }
-    if(!response.ok){
+    if (!response.ok) {
       dispatch(uiActions.endLoading());
       dispatch(uiActions.setError("Getting posts failed"));
       return;
@@ -64,26 +64,14 @@ const Wall: React.FC = () => {
   //fetch posts on first render
   useEffect(() => {
     getUsersPosts().catch(() => {
-      dispatch(uiActions.setError("Failed to fetch posts"))
+      dispatch(uiActions.setError("Failed to fetch posts"));
     });
-  }, [postAdded,likeChanged]);
+  }, [postAdded, likeChanged]);
 
   return (
     <>
       <h1> Wall</h1>
-      {user.loggedIn && (
-        <>
-          <div>
-            {user.name}
-            <img src={user.photo} alt="user profile picture" />
-          </div>
-          <Logout />
-          <ProfileOptions userId={user._id} />
-          {modal.showUser && (
-            <EditProfile orginalName={user.name} userId={user._id} />
-          )}
-        </>
-      )}
+      <ProfileNav />
       {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
       <button
         onClick={() => {
@@ -92,31 +80,13 @@ const Wall: React.FC = () => {
       >
         Add new post
       </button>
-      {modal.showPost && <AddPost onAddedPost = {refetch} />}
-      <button onClick={() => navigate("/invite")}>Search for friend</button>
-      <button onClick={() => navigate("/invites")}>Add new friends</button>
-      <button onClick={() => navigate("/friends")}>Your friends</button>
+      {modal.showPost && <AddPost onAddedPost={refetch} />}
+      <WallNav />
       {posts.length > 0 ? (
         posts.map((post) => {
           return (
             <div key={post._id}>
-              <div onClick={() => navigate(`/posts/${post._id.toString()}`)}>
-                {post.title}
-                {post.text}
-                {post.author.name}
-              </div>
-              <div>
-              <button
-                onClick={() =>
-                  {like({ componentType: "post", id: post._id.toString() })
-                }
-                }
-              >
-                Like
-              </button>
-              <div>Likes: {post.likes.length}</div>
-              </div>
-              <div onClick={()=>{navigate(`/posts/${post._id.toString()}`)}}>Comments: {post.comments.length}</div>
+              <PostCard post={post} newLikeAdded={newLikeAdded}/>
             </div>
           );
         })

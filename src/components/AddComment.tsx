@@ -64,6 +64,7 @@ const AddComment: React.FC<{ postID: string, handleAddComment: ()=>void }> = ({ 
             <button type="submit">Submit Comment</button>
           </form>
           <button onClick={()=>toggleShowAddComment(false)}>cancel</button>
+          {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         </>
       )}
     </>

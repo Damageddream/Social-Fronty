@@ -44,7 +44,7 @@ const ProfileOptions: React.FC<{
         },
       });
       if (!response.ok) {
-        console.error("deleting user failed");
+       dispatch(uiActions.setError("deleting user failed"));
       }
       if(response.ok){
         dispatch(userActions.logOut())

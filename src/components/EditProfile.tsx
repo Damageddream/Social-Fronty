@@ -35,10 +35,11 @@ const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalNa
       body: formData,
     });
     if (!response.ok) {
-      dispatch(uiActions.setError("Adding new post failed"));
-    } else {
-      console.log("sucess");
-      console.log(response.json())
+      dispatch(uiActions.setError("Editing profile failed"));
+      dispatch(modalActions.hideUserModal())
+    } 
+    if(response.ok) {
+     dispatch(modalActions.hideUserModal())
     }
   };
 
@@ -58,8 +59,6 @@ const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalNa
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
-
-    
         editProfile().catch(() => {
         dispatch(uiActions.setError("Editig profile failed"));
       });
