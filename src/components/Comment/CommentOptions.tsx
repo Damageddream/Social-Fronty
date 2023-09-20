@@ -1,12 +1,12 @@
 import { useState, RefObject, useEffect, FormEventHandler } from "react";
-import useOutsideClick from "../customHooks/useOutsideClick";
-import { UserReduxI } from "../interfaces/userI";
+import useOutsideClick from "../../customHooks/useOutsideClick";
+import { UserReduxI } from "../../interfaces/userI";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { serverUrl } from "../utilities/URLs";
-import useToggle from "../customHooks/useToggle";
-import { CommentI } from "../interfaces/commentI";
-import { uiActions } from "../store/uiSlice";
+import { RootState } from "../../store/store";
+import { serverUrl } from "../../utilities/URLs";
+import useToggle from "../../customHooks/useToggle";
+import { CommentI } from "../../interfaces/commentI";
+import { uiActions } from "../../store/uiSlice";
 
 const CommentOptions: React.FC<{
   authorId: string;

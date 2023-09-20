@@ -1,14 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { PostI } from "../interfaces/postI";
-import useLike from "../customHooks/useLike";
+import { PostI } from "../../interfaces/postI";
 
-const PostCard: React.FC<{ post: PostI, newLikeAdded:(like:number)=>number }> = ({ post  }) => {
+const PostCard: React.FC<{ post: PostI, newLikeAdded:(componentType: "post" | 'comment', id: string)=>void }> = ({ post, newLikeAdded }) => {
   const navigate = useNavigate();
-  const [like, likeChanged] = useLike();
-
-  const newLikeAdded = () => {
-
-  }
 
   return (
     <div className="postCard">
@@ -20,7 +14,7 @@ const PostCard: React.FC<{ post: PostI, newLikeAdded:(like:number)=>number }> = 
       <div>
         <button
           onClick={() => {
-            like({ componentType: "post", id: post._id.toString() });
+            newLikeAdded("post", post._id.toString());
           }}
         >
           Like

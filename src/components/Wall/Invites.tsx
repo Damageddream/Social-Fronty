@@ -1,9 +1,9 @@
-import { serverUrl } from "./utilities/URLs";
+import { serverUrl } from "../../utilities/URLs";
 import { useEffect, useState } from "react";
-import UserI, { UserWithInvites } from "./interfaces/userI";
+import UserI, { UserWithInvites } from "../../interfaces/userI";
 import { useDispatch } from "react-redux";
-import { uiActions } from "./store/uiSlice";
-import InviteSingle from "./components/InviteSingle";
+import { uiActions } from "../../store/uiSlice";
+import InviteSingle from "../Profile/InviteSingle";
 import { useNavigate } from "react-router-dom";
 
 const Invites: React.FC = () => {

@@ -1,12 +1,12 @@
 import { useState, RefObject} from "react";
-import useOutsideClick from "../customHooks/useOutsideClick";
-import { UserReduxI } from "../interfaces/userI";
+import useOutsideClick from "../../customHooks/useOutsideClick";
+import { UserReduxI } from "../../interfaces/userI";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { serverUrl } from "../utilities/URLs";
-import { uiActions } from "../store/uiSlice";
-import { userActions } from "../store/userSlice";
-import { modalActions } from "../store/modalSlice";
+import { RootState } from "../../store/store";
+import { serverUrl } from "../../utilities/URLs";
+import { uiActions } from "../../store/uiSlice";
+import { userActions } from "../../store/userSlice";
+import { modalActions } from "../../store/modalSlice";
 import { useNavigate } from "react-router-dom";
 
 const ProfileOptions: React.FC<{

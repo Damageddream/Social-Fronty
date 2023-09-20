@@ -1,10 +1,10 @@
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { modalActions } from "../store/modalSlice";
-import { addEditPostI } from "../interfaces/postI";
-import { uiActions } from "../store/uiSlice";
-import { serverUrl } from "../utilities/URLs";
+import { RootState } from "../../store/store";
+import { modalActions } from "../../store/modalSlice";
+import { addEditPostI } from "../../interfaces/postI";
+import { uiActions } from "../../store/uiSlice";
+import { serverUrl } from "../../utilities/URLs";
 
 const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:string, likes: string[], comments: string[]}> = ({orginalText, orginalTitle, postId, likes, comments}) => {
   // states from redux

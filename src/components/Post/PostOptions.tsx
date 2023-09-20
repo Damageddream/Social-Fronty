@@ -1,10 +1,10 @@
 import { useState, RefObject, useEffect } from "react";
-import useOutsideClick from "../customHooks/useOutsideClick";
-import { UserReduxI } from "../interfaces/userI";
+import useOutsideClick from "../../customHooks/useOutsideClick";
+import { UserReduxI } from "../../interfaces/userI";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { serverUrl } from "../utilities/URLs";
-import { modalActions } from "../store/modalSlice";
+import { RootState } from "../../store/store";
+import { serverUrl } from "../../utilities/URLs";
+import { modalActions } from "../../store/modalSlice";
 import EditPost from "./EditPost";
 
 const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: string; orginalText:string; likes:string[]; comments: string[] }> = ({

@@ -1,10 +1,10 @@
-import { RootState } from "./store/store";
-import { uiActions } from "./store/uiSlice";
-import { userActions } from "./store/userSlice";
+import { RootState } from "../../store/store";
+import { uiActions } from "../../store/uiSlice";
+import { userActions } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { UserReduxI, UserApiLoginObject } from "./interfaces/userI";
+import { UserReduxI, UserApiLoginObject } from "../../interfaces/userI";
 import { useEffect } from "react";
-import { serverUrl } from "./utilities/URLs";
+import { serverUrl } from "../../utilities/URLs";
 import { useNavigate } from "react-router-dom";
 
 const LoginWithFacebook: React.FC = () => {

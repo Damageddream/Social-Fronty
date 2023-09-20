@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { uiActions } from "../store/uiSlice";
-import { serverUrl } from "../utilities/URLs";
+import { uiActions } from "../../store/uiSlice";
+import { serverUrl } from "../../utilities/URLs";
 
 const InviteSingle: React.FC<{
   id: string;

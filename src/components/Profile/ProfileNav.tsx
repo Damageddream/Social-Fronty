@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { UserReduxI } from "../interfaces/userI";
+import { UserReduxI } from "../../interfaces/userI";
 import EditProfile from "./EditProfile";
 import Logout from "./Logout";
 import ProfileOptions from "./ProfileOptions";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 const ProfileNav = () => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);

@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "./store/store";
-import { userActions } from "./store/userSlice";
-import { uiActions } from "./store/uiSlice";
+import { RootState } from "../../store/store";
+import { userActions } from "../../store/userSlice";
+import { uiActions } from "../../store/uiSlice";
 import { useState, FormEventHandler, useEffect } from "react";
-import { serverUrl } from "./utilities/URLs";
-import { UserApiLoginObject } from "./interfaces/userI";
+import { serverUrl } from "../../utilities/URLs";
+import { UserApiLoginObject } from "../../interfaces/userI";
 
 
 const LogInNoFacebook: React.FC = () => {

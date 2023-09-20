@@ -1,8 +1,8 @@
 import { useState, FormEventHandler, useEffect } from "react";
-import { serverUrl } from "./utilities/URLs";
+import { serverUrl } from "../../utilities/URLs";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store/store";
-import { uiActions } from "./store/uiSlice";
+import { RootState } from "../../store/store";
+import { uiActions } from "../../store/uiSlice";
 import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {

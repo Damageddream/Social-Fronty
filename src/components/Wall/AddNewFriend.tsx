@@ -1,9 +1,9 @@
-import { serverUrl } from "./utilities/URLs";
+import { serverUrl } from "../../utilities/URLs";
 import React, { FormEventHandler, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store/store";
-import { uiActions } from "./store/uiSlice";
-import UserI, { NoFriendsI } from "./interfaces/userI";
+import { RootState } from "../../store/store";
+import { uiActions } from "../../store/uiSlice";
+import UserI, { NoFriendsI } from "../../interfaces/userI";
 import { useNavigate } from "react-router-dom";
 const AddNewFriend: React.FC = () => {
   const navigate = useNavigate();

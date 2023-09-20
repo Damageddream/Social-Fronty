@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LogIn from "./LoginPage";
 import Wall from "./Wall";
-import AddNewFriend from "./AddNewFriend";
-import Invites from "./Invites";
-import Register from "./RegisterUser";
-import LogInNoFacebook from "./Login";
-import LoginWithFacebook from "./LogInWithFacebook";
-import MyFriends from "./MyFriends";
-import Post from "./components/Post";
+import AddNewFriend from "./components/Wall/AddNewFriend";
+import Invites from "./components/Wall/Invites";
+import Register from "./components/LoginAndRegister/RegisterUser";
+import LogInNoFacebook from "./components/LoginAndRegister/Login";
+import LoginWithFacebook from "./components/LoginAndRegister/LogInWithFacebook";
+import MyFriends from "./components/Wall/MyFriends";
+import Post from "./components/Post/Post";
 
 function App() {
   return (

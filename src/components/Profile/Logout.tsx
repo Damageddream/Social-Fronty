@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { serverUrl } from "../utilities/URLs";
+import { serverUrl } from "../../utilities/URLs";
 import { useDispatch } from "react-redux";
-import { userActions } from "../store/userSlice";
+import { userActions } from "../../store/userSlice";
 
 const Logout: React.FC = () => {
   const navigate = useNavigate();

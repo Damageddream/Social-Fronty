@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import useToggle from "../customHooks/useToggle";
-import { RootState } from "../store/store";
-import { uiActions } from "../store/uiSlice";
+import useToggle from "../../customHooks/useToggle";
+import { RootState } from "../../store/store";
+import { uiActions } from "../../store/uiSlice";
 import { FormEventHandler, useState } from "react";
-import { CommentI } from "../interfaces/commentI";
-import { serverUrl } from "../utilities/URLs";
+import { CommentI } from "../../interfaces/commentI";
+import { serverUrl } from "../../utilities/URLs";
 
 const AddComment: React.FC<{ postID: string, handleAddComment: ()=>void }> = ({ postID, handleAddComment }) => {
   // custom hook that toggle on/off showing form for adding comments

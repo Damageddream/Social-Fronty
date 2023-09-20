@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { modalActions } from "./store/modalSlice";
-import AddPost from "./components/AddPost";
+import AddPost from "./components/Post/AddPost";
 import { serverUrl } from "./utilities/URLs";
 import { useEffect, useState } from "react";
 import { PostI, PostDataFromApi } from "./interfaces/postI";
 import useCheckUser from "./customHooks/useCheckUser";
 import useLike from "./customHooks/useLike";
 import { uiActions } from "./store/uiSlice";
-import WallNav from "./components/WallNav";
-import ProfileNav from "./components/ProfileNav";
-import PostCard from "./components/PostCard";
+import WallNav from "./components/Wall/WallNav";
+import ProfileNav from "./components/Profile/ProfileNav";
+import PostCard from "./components/Post/PostCard";
 
 const Wall: React.FC = () => {
   // custom hook, checking if user is already logged in
@@ -19,22 +19,20 @@ const Wall: React.FC = () => {
   // custom hook, handling fetching data on liking post or comment
   const [like, likeChanged] = useLike();
 
+  // rerender component with new data after like is added to post in wall view
+  const newLikeAdded = (componentType: "post" | 'comment', id: string) => {
+      like({componentType, id})
+  } 
   //hooks
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
   const modal = useSelector((state: RootState) => state.modal);
   const [posts, setPosts] = useState<PostI[]>([]);
   const [postAdded, setPostAdded] = useState(0);
-
   //Callback to refetch posts after new is added.
   const refetch = () => {
     setPostAdded((prev) => prev + 1);
   };
-
-  const newLikeAdded = (like:number):number => {
-    return like
-  }
-
   // fetch all posts of user and friends of user
   const getUsersPosts = async () => {
     dispatch(uiActions.startLoading());
@@ -51,15 +49,12 @@ const Wall: React.FC = () => {
         setPosts(data.posts);
       } catch (err) {
         dispatch(uiActions.setError(err));
-      } finally {
-        dispatch(uiActions.endLoading());
-      }
+      } 
     }
     if (!response.ok) {
-      dispatch(uiActions.endLoading());
       dispatch(uiActions.setError("Getting posts failed"));
-      return;
     }
+    dispatch(uiActions.endLoading());
   };
   //fetch posts on first render
   useEffect(() => {

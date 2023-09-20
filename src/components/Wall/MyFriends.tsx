@@ -1,9 +1,9 @@
-import { serverUrl } from "./utilities/URLs";
+import { serverUrl } from "../../utilities/URLs";
 import { useEffect, useState } from "react";
-import UserI, { UserWithInvites } from "./interfaces/userI";
+import UserI, { UserWithInvites } from "../../interfaces/userI";
 import { useDispatch, useSelector } from "react-redux";
-import { uiActions } from "./store/uiSlice";
-import { RootState } from "./store/store";
+import { uiActions } from "../../store/uiSlice";
+import { RootState } from "../../store/store";
 
 const MyFriends: React.FC = () => {
     const dispatch = useDispatch();
