@@ -8,7 +8,7 @@ import { serverUrl } from "../../utilities/URLs";
 import { UserApiLoginObject } from "../../interfaces/userI";
 
 
-const LogInNoFacebook: React.FC = () => {
+const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
 
   const navigate = useNavigate();
   const ui = useSelector((state: RootState) => state.ui);
@@ -100,7 +100,7 @@ const LogInNoFacebook: React.FC = () => {
         {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         <button type="submit">{ui.loading ? "Loading..." : "Login"}</button>
       </form>
-      <div onClick={() => navigate("/")}>back</div>
+      <div onClick={() => backToDefault()}>back</div>
     </div>
   );
 };

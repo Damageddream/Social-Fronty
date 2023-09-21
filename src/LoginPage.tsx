@@ -6,13 +6,15 @@ import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
 import useCheckUser from "./customHooks/useCheckUser";
 import useGuestLogin from "./customHooks/useGuestLogin";
+import LogInNoFacebook from "./components/LoginAndRegister/Login";
+import Register from "./components/LoginAndRegister/RegisterUser";
 
 const LogIn: React.FC = () => {
   useCheckUser();
   const [guestLogin] = useGuestLogin();
   const navigate = useNavigate();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
-  const [renderLoginForm, serRenderLoginForm] = useState<
+  const [renderLoginForm, setRenderLoginForm] = useState<
     "default" | "Login" | "Register"
   >("default");
 
@@ -26,6 +28,10 @@ const LogIn: React.FC = () => {
     });
   };
 
+  const backToDefault = () => {
+    setRenderLoginForm('default')
+  }
+
   useEffect(() => {
     if (user.loggedIn) {
       navigate("/wall");
@@ -34,21 +40,22 @@ const LogIn: React.FC = () => {
 
   return (
     <div>
-      { renderLoginForm === "default" &&
+      {renderLoginForm === "default" && (
         <div>
-          {" "}
           <button onClick={facebook}>Login with facebook</button>
           <button
             onClick={() => {
-              navigate("/register");
+              setRenderLoginForm("Register");
             }}
           >
             Register user
           </button>
-          <button onClick={() => navigate("/login")}>Log In</button>
+          <button onClick={() => setRenderLoginForm("Login")}>Log In</button>
           <button onClick={handleClick}>Visit as guest</button>
         </div>
-      }
+      )}
+      {renderLoginForm === "Login" && <LogInNoFacebook backToDefault={backToDefault} />}
+      {renderLoginForm === "Register" && <Register backToDefault={backToDefault} />}
     </div>
   );
 };

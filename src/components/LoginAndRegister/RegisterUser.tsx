@@ -5,7 +5,7 @@ import { RootState } from "../../store/store";
 import { uiActions } from "../../store/uiSlice";
 import { useNavigate } from "react-router-dom";
 
-const Register: React.FC = () => {
+const Register: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
@@ -118,7 +118,7 @@ const Register: React.FC = () => {
         {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         <button type="submit">{ui.loading ? "Loading..." : "Register"}</button>
       </form>
-      <div onClick={() => navigate("/")}>back</div>
+      <div onClick={() => backToDefault()}>back</div>
     </>
   );
 };

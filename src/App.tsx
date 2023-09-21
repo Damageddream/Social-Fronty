@@ -17,8 +17,6 @@ function App() {
         <Route path="/" element={<LogIn />} />
         <Route path="/wall" element={<Wall />} />
         <Route path="/invite" element={<AddNewFriend />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<LogInNoFacebook />} />
         <Route path="/loginFacebook" element={<LoginWithFacebook />} />
         <Route path="/friends" element={<MyFriends />} />
         <Route path="/posts/:id" element={<Post />} />
