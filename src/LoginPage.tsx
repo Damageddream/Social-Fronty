@@ -8,6 +8,7 @@ import useCheckUser from "./customHooks/useCheckUser";
 import useGuestLogin from "./customHooks/useGuestLogin";
 import LogInNoFacebook from "./components/LoginAndRegister/Login";
 import Register from "./components/LoginAndRegister/RegisterUser";
+import "./assets/styles/loginPage.css";
 
 const LogIn: React.FC = () => {
   useCheckUser();
@@ -29,8 +30,8 @@ const LogIn: React.FC = () => {
   };
 
   const backToDefault = () => {
-    setRenderLoginForm('default')
-  }
+    setRenderLoginForm("default");
+  };
 
   useEffect(() => {
     if (user.loggedIn) {
@@ -39,23 +40,34 @@ const LogIn: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      {renderLoginForm === "default" && (
-        <div>
-          <button onClick={facebook}>Login with facebook</button>
-          <button
-            onClick={() => {
-              setRenderLoginForm("Register");
-            }}
-          >
-            Register user
-          </button>
-          <button onClick={() => setRenderLoginForm("Login")}>Log In</button>
-          <button onClick={handleClick}>Visit as guest</button>
-        </div>
-      )}
-      {renderLoginForm === "Login" && <LogInNoFacebook backToDefault={backToDefault} />}
-      {renderLoginForm === "Register" && <Register backToDefault={backToDefault} />}
+    <div className="login-page">
+      <>
+        {renderLoginForm === "default" && (
+          <div className="login-nav">
+            <h1>Log in to your account</h1>
+            <div
+              className="register-nav"
+              onClick={() => {
+                setRenderLoginForm("Register");
+              }}
+            >
+              Don't have an account?<span>Sign up</span>
+            </div>
+            <button onClick={facebook}>Login with facebook</button>
+            <button onClick={() => setRenderLoginForm("Login")}>Log In</button>
+            <button className="guest-btn" onClick={handleClick}>
+              Visit as guest
+            </button>
+          </div>
+        )}
+        {renderLoginForm === "Login" && (
+          <LogInNoFacebook backToDefault={backToDefault} />
+        )}
+        {renderLoginForm === "Register" && (
+          <Register backToDefault={backToDefault} />
+        )}
+      </>
+      <image />
     </div>
   );
 };

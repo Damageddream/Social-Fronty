@@ -6,6 +6,7 @@ import { uiActions } from "../../store/uiSlice";
 import { useState, FormEventHandler, useEffect } from "react";
 import { serverUrl } from "../../utilities/URLs";
 import { UserApiLoginObject } from "../../interfaces/userI";
+import '../../assets/styles/login.css'
 
 
 const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
@@ -76,9 +77,9 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
   }, []);
 
   return (
-    <div>
+    <div className="login">
       <form onSubmit={submitHandler}>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username">Username</label>
         <input
           type="text"
           id="username"
@@ -87,7 +88,7 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
             setUsername(e.target.value);
           }}
         />
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
@@ -98,9 +99,12 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
         />
 
         {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
-        <button type="submit">{ui.loading ? "Loading..." : "Login"}</button>
+        <div className="login-btns">
+        <button className="login-btn" type="submit">{ui.loading ? "Loading..." : "Log in"}</button>
+        <div className="back" onClick={() => backToDefault()}>back</div>
+        </div>
       </form>
-      <div onClick={() => backToDefault()}>back</div>
+      
     </div>
   );
 };

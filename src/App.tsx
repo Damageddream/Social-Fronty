@@ -3,8 +3,6 @@ import LogIn from "./LoginPage";
 import Wall from "./Wall";
 import AddNewFriend from "./components/Wall/AddNewFriend";
 import Invites from "./components/Wall/Invites";
-import Register from "./components/LoginAndRegister/RegisterUser";
-import LogInNoFacebook from "./components/LoginAndRegister/Login";
 import LoginWithFacebook from "./components/LoginAndRegister/LogInWithFacebook";
 import MyFriends from "./components/Wall/MyFriends";
 import Post from "./components/Post/Post";
