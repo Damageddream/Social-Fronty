@@ -9,6 +9,7 @@ import useGuestLogin from "./customHooks/useGuestLogin";
 import LogInNoFacebook from "./components/LoginAndRegister/Login";
 import Register from "./components/LoginAndRegister/RegisterUser";
 import "./assets/styles/loginPage.css";
+import Logo from "./components/Logo/Logo";
 
 const LogIn: React.FC = () => {
   useCheckUser();
@@ -67,7 +68,7 @@ const LogIn: React.FC = () => {
           <Register backToDefault={backToDefault} />
         )}
       </>
-      <image />
+      <Logo />
     </div>
   );
 };

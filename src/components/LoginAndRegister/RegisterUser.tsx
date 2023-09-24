@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { uiActions } from "../../store/uiSlice";
 import { useNavigate } from "react-router-dom";
+//import '../../assets/styles/login.css'
 
-const Register: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
+const Register: React.FC<{ backToDefault: () => void }> = ({
+  backToDefault,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
@@ -17,7 +20,7 @@ const Register: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
 
   //selecting file for profile photo and validate
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(uiActions.removeError())
+    dispatch(uiActions.removeError());
     const selected = e.target.files ? e.target.files[0] : null;
     //validate
     if (selected) {
@@ -86,16 +89,16 @@ const Register: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
   }, []);
 
   return (
-    <>
+    <div className="register">
       <form onSubmit={submitHandler}>
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="name">Name</label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
@@ -104,7 +107,7 @@ const Register: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
             setPassword(e.target.value);
           }}
         />
-        <label htmlFor="passwordConfirm">Confirm password:</label>
+        <label htmlFor="passwordConfirm">Confirm password</label>
         <input
           type="password"
           id="passwordConfirm"
@@ -113,13 +116,21 @@ const Register: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
             setConfirmPassword(e.target.value);
           }}
         />
-        <label htmlFor="photo">Photo</label>
+        <label className="labelphoto" htmlFor="photo">
+          Choose profile photo
+        </label>
         <input type="file" id="photo" onChange={handleFileChange} />
         {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
-        <button type="submit">{ui.loading ? "Loading..." : "Register"}</button>
+        <div className="login-btns">
+          <button type="submit">
+            {ui.loading ? "Loading..." : "Register"}
+          </button>
+          <div className="back" onClick={() => backToDefault()}>
+            back
+          </div>
+        </div>
       </form>
-      <div onClick={() => backToDefault()}>back</div>
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,22 @@
+.logo {
+    margin-top: 20px;
+}
+
+.logo-name {
+    font-size: 3rem;
+
+}
+
+.logo-brand {
+    color: rgb(224, 113, 224);
+    font-size: 1.15rem;
+}
+
+.logo-text {
+    line-height: 40%;
+}
+
+.circle {
+    margin-left: 50px;
+}
+
