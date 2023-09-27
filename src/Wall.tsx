@@ -11,6 +11,7 @@ import { uiActions } from "./store/uiSlice";
 import WallNav from "./components/Wall/WallNav";
 import ProfileNav from "./components/Profile/ProfileNav";
 import PostCard from "./components/Post/PostCard";
+import "../src/assets/styles/wall.css";
 
 const Wall: React.FC = () => {
   // custom hook, checking if user is already logged in
@@ -20,9 +21,9 @@ const Wall: React.FC = () => {
   const [like, likeChanged] = useLike();
 
   // rerender component with new data after like is added to post in wall view
-  const newLikeAdded = (componentType: "post" | 'comment', id: string) => {
-      like({componentType, id})
-  } 
+  const newLikeAdded = (componentType: "post" | "comment", id: string) => {
+    like({ componentType, id });
+  };
   //hooks
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
@@ -49,7 +50,7 @@ const Wall: React.FC = () => {
         setPosts(data.posts);
       } catch (err) {
         dispatch(uiActions.setError(err));
-      } 
+      }
     }
     if (!response.ok) {
       dispatch(uiActions.setError("Getting posts failed"));
@@ -64,31 +65,40 @@ const Wall: React.FC = () => {
   }, [postAdded, likeChanged]);
 
   return (
-    <>
-      <h1> Wall</h1>
-      <ProfileNav />
+    <div className="wall">
+      <div className="profileOptions">
+        <ProfileNav />
+      </div>
       {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
-      <button
-        onClick={() => {
-          dispatch(modalActions.showPostModal());
-        }}
-      >
-        Add new post
-      </button>
-      {modal.showPost && <AddPost onAddedPost={refetch} />}
+      <div className="mainWall">
+        <h1> Your Circle</h1>
+        <div className="addpost">
+          <button
+            onClick={() => {
+              dispatch(modalActions.showPostModal());
+            }}
+          >
+            Add new post
+          </button>
+          {modal.showPost && <AddPost onAddedPost={refetch} />}
+        </div>
+
+        <div className="posts">
+          {posts.length > 0 ? (
+            posts.map((post) => {
+              return (
+                <div key={post._id}>
+                  <PostCard post={post} newLikeAdded={newLikeAdded} />
+                </div>
+              );
+            })
+          ) : (
+            <div>No Posts</div>
+          )}
+        </div>
+      </div>
       <WallNav />
-      {posts.length > 0 ? (
-        posts.map((post) => {
-          return (
-            <div key={post._id}>
-              <PostCard post={post} newLikeAdded={newLikeAdded}/>
-            </div>
-          );
-        })
-      ) : (
-        <div>No Posts</div>
-      )}
-    </>
+    </div>
   );
 };
 

@@ -1,0 +1,42 @@
+@import './main.css';
+
+.wall {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.profileOptions {
+    grid-column: 1/2;
+}
+
+.mainWall{
+    grid-column: 2/3;
+    grid-row:  1/2;
+}
+
+.wallNav {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profilePhoto {
+    max-width: 200px;;
+}
+
+.userinfo {
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.settings{ 
+    max-width: 25px;
+}

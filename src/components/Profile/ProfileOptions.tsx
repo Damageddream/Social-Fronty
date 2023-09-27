@@ -8,6 +8,8 @@ import { uiActions } from "../../store/uiSlice";
 import { userActions } from "../../store/userSlice";
 import { modalActions } from "../../store/modalSlice";
 import { useNavigate } from "react-router-dom";
+import settingsSVG from '../../assets/images/settings.svg'
+import '../../assets/styles/wall.css'
 
 const ProfileOptions: React.FC<{
   userId: string;
@@ -69,7 +71,7 @@ const ProfileOptions: React.FC<{
           <div onClick={handleDeleteClick}>Delete</div>
         </div>
       ) : (
-        <div onClick={toggleOptions}>Options</div>
+        <img className="settings" src={settingsSVG} alt="icon of gearwheel" onClick={toggleOptions} />
       )}
     </>
   );
