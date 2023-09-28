@@ -40,6 +40,7 @@ input {
 }
 .login-btn {
   padding-block: 3px;
+  height: 40px;
 }
 
 input[type="file"] {
@@ -61,17 +62,18 @@ input[type="file"] {
 
 .lds-dual-ring {
     display: inline-block;
-    width: 80px;
-    height: 80px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--clr-primary);
   }
   .lds-dual-ring:after {
     content: " ";
     display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
+    width: 16px;
+    height: 16px;
+    margin: 5px;
     border-radius: 50%;
-    border: 6px solid #fff;
+    border: 4px solid #fff;
     border-color: #fff transparent #fff transparent;
     animation: lds-dual-ring 1.2s linear infinite;
   }

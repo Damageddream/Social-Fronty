@@ -11,10 +11,9 @@ const LoginWithFacebook: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
-  const ui = useSelector((state: RootState) => state.ui);
-
   // fetch user data from facebook auth, and set user with usreslice
   const getUser = async () => {
+    dispatch(uiActions.startLoading());
     const response = await fetch(serverUrl + "/sucess", {
       credentials: "include",
       headers: {
@@ -25,11 +24,13 @@ const LoginWithFacebook: React.FC = () => {
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Failed to login with facebook"));
+      dispatch(uiActions.endLoading())
       navigate("/")
     }
     const data = (await response.json()) as UserApiLoginObject;
     dispatch(userActions.loggedIn(true));
     dispatch(userActions.setUserInfo(data.user));
+    dispatch(uiActions.endLoading())
     localStorage.setItem("token", data.token);
   };
 

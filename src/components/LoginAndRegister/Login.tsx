@@ -75,7 +75,7 @@ const LogInNoFacebook: React.FC<{ backToDefault: () => void }> = ({
 
   return (
     <div className="login">
-   
+      
       <form onSubmit={submitHandler}>
         <label htmlFor="username">Username</label>
         <input
