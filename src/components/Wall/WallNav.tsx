@@ -4,9 +4,9 @@ const WallNav = () => {
   const navigate = useNavigate();
   return (
     <div className="wallNav">
-      <button onClick={() => navigate("/invite")}>Search for friend</button>
-      <button onClick={() => navigate("/invites")}>Add new friends</button>
-      <button onClick={() => navigate("/friends")}>Your friends</button>
+      <nav onClick={() => navigate("/invite")}>Search for friend</nav>
+      <nav onClick={() => navigate("/invites")}>Add new friends</nav>
+      <nav onClick={() => navigate("/friends")}>Your friends</nav>
     </div>
   );
 };

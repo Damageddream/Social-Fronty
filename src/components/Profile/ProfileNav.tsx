@@ -4,7 +4,7 @@ import EditProfile from "./EditProfile";
 import Logout from "./Logout";
 import ProfileOptions from "./ProfileOptions";
 import { RootState } from "../../store/store";
-import '../../assets/styles/wall.css'
+import "../../assets/styles/wall.css";
 
 const ProfileNav = () => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
@@ -14,14 +14,20 @@ const ProfileNav = () => {
       {user.loggedIn && (
         <>
           <div className="userinfo">
-            <img className="profilePhoto" src={user.photo} alt="user profile picture" />
+            <img
+              className="profilePhoto"
+              src={user.photo}
+              alt="user profile picture"
+            />
             <div>{user.name}</div>
           </div>
-          <Logout />
-          <ProfileOptions userId={user._id} />
-          {modal.showUser && (
-            <EditProfile orginalName={user.name} userId={user._id} />
-          )}
+          <div className="logandoptions">
+            <Logout />
+            <ProfileOptions userId={user._id} />
+            {modal.showUser && (
+              <EditProfile orginalName={user.name} userId={user._id} />
+            )}
+          </div>
         </>
       )}
     </div>

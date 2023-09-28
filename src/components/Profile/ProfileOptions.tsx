@@ -1,4 +1,4 @@
-import { useState, RefObject} from "react";
+import { useState, RefObject } from "react";
 import useOutsideClick from "../../customHooks/useOutsideClick";
 import { UserReduxI } from "../../interfaces/userI";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,8 @@ import { uiActions } from "../../store/uiSlice";
 import { userActions } from "../../store/userSlice";
 import { modalActions } from "../../store/modalSlice";
 import { useNavigate } from "react-router-dom";
-import settingsSVG from '../../assets/images/settings.svg'
-import '../../assets/styles/wall.css'
+import settingsSVG from "../../assets/images/settings.svg";
+import "../../assets/styles/wall.css";
 
 const ProfileOptions: React.FC<{
   userId: string;
@@ -17,7 +17,7 @@ const ProfileOptions: React.FC<{
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [showOptions, setShowOptions] = useState(false);
 
@@ -33,9 +33,9 @@ const ProfileOptions: React.FC<{
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
-    if(user._id !== userId){
-      dispatch(uiActions.setError("only owner of the account can delete it"))
-      return
+    if (user._id !== userId) {
+      dispatch(uiActions.setError("only owner of the account can delete it"));
+      return;
     }
     try {
       const response = await fetch(serverUrl + `/user/delete/${userId}`, {
@@ -46,11 +46,11 @@ const ProfileOptions: React.FC<{
         },
       });
       if (!response.ok) {
-       dispatch(uiActions.setError("deleting user failed"));
+        dispatch(uiActions.setError("deleting user failed"));
       }
-      if(response.ok){
-        dispatch(userActions.logOut())
-        navigate('/')
+      if (response.ok) {
+        dispatch(userActions.logOut());
+        navigate("/");
       }
     } catch (err) {
       console.error(err);
@@ -65,13 +65,17 @@ const ProfileOptions: React.FC<{
 
   return (
     <>
-      {showOptions ? (
-        <div ref={ref}>
+      <img
+        className="settings"
+        src={settingsSVG}
+        alt="icon of gearwheel"
+        onClick={toggleOptions}
+      />
+      {showOptions && (
+        <div ref={ref} className="profileoptions">
           <div onClick={() => dispatch(modalActions.showUserModal())}>Edit</div>
           <div onClick={handleDeleteClick}>Delete</div>
         </div>
-      ) : (
-        <img className="settings" src={settingsSVG} alt="icon of gearwheel" onClick={toggleOptions} />
       )}
     </>
   );

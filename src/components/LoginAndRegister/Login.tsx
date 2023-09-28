@@ -6,18 +6,17 @@ import { uiActions } from "../../store/uiSlice";
 import { useState, FormEventHandler, useEffect } from "react";
 import { serverUrl } from "../../utilities/URLs";
 import { UserApiLoginObject } from "../../interfaces/userI";
-import '../../assets/styles/login.css'
+import "../../assets/styles/login.css";
 
-
-const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) => {
-
+const LogInNoFacebook: React.FC<{ backToDefault: () => void }> = ({
+  backToDefault,
+}) => {
   const navigate = useNavigate();
   const ui = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
 
   // fetching user data from backend and set user in redux state
   const login = async () => {
@@ -37,15 +36,16 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
     }
 
     if (response.ok) {
-      try{
+      try {
         const data = (await response.json()) as UserApiLoginObject;
         dispatch(userActions.loggedIn(true));
         dispatch(userActions.setUserInfo(data.user));
         localStorage.setItem("token", data.token);
         dispatch(uiActions.endLoading());
         navigate("/wall");
-      }catch(err){dispatch(uiActions.setError(err))}
-
+      } catch (err) {
+        dispatch(uiActions.setError(err));
+      }
     }
   };
 
@@ -55,10 +55,7 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
     // reseting error info
     dispatch(uiActions.removeError());
     // form client validation
-    if (
-      username.length === 0 ||
-      password.length === 0
-    ) {
+    if (username.length === 0 || password.length === 0) {
       dispatch(uiActions.setError("form rows cannot be empty"));
       return;
     }
@@ -78,6 +75,7 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
 
   return (
     <div className="login">
+   
       <form onSubmit={submitHandler}>
         <label htmlFor="username">Username</label>
         <input
@@ -100,11 +98,14 @@ const LogInNoFacebook: React.FC<{backToDefault: ()=>void}> = ({backToDefault}) =
 
         {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         <div className="login-btns">
-        <button className="login-btn" type="submit">{ui.loading ? "Loading..." : "Log in"}</button>
-        <div className="back" onClick={() => backToDefault()}>back</div>
+          <button className="login-btn" type="submit">
+            {ui.loading ? <div className="lds-dual-ring"></div> : "Log in"}
+          </button>
+          <div className="back" onClick={() => backToDefault()}>
+            back
+          </div>
         </div>
       </form>
-      
     </div>
   );
 };
