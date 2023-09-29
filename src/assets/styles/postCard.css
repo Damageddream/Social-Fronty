@@ -1,0 +1,15 @@
+@import "./main.css";
+
+.postCard {
+    padding: 10px;
+}
+
+
+
+
+.commentPost > img {
+  max-width: 20px;
+}
+.likePost > img {
+  max-width: 20px;
+}

@@ -74,6 +74,7 @@ const ProfileOptions: React.FC<{
       {showOptions && (
         <div ref={ref} className="profileoptions">
           <div onClick={() => dispatch(modalActions.showUserModal())}>Edit</div>
+          <section className="line"></section>
           <div onClick={handleDeleteClick}>Delete</div>
         </div>
       )}
