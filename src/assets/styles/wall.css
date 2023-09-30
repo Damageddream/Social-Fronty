@@ -47,7 +47,8 @@
 }
 
 .profilePhoto {
-    max-width: 200px;;
+    max-width: 200px;
+    border-radius: 100%;
 }
 
 .userinfo {

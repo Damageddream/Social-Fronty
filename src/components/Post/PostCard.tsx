@@ -15,32 +15,36 @@ const PostCard: React.FC<{
       <div onClick={() => navigate(`/posts/${post._id.toString()}`)}>
         <div className="postcardHeader">
           <div className="cardName"> {post.author.name}</div>
-          <img className="cardPhoto" src={post.author.photo} alt="author photo" />
+          <img
+            className="cardPhoto"
+            src={post.author.photo}
+            alt="author photo"
+          />
           <div className="cardTime">{post.timestamp}</div>
         </div>
         <div className="postcardMain">{post.text}</div>
       </div>
-      <div>
-        <button
+      <div className="postcardfooter">
+        <div className="likePost">
+          <img
+            onClick={() => {
+              newLikeAdded("post", post._id.toString());
+            }}
+            src={likeIcon}
+            alt="like icon"
+          />
+          {post.likes.length}
+        </div>
+
+        <div
+          className="commentPost"
           onClick={() => {
-            newLikeAdded("post", post._id.toString());
+            navigate(`/posts/${post._id.toString()}`);
           }}
         >
-          Like
-        </button>
-        <div className="likePost">
-          <img src={likeIcon} alt="like icon" />
-          Likes: {post.likes.length}
+          <img src={commentIcon} alt="comment icon" />
+          {post.comments.length}
         </div>
-      </div>
-      <div
-        className="commentPost"
-        onClick={() => {
-          navigate(`/posts/${post._id.toString()}`);
-        }}
-      >
-        <img src={commentIcon} alt="comment icon" />
-        Comments: {post.comments.length}
       </div>
     </div>
   );
