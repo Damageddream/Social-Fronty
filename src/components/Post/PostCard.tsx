@@ -3,6 +3,7 @@ import { PostI } from "../../interfaces/postI";
 import "../../assets/styles/postCard.css";
 import commentIcon from "../../assets/images/comment.svg";
 import likeIcon from "../../assets/images/like.svg";
+import timeFormatter from "../../utilities/timeFormatter";
 
 const PostCard: React.FC<{
   post: PostI;
@@ -10,9 +11,12 @@ const PostCard: React.FC<{
 }> = ({ post, newLikeAdded }) => {
   const navigate = useNavigate();
 
+  const date = timeFormatter(post.timestamp)
+  
+
   return (
     <div className="postCard">
-      <div onClick={() => navigate(`/posts/${post._id.toString()}`)}>
+      <div className="postCard2" >
         <div className="postcardHeader">
           <div className="cardName"> {post.author.name}</div>
           <img
@@ -20,9 +24,10 @@ const PostCard: React.FC<{
             src={post.author.photo}
             alt="author photo"
           />
-          <div className="cardTime">{post.timestamp}</div>
+          <div className="cardTime">{date.yearMonthDay}</div>
+
         </div>
-        <div className="postcardMain">{post.text}</div>
+        <div className="postcardMain" onClick={() => navigate(`/posts/${post._id.toString()}`)}>{post.text}</div>
       </div>
       <div className="postcardfooter">
         <div className="likePost">

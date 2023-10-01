@@ -2,28 +2,51 @@
 
 .postCard {
     padding: 10px;
+    background-color: rgb(223, 235, 255);
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.postCard * {
+  background-color: rgb(223, 235, 255);
+  
 }
 
 .postcardHeader {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 50px 1fr;
   grid-template-rows: 1fr 1fr;
   align-items: center;
   justify-items: flex-start;
+  
+}
+
+.likePost,.commentPost {
+  display: flex;
+  gap: 5px;
+  font-size: 0.9rem;
 }
 
 .commentPost > img {
   max-width: 20px;
 }
+.commentPost > img:hover {
+  cursor: pointer;
+}
+.likePost > img:hover {
+  cursor: pointer;
+}
+
 .likePost > img {
   max-width: 20px;
+
 }
 
 .cardName {
   grid-column: 2/3;
   grid-row: 1/2;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   margin-left: 5px;
 }
 
@@ -38,7 +61,7 @@
 
 .cardPhoto {
   border-radius: 100%;
-  max-width: 70px;
+  max-width: 50px;
   grid-column: 1/2;
   grid-row: 1/3;
 }
@@ -49,5 +72,14 @@
 }
 
 .postcardMain {
-  font-size: 1.7rem;
+  font-size: 1.1rem;
+  font-weight: 100;
+  opacity: 0.8;
+  text-align: left;
+  margin-block: 10px;
+}
+
+.postcardMain:hover {
+  cursor: pointer;
+  font-weight: 600;
 }

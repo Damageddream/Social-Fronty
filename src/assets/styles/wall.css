@@ -12,7 +12,6 @@
 .mainWall{
     grid-column: 1/2;
     grid-row:  1/2;
-    border: 1px solid black;
     max-width: 800px;
     justify-self: center;
 }
