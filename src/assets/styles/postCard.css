@@ -5,11 +5,11 @@
     background-color: rgb(223, 235, 255);
     margin: 10px;
     border-radius: 8px;
+    min-width: 700px;
 }
 
 .postCard * {
   background-color: rgb(223, 235, 255);
-  
 }
 
 .postcardHeader {
@@ -81,5 +81,5 @@
 
 .postcardMain:hover {
   cursor: pointer;
-  font-weight: 600;
+  opacity: 1;
 }

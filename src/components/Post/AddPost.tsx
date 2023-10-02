@@ -5,6 +5,7 @@ import { modalActions } from "../../store/modalSlice";
 import { PostPostI } from "../../interfaces/postI";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
+import '../../assets/styles/addpost.css'
 
 const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
   // states from redux
@@ -71,7 +72,15 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
 
   return (
     <dialog ref={dialogRef}>
-      <form onSubmit={submitHandler}>
+      <div className="exitbutton"
+        onClick={() => {
+          dispatch(modalActions.hidePostModal());
+          dispatch(uiActions.removeError());
+        }}
+      >
+        X
+      </div>
+      <form className="addpostform" onSubmit={submitHandler}>
         <label htmlFor="postTitle">Title:</label>
         <input
           type="text"
@@ -82,22 +91,14 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
           }}
         />
         <label htmlFor="postText">Text:</label>
-        <input
-          type="text"
+        <textarea
           id="postText"
           value={text}
           onChange={(e) => setText(e.target.value)}
-        />
-        <button type="submit">{ui.loading? "Loading...": "Add Post"}</button>
+          cols={50} rows={15}
+        ></textarea>
+        <button className="addpostbtn" type="submit">{ui.loading? "Loading...": "Add Post"}</button>
       </form>
-      <button
-        onClick={() => {
-          dispatch(modalActions.hidePostModal());
-          dispatch(uiActions.removeError());
-        }}
-      >
-        Close modal
-      </button>
       {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
     </dialog>
   );

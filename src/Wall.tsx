@@ -12,6 +12,9 @@ import WallNav from "./components/Wall/WallNav";
 import ProfileNav from "./components/Profile/ProfileNav";
 import PostCard from "./components/Post/PostCard";
 import "../src/assets/styles/wall.css";
+import AddNewFriend from "./components/Wall/AddNewFriend";
+import MyFriends from "./components/Wall/MyFriends";
+import Invites from "./components/Wall/Invites";
 
 const Wall: React.FC = () => {
   // custom hook, checking if user is already logged in
@@ -30,6 +33,9 @@ const Wall: React.FC = () => {
   const modal = useSelector((state: RootState) => state.modal);
   const [posts, setPosts] = useState<PostI[]>([]);
   const [postAdded, setPostAdded] = useState(0);
+  const [nav, setNav] = useState<
+    "wall" | "friends" | "addFriend" | "searchFriends"
+  >("wall");
   //Callback to refetch posts after new is added.
   const refetch = () => {
     setPostAdded((prev) => prev + 1);
@@ -65,40 +71,50 @@ const Wall: React.FC = () => {
   }, [postAdded, likeChanged]);
 
   return (
-    <div className="wall">
-      <div className="profileOptions">
-        <ProfileNav />
-      </div>
-      {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
-      <div className="mainWall">
-        <h1> Your Circle</h1>
-        <div className="addpost">
-          <button
-            onClick={() => {
-              dispatch(modalActions.showPostModal());
-            }}
-          >
-            Add new post
-          </button>
-          {modal.showPost && <AddPost onAddedPost={refetch} />}
-        </div>
+    <>
+      <div className="wall">
+        {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+        {nav === "wall" && (
+          <div className="mainWall">
+            <h1> Your Circle</h1>
+            <div className="addpost">
+              <button
+                onClick={() => {
+                  dispatch(modalActions.showPostModal());
+                }}
+              >
+                Add new post
+              </button>
+              {modal.showPost && <AddPost onAddedPost={refetch} />}
+            </div>
 
-        <div className="posts">
-          {posts.length > 0 ? (
-            posts.map((post) => {
-              return (
-                <div key={post._id}>
-                  <PostCard post={post} newLikeAdded={newLikeAdded} />
-                </div>
-              );
-            })
-          ) : (
-            <div>No Posts</div>
-          )}
+            <div className="posts">
+              {posts.length > 0 ? (
+                posts.map((post) => {
+                  return (
+                    <div key={post._id}>
+                      <PostCard post={post} newLikeAdded={newLikeAdded} />
+                    </div>
+                  );
+                })
+              ) : (
+                <div>No Posts</div>
+              )}
+            </div>
+          </div>
+        )}
+        {nav==='addFriend' && <Invites /> }
+        {nav=== 'friends' && <MyFriends /> }
+        {nav==='searchFriends' && <AddNewFriend />}
+
+        <div className="profileandnav">
+          <div className="profileOptions">
+            <ProfileNav />
+          </div>
+          <WallNav setNav={setNav} />
         </div>
       </div>
-      <WallNav />
-    </div>
+    </>
   );
 };
 
