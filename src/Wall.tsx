@@ -15,6 +15,8 @@ import "../src/assets/styles/wall.css";
 import AddNewFriend from "./components/Wall/AddNewFriend";
 import MyFriends from "./components/Wall/MyFriends";
 import Invites from "./components/Wall/Invites";
+import { NavType } from "./interfaces/wall";
+import Post from "./components/Post/Post";
 
 const Wall: React.FC = () => {
   // custom hook, checking if user is already logged in
@@ -33,8 +35,9 @@ const Wall: React.FC = () => {
   const modal = useSelector((state: RootState) => state.modal);
   const [posts, setPosts] = useState<PostI[]>([]);
   const [postAdded, setPostAdded] = useState(0);
+  const [postId, setPostId] = useState<string>('')
   const [nav, setNav] = useState<
-    "wall" | "friends" | "addFriend" | "searchFriends"
+   NavType
   >("wall");
   //Callback to refetch posts after new is added.
   const refetch = () => {
@@ -93,19 +96,20 @@ const Wall: React.FC = () => {
                 posts.map((post) => {
                   return (
                     <div key={post._id}>
-                      <PostCard post={post} newLikeAdded={newLikeAdded} />
+                      <PostCard post={post} newLikeAdded={newLikeAdded} setNav={setNav} setPostId={setPostId}  />
                     </div>
                   );
                 })
-              ) : (
+              ) : ( 
                 <div>No Posts</div>
               )}
             </div>
           </div>
         )}
-        {nav==='addFriend' && <Invites /> }
-        {nav=== 'friends' && <MyFriends /> }
-        {nav==='searchFriends' && <AddNewFriend />}
+        {nav === "addFriend" && <Invites />}
+        {nav === "friends" && <MyFriends />}
+        {nav === "searchFriends" && <AddNewFriend />}
+        {nav === 'post' && <Post postId={postId} />}
 
         <div className="profileandnav">
           <div className="profileOptions">

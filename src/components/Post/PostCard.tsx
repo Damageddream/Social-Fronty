@@ -4,19 +4,27 @@ import "../../assets/styles/postCard.css";
 import commentIcon from "../../assets/images/comment.svg";
 import likeIcon from "../../assets/images/like.svg";
 import timeFormatter from "../../utilities/timeFormatter";
+import { Dispatch, SetStateAction } from "react";
+import { NavType } from "../../interfaces/wall";
 
 const PostCard: React.FC<{
   post: PostI;
   newLikeAdded: (componentType: "post" | "comment", id: string) => void;
-}> = ({ post, newLikeAdded }) => {
+  setNav: Dispatch<SetStateAction<NavType>>;
+  setPostId: Dispatch<SetStateAction<string>>;
+}> = ({ post, newLikeAdded, setNav, setPostId }) => {
   const navigate = useNavigate();
 
-  const date = timeFormatter(post.timestamp)
-  
+  const date = timeFormatter(post.timestamp);
+
+  const clickHandler: React.MouseEventHandler<HTMLDivElement> = () => {
+    setNav("post");
+    setPostId(post._id.toString());
+  };
 
   return (
     <div className="postCard">
-      <div className="postCard2" >
+      <div className="postCard2">
         <div className="postcardHeader">
           <div className="cardName"> {post.author.name}</div>
           <img
@@ -25,9 +33,10 @@ const PostCard: React.FC<{
             alt="author photo"
           />
           <div className="cardTime">{date.yearMonthDay}</div>
-
         </div>
-        <div className="postcardMain" onClick={() => navigate(`/posts/${post._id.toString()}`)}>{post.text}</div>
+        <div className="postcardMain" onClick={clickHandler}>
+          {post.text}
+        </div>
       </div>
       <div className="postcardfooter">
         <div className="likePost">

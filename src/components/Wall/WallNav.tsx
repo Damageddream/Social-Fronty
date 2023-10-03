@@ -1,6 +1,7 @@
 import {SetStateAction, Dispatch } from 'react'
+import { NavType } from '../../interfaces/wall';
 
-type NavType = "wall" | "friends" | "addFriend" | "searchFriends";
+
 
 const WallNav: React.FC<{ setNav: Dispatch<SetStateAction<NavType>>}> = ({setNav}) => {
   return (

@@ -6,6 +6,7 @@ import { addEditPostI } from "../../interfaces/postI";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 
+
 const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:string, likes: string[], comments: string[]}> = ({orginalText, orginalTitle, postId, likes, comments}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);

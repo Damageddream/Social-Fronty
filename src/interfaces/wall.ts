@@ -1,0 +1,1 @@
+export type NavType = "wall" | "friends" | "addFriend" | "searchFriends" |"post";

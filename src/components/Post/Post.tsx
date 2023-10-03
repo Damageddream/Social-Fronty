@@ -1,31 +1,29 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { serverUrl } from "../../utilities/URLs";
 import { PostDisplayI } from "../../interfaces/postI";
 import AddComment from "../Comment/AddComment";
 import useLike from "../../customHooks/useLike";
 import PostOptions from "./PostOptions";
 import CommentCard from "../Comment/CommentCard";
+import "../../assets/styles/post.css";
+import timeFormatter from "../../utilities/timeFormatter";
 
-const Post: React.FC = () => {
+
+const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [like, likeChanged] = useLike();
-  const navigate = useNavigate();
-  const paramId = useParams();
   const [post, setPost] = useState<PostDisplayI>();
   const [commentsIds, setCommentsIds] = useState<string[]>([]);
   const [commentAdded, setCommentAdded] = useState(0);
 
+
   const getPost = async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch(
-      serverUrl + `/posts/${paramId.id as string}/comments`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token as string}`,
-        },
-      }
-    );
+    const response = await fetch(serverUrl + `/posts/${postId}/comments`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token as string}`,
+      },
+    });
     const data = (await response.json()) as PostDisplayI;
     setPost(data);
     const commentsIds = data.comments.map((comment) => comment._id.toString());
@@ -49,7 +47,6 @@ const Post: React.FC = () => {
   return (
     <>
       <div className="post">
-        <div onClick={() => navigate("/wall")}>back</div>
         {post && (
           <div>
             <PostOptions
@@ -60,8 +57,15 @@ const Post: React.FC = () => {
               likes={post.likes}
               comments={commentsIds}
             />
-            {post.title}
-            {post.author.name}
+            <div className="postcardHeader">
+              <div className="cardName"> {post.author.name}</div>
+              <img
+                className="cardPhoto"
+                src={post.author.photo}
+                alt="author photo"
+              />
+              <div className="cardTime">{timeFormatter(post.timestamp).yearMonthDay}</div>
+            </div>
             {post.text}
             <div>Likes: {post.likes.length}</div>
             <button
