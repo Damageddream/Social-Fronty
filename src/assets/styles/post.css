@@ -1,0 +1,71 @@
+@import "./main.css";
+
+.singlecomment {
+  display: flex;
+  gap: 5px;
+  margin: 5px;
+}
+
+.commentmain {
+  background-color: rgb(223, 235, 255);
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  grid-template-rows: 1fr 1fr 1fr;
+  justify-content: space-around;
+  padding-inline: 10px;
+  border-radius: 12px;
+  align-items: center;
+}
+
+.commentmain > * {
+  background-color: rgb(223, 235, 255);
+}
+
+.options {
+  max-width: 15px;
+  opacity: 0.5;
+  grid-column: 2/3;
+  grid-row: 1/2;
+  margin-left: 5px;
+  align-self: flex-start;
+}
+
+.commentname {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: start;
+}
+.commenttext {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  opacity: 0.7;
+}
+.options:hover {
+  cursor: pointer;
+
+}
+
+.likeComment {
+  display: flex;
+  gap: 5px;
+  font-size: 0.9rem;
+  grid-column: 1/2;
+  grid-row: 3/4;
+  display: flex;
+  text-align: center;
+}
+
+.likeComment > img:hover {
+  cursor: pointer;
+}
+
+.likeComment > img {
+  max-width: 20px;
+  background-color: rgb(223, 235, 255);
+}
+
+.commentPhoto {
+  max-width: 50px;
+}

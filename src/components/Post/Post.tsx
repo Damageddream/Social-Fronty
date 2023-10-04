@@ -7,14 +7,13 @@ import PostOptions from "./PostOptions";
 import CommentCard from "../Comment/CommentCard";
 import "../../assets/styles/post.css";
 import timeFormatter from "../../utilities/timeFormatter";
-
+import likeIcon from "../../assets/images/like.svg";
 
 const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [like, likeChanged] = useLike();
   const [post, setPost] = useState<PostDisplayI>();
   const [commentsIds, setCommentsIds] = useState<string[]>([]);
   const [commentAdded, setCommentAdded] = useState(0);
-
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
@@ -49,55 +48,59 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
       <div className="post">
         {post && (
           <div>
-            <PostOptions
-              authorId={post.author._id}
-              postId={post._id.toString()}
-              orginalTitle={post.title}
-              orginalText={post.text}
-              likes={post.likes}
-              comments={commentsIds}
-            />
-            <div className="postcardHeader">
-              <div className="cardName"> {post.author.name}</div>
-              <img
-                className="cardPhoto"
-                src={post.author.photo}
-                alt="author photo"
+            <div className="postCard">
+              <PostOptions
+                authorId={post.author._id}
+                postId={post._id.toString()}
+                orginalTitle={post.title}
+                orginalText={post.text}
+                likes={post.likes}
+                comments={commentsIds}
               />
-              <div className="cardTime">{timeFormatter(post.timestamp).yearMonthDay}</div>
+              <div className="postcardHeader">
+                <div className="cardName"> {post.author.name}</div>
+                <img
+                  className="cardPhoto"
+                  src={post.author.photo}
+                  alt="author photo"
+                />
+                <div className="cardTime">
+                  {timeFormatter(post.timestamp).yearMonthDay}
+                </div>
+              </div>
+              <div className="postcardMain">{post.text}</div>
+              <div className="likePost">
+                <img
+                  onClick={() => {
+                    newLikeAdded("post", post._id.toString());
+                  }}
+                  src={likeIcon}
+                  alt="like icon"
+                />
+                {post.likes.length}
+              </div>
             </div>
-            {post.text}
-            <div>Likes: {post.likes.length}</div>
-            <button
-              onClick={() =>
-                like({
-                  componentType: "post",
-                  id: post._id.toString(),
+            <div>
+              {post.comments.length > 0 ? (
+                post.comments.map((comment) => {
+                  return (
+                    <div className="comment" key={comment._id}>
+                      <CommentCard
+                        comment={comment}
+                        newLikeAdded={newLikeAdded}
+                      />
+                    </div>
+                  );
                 })
-              }
-            >
-              Like
-            </button>
-            {post.comments.length > 0 ? (
-              post.comments.map((comment) => {
-                return (
-                  <div key={comment._id}>
-                    <CommentCard
-                      comment={comment}
-                      newLikeAdded={newLikeAdded}
-                    />
-                  </div>
-                );
-              })
-            ) : (
-              <div>No comments</div>
-            )}
-            <>
-              <AddComment
-                postID={post._id.toString()}
-                handleAddComment={handleAddComment}
-              />
-            </>
+              ) : (
+                <div>No comments</div>
+              )}
+            </div>
+
+            <AddComment
+              postID={post._id.toString()}
+              handleAddComment={handleAddComment}
+            />
           </div>
         )}
         {!post && <div>There is no post with that id</div>}

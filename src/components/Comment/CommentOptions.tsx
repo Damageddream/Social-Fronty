@@ -7,13 +7,14 @@ import { serverUrl } from "../../utilities/URLs";
 import useToggle from "../../customHooks/useToggle";
 import { CommentI } from "../../interfaces/commentI";
 import { uiActions } from "../../store/uiSlice";
+import options from "../../assets/images/options.svg";
 
 const CommentOptions: React.FC<{
   authorId: string;
   commentId: string;
   orginalText: string;
   postId: string;
-  likes: string[]
+  likes: string[];
 }> = ({ authorId, commentId, orginalText, postId, likes }) => {
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
@@ -113,7 +114,7 @@ const CommentOptions: React.FC<{
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
           ) : (
-            <div onClick={toggleOptions}>Options</div>
+            <img className="options" src={options} alt="three dots" onClick={toggleOptions} />
           )}
           {showAddComment && (
             <>
