@@ -109,7 +109,7 @@ const CommentOptions: React.FC<{
       {userIsAuthor && (
         <>
           {showOptions ? (
-            <div ref={ref}>
+            <div ref={ref} className="commentoptions">
               <div onClick={() => toggleShowAddComment()}>Edit</div>
               <div onClick={handleDeleteClick}>Delete</div>
             </div>

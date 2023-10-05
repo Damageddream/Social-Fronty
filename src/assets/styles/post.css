@@ -7,7 +7,7 @@
 }
 
 .commentmain {
-  background-color: rgb(223, 235, 255);
+  background-color: rgb(245, 229, 252);
   display: grid;
   grid-template-columns: 1fr 30px;
   grid-template-rows: 1fr 1fr 1fr;
@@ -18,7 +18,7 @@
 }
 
 .commentmain > * {
-  background-color: rgb(223, 235, 255);
+  background-color: rgb(245, 229, 252);
 }
 
 .options {
@@ -63,9 +63,46 @@
 
 .likeComment > img {
   max-width: 20px;
-  background-color: rgb(223, 235, 255);
+  background-color: rgb(245, 229, 252);
 }
 
 .commentPhoto {
   max-width: 50px;
+  border-radius: 100%;
+}
+
+.addcomment {
+  display: flex;
+  align-items: center;
+}
+.addcomment > input {
+  width: 100%;
+  max-width: 500px;
+}
+
+.subbmitcomment {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.cancelcomment {
+  font-size: 1rem;
+  margin-left: 450px;
+}
+
+.cancelcomment:hover {
+  cursor: pointer;
+}
+
+.imageoptions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.postoptions {
+  text-align: end;
+  position: relative;
+  top: 20px
 }

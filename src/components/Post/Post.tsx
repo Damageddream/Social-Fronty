@@ -80,6 +80,10 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
                 {post.likes.length}
               </div>
             </div>
+            <AddComment
+              postID={post._id.toString()}
+              handleAddComment={handleAddComment}
+            />
             <div>
               {post.comments.length > 0 ? (
                 post.comments.map((comment) => {
@@ -97,10 +101,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
               )}
             </div>
 
-            <AddComment
-              postID={post._id.toString()}
-              handleAddComment={handleAddComment}
-            />
+
           </div>
         )}
         {!post && <div>There is no post with that id</div>}

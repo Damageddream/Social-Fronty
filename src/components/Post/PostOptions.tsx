@@ -6,22 +6,23 @@ import { RootState } from "../../store/store";
 import { serverUrl } from "../../utilities/URLs";
 import { modalActions } from "../../store/modalSlice";
 import EditPost from "./EditPost";
+import options from "../../assets/images/options.svg";
 
-const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: string; orginalText:string; likes:string[]; comments: string[] }> = ({
-  authorId,
-  postId,
-  orginalText,
-  orginalTitle,
-  likes,
-  comments,
-}) => {
+const PostOptions: React.FC<{
+  authorId: string;
+  postId: string;
+  orginalTitle: string;
+  orginalText: string;
+  likes: string[];
+  comments: string[];
+}> = ({ authorId, postId, orginalText, orginalTitle, likes, comments }) => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
 
   const [showOptions, setShowOptions] = useState(false);
   const [userIsAuthor, setUserIsAuthor] = useState(false);
 
-  const dispatch = useDispatch()
-  const modal = useSelector((state:RootState) => state.modal)
+  const dispatch = useDispatch();
+  const modal = useSelector((state: RootState) => state.modal);
 
   const handleClickOutisde = () => {
     setShowOptions(false);
@@ -69,13 +70,30 @@ const PostOptions: React.FC<{ authorId: string; postId: string; orginalTitle: st
       {userIsAuthor && (
         <>
           {showOptions ? (
-            <div ref={ref}>
-              <div onClick={()=>dispatch(modalActions.showPostModal())}>Edit</div>
-              {modal.showPost && <EditPost orginalText={orginalText} orginalTitle={orginalTitle} postId={postId} likes={likes} comments={comments} />}
+            <div ref={ref} className="postoptions">
+              <div onClick={() => dispatch(modalActions.showPostModal())}>
+                Edit
+              </div>
+              {modal.showPost && (
+                <EditPost
+                  orginalText={orginalText}
+                  orginalTitle={orginalTitle}
+                  postId={postId}
+                  likes={likes}
+                  comments={comments}
+                />
+              )}
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
           ) : (
-            <div onClick={toggleOptions}>Options</div>
+            <div className="imageoptions">
+              <img
+                className="options"
+                src={options}
+                alt="three dots"
+                onClick={toggleOptions}
+              />
+            </div>
           )}
         </>
       )}

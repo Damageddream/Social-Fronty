@@ -51,7 +51,8 @@ const AddComment: React.FC<{ postID: string, handleAddComment: ()=>void }> = ({ 
     {!showAddComment && <button onClick={()=>toggleShowAddComment()}>Add comment</button>}
       {showAddComment && (
         <>
-          <form onSubmit={submitHandler}>
+          <form className="addcomment" onSubmit={submitHandler}>
+          <div role="button" className="cancelcomment" onClick={()=>toggleShowAddComment(false)}>X</div>
             <label htmlFor="text">Comment:</label>
             <input
               type="text"
@@ -61,9 +62,9 @@ const AddComment: React.FC<{ postID: string, handleAddComment: ()=>void }> = ({ 
                 setText(e.target.value);
               }}
             />
-            <button type="submit">Submit Comment</button>
+            <button className="subbmitcomment" type="submit">Submit Comment</button>
           </form>
-          <button onClick={()=>toggleShowAddComment(false)}>cancel</button>
+          
           {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         </>
       )}

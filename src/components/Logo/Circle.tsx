@@ -1,4 +1,4 @@
-import circle from "../../assets/images/logoCircle.png";
+import circle from "../../assets/images/circle.svg";
 
 
 const Circle: React.FC = () => {
@@ -6,7 +6,6 @@ const Circle: React.FC = () => {
   className="circle" 
   src={circle} 
   alt="purple circle"
-
   />
   
 };
