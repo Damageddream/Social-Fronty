@@ -8,6 +8,14 @@ import CommentCard from "../Comment/CommentCard";
 import "../../assets/styles/post.css";
 import timeFormatter from "../../utilities/timeFormatter";
 import likeIcon from "../../assets/images/like.svg";
+import { LayoutGroup, motion } from "framer-motion";
+import { commentDivMove } from "../../utilities/animation";
+
+const spring = {
+  type: "spring",
+  stiffness: 700,
+  damping: 30,
+};
 
 const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [like, likeChanged] = useLike();
@@ -44,47 +52,49 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   };
 
   return (
-    <>
-      <div className="post">
-        {post && (
-          <div>
-            <div className="postCard">
-              <PostOptions
-                authorId={post.author._id}
-                postId={post._id.toString()}
-                orginalTitle={post.title}
-                orginalText={post.text}
-                likes={post.likes}
-                comments={commentsIds}
+    <div className="post">
+      {post && (
+        <div>
+          <div className="postCard">
+            <PostOptions
+              authorId={post.author._id}
+              postId={post._id.toString()}
+              orginalTitle={post.title}
+              orginalText={post.text}
+              likes={post.likes}
+              comments={commentsIds}
+            />
+            <div className="postcardHeader">
+              <div className="cardName"> {post.author.name}</div>
+              <img
+                className="cardPhoto"
+                src={post.author.photo}
+                alt="author photo"
               />
-              <div className="postcardHeader">
-                <div className="cardName"> {post.author.name}</div>
-                <img
-                  className="cardPhoto"
-                  src={post.author.photo}
-                  alt="author photo"
-                />
-                <div className="cardTime">
-                  {timeFormatter(post.timestamp).yearMonthDay}
-                </div>
-              </div>
-              <div className="postcardMain">{post.text}</div>
-              <div className="likePost">
-                <img
-                  onClick={() => {
-                    newLikeAdded("post", post._id.toString());
-                  }}
-                  src={likeIcon}
-                  alt="like icon"
-                />
-                {post.likes.length}
+              <div className="cardTime">
+                {timeFormatter(post.timestamp).yearMonthDay}
               </div>
             </div>
+            <div className="postcardMain">{post.text}</div>
+            <div className="likePost">
+              <img
+                onClick={() => {
+                  newLikeAdded("post", post._id.toString());
+                }}
+                src={likeIcon}
+                alt="like icon"
+              />
+              {post.likes.length}
+            </div>
+          </div>
+          <LayoutGroup>
             <AddComment
               postID={post._id.toString()}
               handleAddComment={handleAddComment}
             />
-            <div>
+            <motion.div className="spring" layout transition={spring} animate={{
+                opacity: 1,
+              }}>
               {post.comments.length > 0 ? (
                 post.comments.map((comment) => {
                   return (
@@ -99,15 +109,12 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
               ) : (
                 <div>No comments</div>
               )}
-            </div>
-
-
-          </div>
-        )}
-        {!post && <div>There is no post with that id</div>}
-      </div>
-    </>
+            </motion.div>
+          </LayoutGroup>
+        </div>
+      )}
+      {!post && <div>There is no post with that id</div>}
+    </div>
   );
 };
-
 export default Post;

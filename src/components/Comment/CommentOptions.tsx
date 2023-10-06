@@ -107,14 +107,19 @@ const CommentOptions: React.FC<{
   return (
     <>
       {userIsAuthor && (
-        <>
-          {showOptions ? (
+        <div className="commentoptionscontainer">
+          <img
+            className="options"
+            src={options}
+            alt="three dots"
+            onClick={toggleOptions}
+          />
+          {showOptions && (
             <div ref={ref} className="commentoptions">
               <div onClick={() => toggleShowAddComment()}>Edit</div>
+              <section className="line"></section>
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
-          ) : (
-            <img className="options" src={options} alt="three dots" onClick={toggleOptions} />
           )}
           {showAddComment && (
             <>
@@ -135,7 +140,7 @@ const CommentOptions: React.FC<{
               </button>
             </>
           )}
-        </>
+        </div>
       )}
     </>
   );

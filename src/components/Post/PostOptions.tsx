@@ -68,12 +68,21 @@ const PostOptions: React.FC<{
   return (
     <>
       {userIsAuthor && (
-        <>
-          {showOptions ? (
+        <div className="postOptionsContainer">
+          <div className="imageoptions">
+            <img
+              className="options"
+              src={options}
+              alt="three dots"
+              onClick={toggleOptions}
+            />
+          </div>
+          {showOptions && (
             <div ref={ref} className="postoptions">
               <div onClick={() => dispatch(modalActions.showPostModal())}>
                 Edit
               </div>
+              <section className="line"></section>
               {modal.showPost && (
                 <EditPost
                   orginalText={orginalText}
@@ -85,17 +94,8 @@ const PostOptions: React.FC<{
               )}
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
-          ) : (
-            <div className="imageoptions">
-              <img
-                className="options"
-                src={options}
-                alt="three dots"
-                onClick={toggleOptions}
-              />
-            </div>
           )}
-        </>
+        </div>
       )}
     </>
   );
