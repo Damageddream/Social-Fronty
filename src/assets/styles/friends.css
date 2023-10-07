@@ -1,0 +1,52 @@
+@import "./main.css";
+
+.addfriend {
+    display: flex;
+    flex-direction: column;
+}
+.friendH1 {
+    margin-left: 40px;
+}
+
+.friendsContainer {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
+}
+
+.friend {
+    display: flex;
+    flex-direction: column;
+    opacity: 0.7;
+    align-items: center;
+    margin: 5px;
+}
+
+.friend:hover{
+    opacity: 1;
+}
+
+.friend > img {
+    max-width: 150px;
+    border-radius: 100%;
+}
+
+.friendHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchbtn {
+    font-size: 0.7rem;
+    height: auto;
+    padding: 5px;
+    margin-left: 2px;
+}
+
+.searchInput{
+    width: 150px;
+    height: 30px;
+}
+
+.searchForm {
+    margin-right: 50px;
+}

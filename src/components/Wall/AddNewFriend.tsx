@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { uiActions } from "../../store/uiSlice";
 import UserI, { NoFriendsI } from "../../interfaces/userI";
-import { useNavigate } from "react-router-dom";
+import Search from "./Search";
+import "../../assets/styles/friends.css";
 const AddNewFriend: React.FC = () => {
-  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
@@ -21,7 +21,7 @@ const AddNewFriend: React.FC = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token as string}`,
       },
-    })
+    });
     const data = (await response.json()) as NoFriendsI;
     setStrangers(data.noFriends);
   };
@@ -66,21 +66,27 @@ const AddNewFriend: React.FC = () => {
   }, [inviteSend]);
 
   return (
-    <div>
-      {strangers?.map((stranger) => {
-        return (
-          <div key={stranger._id}>
-            <img src={stranger.photo} alt="profile picture" />
-            <div>{stranger.name}</div>
-            <form onSubmit={submitHandler}>
-              <input type="hidden" name="id" value={stranger._id} />
-              <button type="submit">Invite to friends</button>
-            </form>
-            {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
-          </div>
-        );
-      })}
-      <div onClick={() => navigate("/wall")}>back</div>
+    <div className="addfriend">
+      <div className="friendHeader">
+        <div></div>
+        <h1 className="friendH1">Search for friends</h1>
+        <Search />
+      </div>
+      <div className="friendsContainer">
+        {strangers?.map((stranger) => {
+          return (
+            <div className="friend" key={stranger._id}>
+              <img src={stranger.photo} alt="profile picture" />
+              <div>{stranger.name}</div>
+              <form onSubmit={submitHandler}>
+                <input type="hidden" name="id" value={stranger._id} />
+                <button  type="submit">Invite to friends</button>
+              </form>
+              {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
