@@ -11,11 +11,10 @@ import options from "../../assets/images/options.svg";
 const PostOptions: React.FC<{
   authorId: string;
   postId: string;
-  orginalTitle: string;
   orginalText: string;
   likes: string[];
   comments: string[];
-}> = ({ authorId, postId, orginalText, orginalTitle, likes, comments }) => {
+}> = ({ authorId, postId, orginalText, likes, comments }) => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
 
   const [showOptions, setShowOptions] = useState(false);
@@ -86,7 +85,6 @@ const PostOptions: React.FC<{
               {modal.showPost && (
                 <EditPost
                   orginalText={orginalText}
-                  orginalTitle={orginalTitle}
                   postId={postId}
                   likes={likes}
                   comments={comments}

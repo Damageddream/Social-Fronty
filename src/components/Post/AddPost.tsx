@@ -17,7 +17,6 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   //states to fill Post form
-  const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
 
   // function for sending POST request, to create new post
@@ -26,7 +25,6 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
     dispatch(uiActions.startLoading())
     const token = localStorage.getItem("token")
     const formData: PostPostI = {
-      title,
       text,
     };
     const response = await fetch(serverUrl + "/posts", {
@@ -81,15 +79,6 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
         X
       </div>
       <form className="addpostform" onSubmit={submitHandler}>
-        <label htmlFor="postTitle">Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
         <label htmlFor="postText">Text:</label>
         <textarea
           id="postText"

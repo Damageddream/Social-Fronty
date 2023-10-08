@@ -2,7 +2,6 @@ import { CommentDisplayI } from "./commentI";
 import { UserDisplayI } from "./userI";
 
 export interface  PostI {
-    title: string;
     text: string;
     author: UserDisplayI;
     timestamp:string;
@@ -12,19 +11,16 @@ export interface  PostI {
 }
 
 export interface PostPostI {
-    title: string;
     text: string;
 }
 
 export interface addEditPostI {
-    title: string;
     text: string;
     likes: string[];
     comments: string[] | undefined
 }
 
 export interface  PostDisplayI {
-    title: string;
     text: string;
     author: UserDisplayI;
     timestamp:string;

@@ -7,7 +7,7 @@ import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 
 
-const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:string, likes: string[], comments: string[]}> = ({orginalText, orginalTitle, postId, likes, comments}) => {
+const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], comments: string[]}> = ({orginalText, postId, likes, comments}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
@@ -18,14 +18,12 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   //states to fill Post form
-  const [title, setTitle] = useState<string>(orginalTitle);
   const [text, setText] = useState<string>(orginalText);
 
   // function for sending POST request, to create new post
   const addPost = async () => {
     const token = localStorage.getItem("token")
     const formData: addEditPostI = {
-      title,
       text,
       likes,
       comments,
@@ -71,15 +69,6 @@ const EditPost: React.FC<{orginalTitle: string, orginalText: string, postId:stri
   return (
     <dialog ref={dialogRef}>
       <form onSubmit={submitHandler}>
-        <label htmlFor="postTitle">Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
         <label htmlFor="postText">Text:</label>
         <input
           type="text"

@@ -9,7 +9,7 @@ import "../../assets/styles/post.css";
 import timeFormatter from "../../utilities/timeFormatter";
 import likeIcon from "../../assets/images/like.svg";
 import { LayoutGroup, motion } from "framer-motion";
-import { commentDivMove } from "../../utilities/animation";
+
 
 const spring = {
   type: "spring",
@@ -59,7 +59,6 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
             <PostOptions
               authorId={post.author._id}
               postId={post._id.toString()}
-              orginalTitle={post.title}
               orginalText={post.text}
               likes={post.likes}
               comments={commentsIds}
