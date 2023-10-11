@@ -1,8 +1,6 @@
 import {SetStateAction, Dispatch } from 'react'
 import { NavType } from '../../interfaces/wall';
 
-
-
 const WallNav: React.FC<{ setNav: Dispatch<SetStateAction<NavType>>}> = ({setNav}) => {
   return (
     <div className="wallNav">
