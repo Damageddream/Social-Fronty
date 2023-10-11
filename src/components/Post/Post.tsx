@@ -54,7 +54,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   return (
     <div className="post">
       {post && (
-        <div>
+        <div className='postContainer'>
           <div className="postCard">
             <PostOptions
               authorId={post.author._id}

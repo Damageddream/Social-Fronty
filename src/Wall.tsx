@@ -95,7 +95,7 @@ const Wall: React.FC = () => {
               {posts.length > 0 ? (
                 posts.map((post) => {
                   return (
-                    <div key={post._id}>
+                    <div className="post" key={post._id}>
                       <PostCard post={post} newLikeAdded={newLikeAdded} setNav={setNav} setPostId={setPostId}  />
                     </div>
                   );

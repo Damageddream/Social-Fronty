@@ -50,3 +50,16 @@
 .searchForm {
     margin-right: 50px;
 }
+
+.inviteButtons {
+    display: flex;
+    gap: 5px;
+}
+
+.decline {
+    background-color: var(--clr-thriary);
+}
+
+.decline:hover {
+    background-color:#ff8800;
+}

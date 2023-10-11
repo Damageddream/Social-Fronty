@@ -1,11 +1,28 @@
 @import "./main.css";
+.posts{
+  width: 100%;
+}
+.post {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
 
 .postCard {
     padding: 10px;
     background-color: rgb(245, 229, 252);
     margin: 10px;
     border-radius: 8px;
-    min-width: 700px;
+    max-width: 700px;
+    flex: 1;
+    width: 100%;
+    
 }
 
 .postCard * {
@@ -83,4 +100,13 @@
 .postcardMain:hover {
   cursor: pointer;
   opacity: 1;
+}
+
+.spring {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 700px;
 }

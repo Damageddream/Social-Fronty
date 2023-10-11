@@ -7,12 +7,11 @@ const InviteSingle: React.FC<{
   id: string;
   name: string;
   photo: string;
-  onResponseAction: ()=>void;
-
-}> = ({id,name, photo,  onResponseAction}) => {
+  onResponseAction: () => void;
+}> = ({ id, name, photo, onResponseAction }) => {
   const [answer, setAnswer] = useState<"accept" | "denie">("accept");
-  const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const clickAccpeptHandler = () => {
     setAnswer("accept");
   };
@@ -21,9 +20,9 @@ const InviteSingle: React.FC<{
   };
 
   const answerInvites = async (id: string) => {
-    setLoading(true)
+    setLoading(true);
     const token = localStorage.getItem("token");
-    const response = await fetch(serverUrl+ "/users/invites", {
+    const response = await fetch(serverUrl + "/users/invites", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,11 +32,11 @@ const InviteSingle: React.FC<{
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Response to invite failed"));
-      setLoading(false)
+      setLoading(false);
     }
-    if(response.ok){
-      onResponseAction()
-      setLoading(false)
+    if (response.ok) {
+      onResponseAction();
+      setLoading(false);
     }
   };
 
@@ -57,25 +56,27 @@ const InviteSingle: React.FC<{
   };
 
   return (
-      <div>
-        <div>User {name} invited you to be friends</div>
-        <img src={photo} alt="profile picture" />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            void submitHandler(e);
-          }}
-        >
-          <input name="id" type="hidden" value={id} />
+    <div className="friend">
+      <div>User {name} invited you to be friends</div>
+      <img src={photo} alt="profile picture" />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          void submitHandler(e);
+        }}
+      >
+        <input name="id" type="hidden" value={id} />
+        <div className="inviteButtons">
           <button type="submit" onClick={clickAccpeptHandler}>
             accept
           </button>
-          <button type="submit" onClick={clickDenieHandler}>
+          <button type="submit" className="decline" onClick={clickDenieHandler}>
             decline
           </button>
-          {loading && <div>Loading....</div>}
-        </form>
-      </div>
+        </div>
+        {loading && <div>Loading....</div>}
+      </form>
+    </div>
   );
 };
 
