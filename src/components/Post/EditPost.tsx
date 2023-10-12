@@ -6,8 +6,12 @@ import { addEditPostI } from "../../interfaces/postI";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 
-
-const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], comments: string[]}> = ({orginalText, postId, likes, comments}) => {
+const EditPost: React.FC<{
+  orginalText: string;
+  postId: string;
+  likes: string[];
+  comments: string[];
+}> = ({ orginalText, postId, likes, comments }) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
@@ -22,7 +26,7 @@ const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], c
 
   // function for sending POST request, to create new post
   const addPost = async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     const formData: addEditPostI = {
       text,
       likes,
@@ -32,7 +36,7 @@ const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], c
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token as string}`
+        Authorization: `Bearer ${token as string}`,
       },
       body: JSON.stringify(formData),
     });
@@ -40,19 +44,19 @@ const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], c
       dispatch(uiActions.setError("Adding new post failed"));
     } else {
       console.log("sucess");
-      console.log(response.json())
+      console.log(response.json());
     }
   };
 
   // showing or hinding modal when redux modal state changes
   useEffect(() => {
-    console.log(comments)
+    console.log(comments);
     if (modal.showPost) {
       dialogRef.current?.showModal();
     } else {
       dialogRef.current?.close();
     }
-  }, [modal.showPost, comments],);
+  }, [modal.showPost, comments]);
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
@@ -67,8 +71,17 @@ const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], c
   };
 
   return (
-    <dialog ref={dialogRef}>
-      <form onSubmit={submitHandler}>
+    <dialog className="editPostContainer" ref={dialogRef}>
+      <div
+        role="button"
+        className="exitbutton"
+        onClick={() => {
+          dispatch(modalActions.hidePostModal());
+        }}
+      >
+        X
+      </div>
+      <form className="editPost" onSubmit={submitHandler}>
         <label htmlFor="postText">Text:</label>
         <input
           type="text"
@@ -76,15 +89,8 @@ const EditPost: React.FC<{orginalText: string, postId:string, likes: string[], c
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button type="submit">Add Post</button>
+        <button className="addPostBtn" type="submit">Edit Post</button>
       </form>
-      <button
-        onClick={() => {
-          dispatch(modalActions.hidePostModal());
-        }}
-      >
-        Close modal
-      </button>
     </dialog>
   );
 };

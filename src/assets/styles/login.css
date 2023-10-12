@@ -54,6 +54,7 @@ input[type="file"] {
   cursor: pointer;
   align-self: center;
   margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .labelphoto:hover {

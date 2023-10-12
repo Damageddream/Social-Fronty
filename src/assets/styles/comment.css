@@ -1,0 +1,6 @@
+@import './main.css';
+
+.editComment {
+    background-color: red;
+    display: flex;
+}

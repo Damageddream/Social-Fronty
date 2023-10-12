@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { UserReduxI } from "../../interfaces/userI";
 import EditProfile from "./EditProfile";
-import Logout from "./Logout";
+import Logout from "../LoginAndRegister/Logout";
 import ProfileOptions from "./ProfileOptions";
 import { RootState } from "../../store/store";
 import "../../assets/styles/wall.css";

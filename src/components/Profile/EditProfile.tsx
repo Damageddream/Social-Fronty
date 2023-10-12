@@ -5,8 +5,10 @@ import { modalActions } from "../../store/modalSlice";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 
-
-const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalName, userId}) => {
+const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
+  orginalName,
+  userId,
+}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const ui = useSelector((state: RootState) => state.ui);
@@ -21,25 +23,25 @@ const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalNa
 
   // function for sending POST request, to create new post
   const editProfile = async () => {
-    const token = localStorage.getItem("token")
-    const formData = new FormData()
-    formData.append("name", name)
-    if(file) {
-        formData.append("file", file )
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("name", name);
+    if (file) {
+      formData.append("file", file);
     }
     const response = await fetch(serverUrl + `/user/edit/${userId}`, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${token as string}`
+        Authorization: `Bearer ${token as string}`,
       },
       body: formData,
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Editing profile failed"));
-      dispatch(modalActions.hideUserModal())
-    } 
-    if(response.ok) {
-     dispatch(modalActions.hideUserModal())
+      dispatch(modalActions.hideUserModal());
+    }
+    if (response.ok) {
+      dispatch(modalActions.hideUserModal());
     }
   };
 
@@ -59,14 +61,22 @@ const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalNa
 
   const submitHandler: FormEventHandler = (e) => {
     e.preventDefault();
-        editProfile().catch(() => {
-        dispatch(uiActions.setError("Editig profile failed"));
-      });
- 
-    }
+    editProfile().catch(() => {
+      dispatch(uiActions.setError("Editig profile failed"));
+    });
+  };
 
   return (
     <dialog ref={dialogRef}>
+      <div
+        className="exitbutton "
+        role="button"
+        onClick={() => {
+          dispatch(modalActions.hideUserModal());
+        }}
+      >
+        X
+      </div>
       <form onSubmit={submitHandler}>
         <label htmlFor="name">Name:</label>
         <input
@@ -77,17 +87,10 @@ const EditProfile: React.FC<{orginalName: string, userId:string }> = ({orginalNa
             setName(e.target.value);
           }}
         />
-          <label htmlFor="photo">Photo</label>
+        <label className="labelphoto" htmlFor="photo">Photo</label>
         <input type="file" id="photo" onChange={handleFileChange} />
-        <button type="submit">Edit Profile</button>
+        <button className="addpostbtn" type="submit">Edit Profile</button>
       </form>
-      <button
-        onClick={() => {
-          dispatch(modalActions.hideUserModal());
-        }}
-      >
-        Close modal
-      </button>
     </dialog>
   );
 };

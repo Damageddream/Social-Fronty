@@ -8,6 +8,7 @@ import useToggle from "../../customHooks/useToggle";
 import { CommentI } from "../../interfaces/commentI";
 import { uiActions } from "../../store/uiSlice";
 import options from "../../assets/images/options.svg";
+import '../../assets/styles/comment.css'
 
 const CommentOptions: React.FC<{
   authorId: string;
@@ -123,7 +124,7 @@ const CommentOptions: React.FC<{
           )}
           {showAddComment && (
             <>
-              <form onSubmit={submitHandler}>
+              <form className="editComment" onSubmit={submitHandler}>
                 <label htmlFor="text">Comment:</label>
                 <input
                   type="text"

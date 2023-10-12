@@ -160,3 +160,26 @@
   background-color: rgb(226, 225, 225);
   cursor: pointer;
 }
+
+.editPostContainer {
+  max-width: 300px;
+  background-color: var(--clr-white)
+}
+.editPostContainer > div {
+  background-color: inherit;
+}
+
+.editPost {
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.editPost > * {
+  background-color: inherit;
+}
+
+.addPostBtn {
+  background-color: var(--clr-primary);
+  margin-top: 5px;
+}
