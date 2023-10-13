@@ -1,6 +1,23 @@
 @import './main.css';
 
 .editComment {
-    background-color: red;
     display: flex;
+    border: 1px solid black;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.exitedit {
+    font-size: 1.2rem;
+    margin-left: auto;
+}
+
+.editCommentHeader {
+    display: flex;
+    width: 100%;
+}
+
+.editCommenButton {
+    align-self: center;
 }

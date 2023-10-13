@@ -10,7 +10,6 @@ import timeFormatter from "../../utilities/timeFormatter";
 import likeIcon from "../../assets/images/like.svg";
 import { LayoutGroup, motion } from "framer-motion";
 
-
 const spring = {
   type: "spring",
   stiffness: 700,
@@ -54,7 +53,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   return (
     <div className="post">
       {post && (
-        <div className='postContainer'>
+        <div className="postContainer">
           <div className="postCard">
             <PostOptions
               authorId={post.author._id}
@@ -91,18 +90,25 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
               postID={post._id.toString()}
               handleAddComment={handleAddComment}
             />
-            <motion.div className="spring" layout transition={spring} animate={{
+            <motion.div
+              className="spring"
+              layout
+              transition={spring}
+              animate={{
                 opacity: 1,
-              }}>
+              }}
+            >
               {post.comments.length > 0 ? (
                 post.comments.map((comment) => {
                   return (
-                    <div className="comment" key={comment._id}>
-                      <CommentCard
-                        comment={comment}
-                        newLikeAdded={newLikeAdded}
-                      />
-                    </div>
+                    <>
+                      <div className="comment" key={comment._id}>
+                        <CommentCard
+                          comment={comment}
+                          newLikeAdded={newLikeAdded}
+                        />
+                      </div>
+                    </>
                   );
                 })
               ) : (

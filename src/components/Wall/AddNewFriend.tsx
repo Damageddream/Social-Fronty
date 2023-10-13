@@ -11,6 +11,7 @@ const AddNewFriend: React.FC = () => {
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
   const [strangers, setStrangers] = useState<UserI[]>();
+  const [displayStrangers, setDisplayStrangers] = useState<UserI[]>();
   const [inviteSend, setInviteSend] = useState(0);
 
   // getting list of users that are not friends with user sending request
@@ -63,17 +64,23 @@ const AddNewFriend: React.FC = () => {
     fetchStrangers().catch(() => {
       dispatch(uiActions.setError("Failed to get list of strangers"));
     });
+    
   }, [inviteSend]);
+
+
+  useEffect(()=>{
+    setDisplayStrangers(strangers)
+  },[strangers])
 
   return (
     <div className="addfriend">
       <div className="friendHeader">
         <div></div>
         <h1 className="friendH1">Search for friends</h1>
-        <Search />
+        <Search strangers={strangers} setStrangers={setDisplayStrangers} rerender={setInviteSend} />
       </div>
       <div className="friendsContainer">
-        {strangers?.map((stranger) => {
+        {displayStrangers?.map((stranger) => {
           return (
             <div className="friend" key={stranger._id}>
               <img src={stranger.photo} alt="profile picture" />

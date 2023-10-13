@@ -1,33 +1,24 @@
-import { useState, RefObject, useEffect, FormEventHandler } from "react";
+import { useState, RefObject, useEffect } from "react";
 import useOutsideClick from "../../customHooks/useOutsideClick";
 import { UserReduxI } from "../../interfaces/userI";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { serverUrl } from "../../utilities/URLs";
-import useToggle from "../../customHooks/useToggle";
-import { CommentI } from "../../interfaces/commentI";
 import { uiActions } from "../../store/uiSlice";
 import options from "../../assets/images/options.svg";
-import '../../assets/styles/comment.css'
+import "../../assets/styles/comment.css";
 
 const CommentOptions: React.FC<{
   authorId: string;
   commentId: string;
-  orginalText: string;
-  postId: string;
-  likes: string[];
-}> = ({ authorId, commentId, orginalText, postId, likes }) => {
+  toggleShowEditComment: (value:boolean)=>void;
+}> = ({ authorId, commentId, toggleShowEditComment }) => {
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
 
   const [showOptions, setShowOptions] = useState(false);
   const [userIsAuthor, setUserIsAuthor] = useState(false);
-  const [text, setText] = useState<string>(orginalText);
-  const [showAddComment, toggleShowAddComment]: [
-    boolean,
-    (value?: boolean) => void
-  ] = useToggle(false);
 
   const handleClickOutisde = () => {
     setShowOptions(false);
@@ -70,41 +61,6 @@ const CommentOptions: React.FC<{
     });
   };
 
-  const editComment = async () => {
-    const token = localStorage.getItem("token");
-    const formData: CommentI = {
-      text,
-      post: postId,
-      likes,
-    };
-    const response = await fetch(serverUrl + `/comments/${commentId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token as string}`,
-      },
-      body: JSON.stringify(formData),
-    });
-    if (!response.ok) {
-      dispatch(uiActions.setError("Adding new comment failed"));
-    } else {
-      console.log("sucess");
-      console.log(response.json());
-      toggleShowAddComment(false);
-    }
-  };
-
-  const submitHandler: FormEventHandler = (e) => {
-    e.preventDefault();
-    try {
-      editComment().catch((err) => {
-        dispatch(uiActions.setError("Adding new comment failed"));
-      });
-    } catch (err) {
-      dispatch(uiActions.setError("Adding new post failed"));
-    }
-  };
-
   return (
     <>
       {userIsAuthor && (
@@ -117,29 +73,10 @@ const CommentOptions: React.FC<{
           />
           {showOptions && (
             <div ref={ref} className="commentoptions">
-              <div onClick={() => toggleShowAddComment()}>Edit</div>
+              <div onClick={() => toggleShowEditComment(true)}>Edit</div>
               <section className="line"></section>
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
-          )}
-          {showAddComment && (
-            <>
-              <form className="editComment" onSubmit={submitHandler}>
-                <label htmlFor="text">Comment:</label>
-                <input
-                  type="text"
-                  id="text"
-                  value={text}
-                  onChange={(e) => {
-                    setText(e.target.value);
-                  }}
-                />
-                <button type="submit">Submit Comment</button>
-              </form>
-              <button onClick={() => toggleShowAddComment(false)}>
-                cancel
-              </button>
-            </>
           )}
         </div>
       )}
