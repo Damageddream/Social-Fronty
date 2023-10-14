@@ -7,6 +7,7 @@ import UserI, { NoFriendsI } from "../../interfaces/userI";
 import Search from "./Search";
 import "../../assets/styles/friends.css";
 const AddNewFriend: React.FC = () => {
+
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
@@ -60,6 +61,10 @@ const AddNewFriend: React.FC = () => {
     }
   };
 
+  const updateStrangers = (newStrangersArray:UserI[]):void => {
+    setDisplayStrangers(newStrangersArray)
+  }
+
   useEffect(() => {
     fetchStrangers().catch(() => {
       dispatch(uiActions.setError("Failed to get list of strangers"));
@@ -77,7 +82,7 @@ const AddNewFriend: React.FC = () => {
       <div className="friendHeader">
         <div></div>
         <h1 className="friendH1">Search for friends</h1>
-        <Search strangers={strangers} setStrangers={setDisplayStrangers} rerender={setInviteSend} />
+        <Search strangers={strangers} updateStrangers={updateStrangers}/>
       </div>
       <div className="friendsContainer">
         {displayStrangers?.map((stranger) => {

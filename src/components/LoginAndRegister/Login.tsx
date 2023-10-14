@@ -95,8 +95,7 @@ const LogInNoFacebook: React.FC<{ backToDefault: () => void }> = ({
             setPassword(e.target.value);
           }}
         />
-
-        {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+        {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
         <div className="login-btns">
           <button className="login-btn" type="submit">
             {ui.loading ? <div className="lds-dual-ring"></div> : "Log in"}

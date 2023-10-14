@@ -73,3 +73,15 @@ button:hover {
     transform: rotate(360deg);
   }
 }
+
+.warning {
+  border: 2px solid #f83734;
+  display: flex;
+  padding: 5px;
+  color: #f83734;
+  border-radius: 8px;
+  margin-top: 5px;
+  width: 200px;
+  text-align: left;
+  line-height: 1;
+}
