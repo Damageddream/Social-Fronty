@@ -18,6 +18,8 @@ const LogInNoFacebook: React.FC<{ backToDefault: () => void }> = ({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  dispatch(uiActions.removeError())
+
   // fetching user data from backend and set user in redux state
   const login = async () => {
     dispatch(uiActions.startLoading());

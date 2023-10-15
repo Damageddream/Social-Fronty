@@ -11,11 +11,11 @@ import Register from "./components/LoginAndRegister/RegisterUser";
 import "./assets/styles/loginPage.css";
 import Logo from "./components/Logo/Logo";
 import { uiActions } from "./store/uiSlice";
-
+import GuestLogin from "./components/LoginAndRegister/GuestLogin";
 
 const LogIn: React.FC = () => {
   useCheckUser();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [guestLogin] = useGuestLogin();
   const navigate = useNavigate();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
@@ -24,14 +24,16 @@ const LogIn: React.FC = () => {
     "default" | "Login" | "Register"
   >("default");
 
+  dispatch(uiActions.removeError());
+
   const facebook = () => {
-    dispatch(uiActions.startLoading())
+    dispatch(uiActions.startLoading());
     window.open(serverUrl + "/login/facebook", "_self");
   };
 
   const handleClick = () => {
     guestLogin().catch(() => {
-      console.error("er");
+      dispatch(uiActions.setError("Login as guest failed"));
     });
   };
 
@@ -59,11 +61,20 @@ const LogIn: React.FC = () => {
             >
               Don't have an account?<span>Sign up</span>
             </div>
-            <button onClick={facebook}>{ui.loading ? <div className="lds-dual-ring"></div> : "Log in with facebook"}</button>
-            <button onClick={() => setRenderLoginForm("Login")}>Log In</button>
-            <button className="guest-btn" onClick={handleClick}>
-              Visit as guest
+            <button onClick={facebook}>
+              {ui.loading ? (
+                <div className="lds-dual-ring"></div>
+              ) : (
+                "Log in with facebook"
+              )}
             </button>
+            {ui.error.errorStatus && (
+              <div className="warning">
+                {ui.error.errorInfo}something went wrongs
+              </div>
+            )}
+            <button onClick={() => setRenderLoginForm("Login")}>Log In</button>
+            <GuestLogin />
           </div>
         )}
         {renderLoginForm === "Login" && (

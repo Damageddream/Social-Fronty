@@ -61,3 +61,12 @@ input[type="file"] {
   background-color: rgb(238, 238, 238);
 }
 
+@media (max-width: 600px){
+  .login {
+    margin-top: 50px;
+  }
+
+  .register{
+    margin-top: 50px;
+  }
+}

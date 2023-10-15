@@ -1,22 +1,42 @@
 .logo {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .logo-name {
-    font-size: 3rem;
-
+  font-size: 3rem;
 }
 
 .logo-brand {
-    color: rgb(224, 113, 224);
-    font-size: 1.15rem;
+  color: rgb(224, 113, 224);
+  font-size: 1.15rem;
 }
 
 .logo-text {
-    line-height: 40%;
+  line-height: 40%;
 }
 
 .circle {
-    max-width: 500px;
+  max-width: 500px;
 }
 
+@media (max-width: 600px) {
+  .circle {
+    max-width: 150px;
+    align-self: center;
+  }
+  .logo {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    grid-row: 1/2;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .logo-name {
+    font-size: 2rem;
+    line-height: 1;
+  }
+}

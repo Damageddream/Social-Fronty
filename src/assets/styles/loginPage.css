@@ -49,3 +49,12 @@ span {
 span:hover {
     cursor: pointer;
 }
+
+@media (max-width: 600px){
+    .login-page {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+    }
+}

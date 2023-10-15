@@ -120,14 +120,14 @@ const Register: React.FC<{ backToDefault: () => void }> = ({
           Choose profile photo
         </label>
         <input type="file" id="photo" onChange={handleFileChange} />
-        {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         <div className="login-btns">
           <button type="submit">
-            {ui.loading ? "Loading..." : "Register"}
+            {ui.loading ? <div className="lds-dual-ring"></div>  : "Register"}
           </button>
           <div className="back" onClick={() => backToDefault()}>
             back
           </div>
+          {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
         </div>
       </form>
     </div>
