@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { PostI } from "../../interfaces/postI";
 import "../../assets/styles/postCard.css";
 import commentIcon from "../../assets/images/comment.svg";
@@ -13,8 +12,6 @@ const PostCard: React.FC<{
   setNav: Dispatch<SetStateAction<NavType>>;
   setPostId: Dispatch<SetStateAction<string>>;
 }> = ({ post, newLikeAdded, setNav, setPostId }) => {
-  const navigate = useNavigate();
-
   const date = timeFormatter(post.timestamp);
 
   const clickHandler: React.MouseEventHandler<HTMLDivElement> = () => {
@@ -52,9 +49,7 @@ const PostCard: React.FC<{
 
         <div
           className="commentPost"
-          onClick={() => {
-            navigate(`/posts/${post._id.toString()}`);
-          }}
+          onClick={clickHandler}
         >
           <img src={commentIcon} alt="comment icon" />
           {post.comments.length}
