@@ -64,3 +64,25 @@
     background-color:#ff8800;
 }
 
+@media (max-width: 600px){ 
+    .friendHeader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .empty{
+        display: none;
+    }
+    .friendH1 {
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+    .searchForm {
+        margin-right: 0;
+    }
+    .searchForm > label {
+        align-self: center;
+    }
+
+}

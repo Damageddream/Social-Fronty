@@ -4,7 +4,7 @@
 .wall {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    height: 100vh;
+    height: 100%;
     background-color: blueviolet;
     gap: 30px;
     padding: 45px;
@@ -61,7 +61,6 @@
     align-items: center;
     margin: 5px;
     flex-direction: column;
-   
 }
 
 .logandoptions {
@@ -121,4 +120,43 @@
     height: 0.5px;
     padding: 0;
     opacity: inherit;
+}
+
+@media (max-width: 600px){
+    .wall {
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 100vh;
+        background-color: white;
+        padding: 0;
+        gap: 0;
+    }
+
+    .profileandnav {
+        grid-row: 1/2;
+
+    }
+
+    .mainWall{
+        grid-row: 2/3;
+    }
+
+    .user {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin: 5px;
+        
+    }
+
+    .profilePhoto {
+        max-width: 100px;
+        border-radius: 100%;
+    
+    }
+
+    .userinfo {
+        grid-column: 2/3;
+    }
+    
+    
 }

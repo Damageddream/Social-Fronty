@@ -80,7 +80,7 @@ const AddNewFriend: React.FC = () => {
   return (
     <div className="addfriend">
       <div className="friendHeader">
-        <div></div>
+        <div className="empty"></div>
         <h1 className="friendH1">Search for friends</h1>
         <Search strangers={strangers} updateStrangers={updateStrangers}/>
       </div>
