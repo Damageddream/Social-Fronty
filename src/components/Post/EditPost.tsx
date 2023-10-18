@@ -14,7 +14,6 @@ const EditPost: React.FC<{
 }> = ({ orginalText, postId, likes, comments }) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
-  const user = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
 
   const dispatch = useDispatch();
@@ -24,8 +23,11 @@ const EditPost: React.FC<{
   //states to fill Post form
   const [text, setText] = useState<string>(orginalText);
 
+
   // function for sending POST request, to create new post
   const addPost = async () => {
+    dispatch(uiActions.removeError());
+    dispatch(uiActions.startLoading())
     const token = localStorage.getItem("token");
     const formData: addEditPostI = {
       text,
@@ -43,14 +45,13 @@ const EditPost: React.FC<{
     if (!response.ok) {
       dispatch(uiActions.setError("Adding new post failed"));
     } else {
-      console.log("sucess");
-      console.log(response.json());
+      dispatch(uiActions.endLoading())
+
     }
   };
 
   // showing or hinding modal when redux modal state changes
   useEffect(() => {
-    console.log(comments);
     if (modal.showPost) {
       dialogRef.current?.showModal();
     } else {
@@ -89,7 +90,7 @@ const EditPost: React.FC<{
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button className="addPostBtn" type="submit">Edit Post</button>
+        <button className="addPostBtn" type="submit">{ui.loading ? <div className="lds-dual-ring"></div> : "Edit Post"}</button>
       </form>
     </dialog>
   );

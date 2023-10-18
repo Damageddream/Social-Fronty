@@ -1,8 +1,10 @@
 import { useState, FormEventHandler } from "react";
 import { CommentI } from "../../interfaces/commentI";
 import { serverUrl } from "../../utilities/URLs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
+import { RootState } from "../../store/store";
+import { editActions } from "../../store/editSlice";
 
 const EditComment: React.FC<{
   commentId: string;
@@ -13,8 +15,11 @@ const EditComment: React.FC<{
 }> = ({ commentId, orginalText, postId, likes, toggleShowEditComment }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState<string>(orginalText);
+  const ui = useSelector((state: RootState) => state.ui);
 
   const editComment = async () => {
+    dispatch(uiActions.removeError());
+    dispatch(uiActions.startLoading());
     const token = localStorage.getItem("token");
     const formData: CommentI = {
       text,
@@ -32,8 +37,8 @@ const EditComment: React.FC<{
     if (!response.ok) {
       dispatch(uiActions.setError("Adding new comment failed"));
     } else {
-      console.log("sucess");
-      console.log(response.json());
+      dispatch(uiActions.endLoading());
+      dispatch(editActions.editComment());
       toggleShowEditComment(false);
     }
   };
@@ -52,7 +57,7 @@ const EditComment: React.FC<{
     <>
       <form className="editComment" onSubmit={submitHandler}>
         <div className="editCommentHeader">
-        <label htmlFor="text">Comment:</label>
+          <label htmlFor="text">Comment:</label>
           <div
             role="button"
             className="exitbutton exitedit"
@@ -60,7 +65,6 @@ const EditComment: React.FC<{
           >
             X
           </div>
-          
         </div>
         <input
           type="text"
@@ -70,7 +74,12 @@ const EditComment: React.FC<{
             setText(e.target.value);
           }}
         />
-        <button className="editCommenButton" type="submit">Edit Comment</button>
+        {ui.error.errorStatus && (
+          <div className="warning">{ui.error.errorInfo}</div>
+        )}
+        <button className="editCommenButton" type="submit">
+          {ui.loading ? <div className="lds-dual-ring"></div> : "Edit Comment"}
+        </button>
       </form>
     </>
   );

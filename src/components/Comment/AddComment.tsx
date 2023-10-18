@@ -84,15 +84,14 @@ const AddComment: React.FC<{
                 setText(e.target.value);
               }}
             />
-
+            {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}asd</div>}
             <button className="subbmitcomment" type="submit">
-              Submit Comment
+            {ui.loading ? <div className="lds-dual-ring"></div> : "Add comment"}
             </button>
           </motion.form>
-
-          {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+          
         </>
-      )}
+      )}  
     </motion.div>
   );
 };

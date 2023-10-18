@@ -11,7 +11,7 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const ui = useSelector((state: RootState) => state.ui);
-
+  
   const dispatch = useDispatch();
   // reference to dialog element
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -84,11 +84,11 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
           id="postText"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          cols={50} rows={15}
+          rows={15}
         ></textarea>
-        <button className="addpostbtn" type="submit">{ui.loading? "Loading...": "Add Post"}</button>
+        <button className="addpostbtn" type="submit">{ui.loading ? <div className="lds-dual-ring"></div> : "Add post"}</button>
       </form>
-      {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+      {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
     </dialog>
   );
 };

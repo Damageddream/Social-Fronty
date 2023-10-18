@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import uiSlice from "./uiSlice";
 import userSlice from "./userSlice";
 import modalSlice from "./modalSlice";
+import editSlice from "./editSlice";
 
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
         user: userSlice,
         ui: uiSlice,
         modal: modalSlice,
+        edit: editSlice
     }
 });
 

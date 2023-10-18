@@ -76,7 +76,6 @@ const Wall: React.FC = () => {
   return (
     <>
       <div className="wall">
-        {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
         {nav === "wall" && (
           <div className="mainWall">
             <h1> Your Circle</h1>
@@ -92,6 +91,7 @@ const Wall: React.FC = () => {
             </div>
 
             <div className="posts">
+            {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
               {posts.length > 0 ? (
                 posts.map((post) => {
                   return (

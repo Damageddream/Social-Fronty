@@ -17,5 +17,11 @@
 
 .addpostbtn {
     align-self: flex-end;
+    width: 150px;
+}
+
+#postText{
+    width: 300px;
+    font-family: inherit;
 }
 

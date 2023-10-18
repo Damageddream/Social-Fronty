@@ -9,6 +9,8 @@ import "../../assets/styles/post.css";
 import timeFormatter from "../../utilities/timeFormatter";
 import likeIcon from "../../assets/images/like.svg";
 import { LayoutGroup, motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const spring = {
   type: "spring",
@@ -21,9 +23,11 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [post, setPost] = useState<PostDisplayI>();
   const [commentsIds, setCommentsIds] = useState<string[]>([]);
   const [commentAdded, setCommentAdded] = useState(0);
+  const edit = useSelector((state:RootState)=> state.edit)
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
+    
     const response = await fetch(serverUrl + `/posts/${postId}/comments`, {
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +44,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
     getPost().catch(() => {
       console.error("Failed to fetch post");
     });
-  }, [likeChanged, commentAdded]);
+  }, [likeChanged, commentAdded, edit.editedComment]);
 
   const handleAddComment = () => {
     setCommentAdded((prev) => prev + 1);
