@@ -72,7 +72,6 @@ const Wall: React.FC = () => {
       dispatch(uiActions.setError("Failed to fetch posts"));
     });
   }, [postAdded, likeChanged]);
-
   return (
     <>
       <div className="wall">
@@ -89,7 +88,6 @@ const Wall: React.FC = () => {
               </button>
               {modal.showPost && <AddPost onAddedPost={refetch} />}
             </div>
-
             <div className="posts">
             {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
               {posts.length > 0 ? (

@@ -19,6 +19,9 @@
     align-self: flex-end;
     width: 150px;
 }
+.addPostBtn{
+    width: 120px;
+}
 
 #postText{
     width: 300px;

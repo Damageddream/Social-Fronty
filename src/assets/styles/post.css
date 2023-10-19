@@ -162,8 +162,8 @@
 }
 
 .editPostContainer {
-  max-width: 300px;
-  background-color: var(--clr-white)
+  max-width: 400px;
+  background-color: var(--clr-white);
 }
 .editPostContainer > div {
   background-color: inherit;
@@ -177,7 +177,10 @@
 
 .editPost > * {
   background-color: inherit;
+  flex: 1;
 }
+
+
 
 .addPostBtn {
   background-color: var(--clr-primary);

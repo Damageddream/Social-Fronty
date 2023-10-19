@@ -4,6 +4,7 @@ import { RootState } from "../../store/store";
 import { modalActions } from "../../store/modalSlice";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
+import { editActions } from "../../store/editSlice";
 
 const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
   orginalName,
@@ -42,6 +43,7 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
     }
     if (response.ok) {
       dispatch(modalActions.hideUserModal());
+      dispatch(editActions.editProfile())
     }
   };
 

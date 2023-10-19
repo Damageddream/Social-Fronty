@@ -5,6 +5,7 @@ import { modalActions } from "../../store/modalSlice";
 import { addEditPostI } from "../../interfaces/postI";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
+import { editActions } from "../../store/editSlice";
 
 const EditPost: React.FC<{
   orginalText: string;
@@ -23,11 +24,10 @@ const EditPost: React.FC<{
   //states to fill Post form
   const [text, setText] = useState<string>(orginalText);
 
-
   // function for sending POST request, to create new post
   const addPost = async () => {
     dispatch(uiActions.removeError());
-    dispatch(uiActions.startLoading())
+    dispatch(uiActions.startLoading());
     const token = localStorage.getItem("token");
     const formData: addEditPostI = {
       text,
@@ -43,10 +43,12 @@ const EditPost: React.FC<{
       body: JSON.stringify(formData),
     });
     if (!response.ok) {
+      dispatch(uiActions.endLoading());
       dispatch(uiActions.setError("Adding new post failed"));
     } else {
-      dispatch(uiActions.endLoading())
-
+      dispatch(uiActions.endLoading());
+      dispatch(editActions.editPost())
+      dispatch(modalActions.hidePostModal())
     }
   };
 
@@ -84,13 +86,18 @@ const EditPost: React.FC<{
       </div>
       <form className="editPost" onSubmit={submitHandler}>
         <label htmlFor="postText">Text:</label>
-        <input
-          type="text"
+        <textarea
           id="postText"
+          rows={10}
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button className="addPostBtn" type="submit">{ui.loading ? <div className="lds-dual-ring"></div> : "Edit Post"}</button>
+        {ui.error.errorStatus && (
+          <div className="warning">{ui.error.errorInfo}</div>
+        )}
+        <button className="addPostBtn" type="submit">
+          {ui.loading ? <div className="lds-dual-ring"></div> : "Edit Post"}
+        </button>
       </form>
     </dialog>
   );

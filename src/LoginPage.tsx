@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { UserReduxI } from "./interfaces/userI";
 import { RootState } from "./store/store";
 import useCheckUser from "./customHooks/useCheckUser";
-import useGuestLogin from "./customHooks/useGuestLogin";
 import LogInNoFacebook from "./components/LoginAndRegister/Login";
 import Register from "./components/LoginAndRegister/RegisterUser";
 import "./assets/styles/loginPage.css";
@@ -16,7 +15,6 @@ import GuestLogin from "./components/LoginAndRegister/GuestLogin";
 const LogIn: React.FC = () => {
   useCheckUser();
   const dispatch = useDispatch();
-  const [guestLogin] = useGuestLogin();
   const navigate = useNavigate();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
@@ -29,12 +27,6 @@ const LogIn: React.FC = () => {
   const facebook = () => {
     dispatch(uiActions.startLoading());
     window.open(serverUrl + "/login/facebook", "_self");
-  };
-
-  const handleClick = () => {
-    guestLogin().catch(() => {
-      dispatch(uiActions.setError("Login as guest failed"));
-    });
   };
 
   const backToDefault = () => {

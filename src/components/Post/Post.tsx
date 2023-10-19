@@ -23,11 +23,11 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [post, setPost] = useState<PostDisplayI>();
   const [commentsIds, setCommentsIds] = useState<string[]>([]);
   const [commentAdded, setCommentAdded] = useState(0);
-  const edit = useSelector((state:RootState)=> state.edit)
+  const edit = useSelector((state: RootState) => state.edit);
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
-    
+
     const response = await fetch(serverUrl + `/posts/${postId}/comments`, {
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
     getPost().catch(() => {
       console.error("Failed to fetch post");
     });
-  }, [likeChanged, commentAdded, edit.editedComment]);
+  }, [likeChanged, commentAdded, edit.editedComment, edit.editedPost]);
 
   const handleAddComment = () => {
     setCommentAdded((prev) => prev + 1);

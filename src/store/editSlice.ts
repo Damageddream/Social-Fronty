@@ -1,20 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const editSlice = createSlice({
-    name: "edit",
-    initialState: {
-        editedComment: 0,
-        editedPost: 0,
+  name: "edit",
+  initialState: {
+    editedComment: 0,
+    editedPost: 0,
+    editProfile: 0,
+  },
+  reducers: {
+    editComment(state) {
+      state.editedComment += 1;
     },
-    reducers: {
-        editComment(state){
-            state.editedComment += 1
-        },
-        editPost(state){
-            state.editedPost +=1
-        }
-    }
-})
+    editPost(state) {
+      state.editedPost += 1;
+    },
+    editProfile(state) {
+      state.editProfile += 1;
+    },
+  },
+});
 
-export const editActions = editSlice.actions
+export const editActions = editSlice.actions;
 export default editSlice.reducer;
