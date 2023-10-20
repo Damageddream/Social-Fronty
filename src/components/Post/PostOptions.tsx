@@ -75,8 +75,7 @@ const PostOptions: React.FC<{
               alt="three dots"
               onClick={toggleOptions}
             />
-          </div>
-          {showOptions && (
+                      {showOptions && (
             <div ref={ref} className="postoptions">
               <div onClick={() => dispatch(modalActions.showPostModal())}>
                 Edit
@@ -93,6 +92,8 @@ const PostOptions: React.FC<{
               <div onClick={handleDeleteClick}>Delete</div>
             </div>
           )}
+          </div>
+
         </div>
       )}
     </>
