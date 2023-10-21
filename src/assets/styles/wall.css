@@ -8,6 +8,7 @@
     background-color: blueviolet;
     gap: 30px;
     padding: 45px;
+    min-height: 100vh;
 }
 
 .profileandnav {

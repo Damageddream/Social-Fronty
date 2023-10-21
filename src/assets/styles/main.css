@@ -16,12 +16,10 @@ html, body {
     margin: 0;
     text-align: center;
     font-family:  'Hind', 'Montserrat', sans-serif;
-    min-height: 100vh;
     min-height: -webkit-fill-available;
 }
 
 #root {
-    height: 100vh;
     margin: 0;
 }
 
