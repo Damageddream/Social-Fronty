@@ -1,8 +1,15 @@
 @import "./main.css";
 
+.friendsMain {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
 .addfriend {
     display: flex;
     flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
 }
 .friendH1 {
     margin-left: 40px;
@@ -20,6 +27,7 @@
     align-items: center;
     margin: 5px;
 }
+
 
 .friend:hover{
     opacity: 1;
@@ -56,6 +64,10 @@
     gap: 5px;
 }
 
+.inviteButtons > * {
+    width: 80px;
+}
+
 .decline {
     background-color: var(--clr-thriary);
 }
@@ -63,6 +75,7 @@
 .decline:hover {
     background-color:#ff8800;
 }
+
 
 @media (max-width: 600px){ 
     .friendHeader {

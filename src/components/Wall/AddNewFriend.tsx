@@ -92,7 +92,7 @@ const AddNewFriend: React.FC = () => {
               <div>{stranger.name}</div>
               <form onSubmit={submitHandler}>
                 <input type="hidden" name="id" value={stranger._id} />
-                <button  type="submit">Invite to friends</button>
+                <button className="invitebtn"  type="submit">Invite to friends</button>
               </form>
               {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
             </div>

@@ -31,7 +31,7 @@ const MyFriends: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="friendsMain">
       <h1>Friends: </h1>
       <div>
         {friends && (

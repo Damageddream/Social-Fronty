@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
+import { RootState } from "../../store/store";
 
 const InviteSingle: React.FC<{
   id: string;
@@ -11,6 +12,7 @@ const InviteSingle: React.FC<{
 }> = ({ id, name, photo, onResponseAction }) => {
   const [answer, setAnswer] = useState<"accept" | "denie">("accept");
   const [loading, setLoading] = useState(false);
+  const ui = useSelector((state:RootState) => state.ui)
   const dispatch = useDispatch();
   const clickAccpeptHandler = () => {
     setAnswer("accept");
@@ -68,13 +70,13 @@ const InviteSingle: React.FC<{
         <input name="id" type="hidden" value={id} />
         <div className="inviteButtons">
           <button type="submit" onClick={clickAccpeptHandler}>
-            accept
+          {loading ? <div className="lds-dual-ring"></div> : "Accept"}
           </button>
           <button type="submit" className="decline" onClick={clickDenieHandler}>
-            decline
+          {loading ? <div className="lds-dual-ring"></div> : "Decline"}
           </button>
         </div>
-        {loading && <div>Loading....</div>}
+        {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
       </form>
     </div>
   );
