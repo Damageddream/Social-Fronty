@@ -76,6 +76,9 @@
     background-color:#ff8800;
 }
 
+.invitebtn{
+    width: 150px;
+}
 
 @media (max-width: 600px){ 
     .friendHeader {

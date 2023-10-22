@@ -1,20 +1,18 @@
 import { serverUrl } from "../../utilities/URLs";
 import React, { FormEventHandler, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
 import UserI, { NoFriendsI } from "../../interfaces/userI";
 import Search from "./Search";
 import "../../assets/styles/friends.css";
+import AddNewSingle from "./AddNewSingle";
 const AddNewFriend: React.FC = () => {
-
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const ui = useSelector((state: RootState) => state.ui);
   const [strangers, setStrangers] = useState<UserI[]>();
   const [displayStrangers, setDisplayStrangers] = useState<UserI[]>();
   const [inviteSend, setInviteSend] = useState(0);
-
+  const [loading, setLoading] = useState(false)
   // getting list of users that are not friends with user sending request
   const fetchStrangers = async () => {
     const response = await fetch(serverUrl + "/users/nofriends", {
@@ -30,7 +28,7 @@ const AddNewFriend: React.FC = () => {
 
   const inviteHandler = async (id: string) => {
     dispatch(uiActions.removeError());
-    dispatch(uiActions.startLoading());
+    setLoading(true)
     const response = await fetch(serverUrl + "/users/nofriends", {
       method: "POST",
       headers: {
@@ -41,10 +39,10 @@ const AddNewFriend: React.FC = () => {
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Failed to send invite"));
-      dispatch(uiActions.endLoading());
+      setLoading(false)
     }
     if (response.ok) {
-      dispatch(uiActions.endLoading());
+      setLoading(false)
       setInviteSend((prev) => prev + 1);
     }
   };
@@ -61,40 +59,32 @@ const AddNewFriend: React.FC = () => {
     }
   };
 
-  const updateStrangers = (newStrangersArray:UserI[]):void => {
-    setDisplayStrangers(newStrangersArray)
-  }
+  const updateStrangers = (newStrangersArray: UserI[]): void => {
+    setDisplayStrangers(newStrangersArray);
+  };
 
   useEffect(() => {
     fetchStrangers().catch(() => {
       dispatch(uiActions.setError("Failed to get list of strangers"));
     });
-    
   }, [inviteSend]);
 
-
-  useEffect(()=>{
-    setDisplayStrangers(strangers)
-  },[strangers])
+  useEffect(() => {
+    setDisplayStrangers(strangers);
+  }, [strangers]);
 
   return (
     <div className="addfriend">
       <div className="friendHeader">
         <div className="empty"></div>
         <h1 className="friendH1">Search for friends</h1>
-        <Search strangers={strangers} updateStrangers={updateStrangers}/>
+        <Search strangers={strangers} updateStrangers={updateStrangers} />
       </div>
       <div className="friendsContainer">
         {displayStrangers?.map((stranger) => {
           return (
-            <div className="friend" key={stranger._id}>
-              <img src={stranger.photo} alt="profile picture" />
-              <div>{stranger.name}</div>
-              <form onSubmit={submitHandler}>
-                <input type="hidden" name="id" value={stranger._id} />
-                <button className="invitebtn"  type="submit">Invite to friends</button>
-              </form>
-              {ui.error.errorStatus && <div>{ui.error.errorInfo}</div>}
+            <div key={stranger._id}>
+              <AddNewSingle stranger={stranger} submitHandler={submitHandler} loading={loading} />
             </div>
           );
         })}
