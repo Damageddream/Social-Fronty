@@ -7,18 +7,18 @@ import { serverUrl } from "../../utilities/URLs";
 import { uiActions } from "../../store/uiSlice";
 import options from "../../assets/images/options.svg";
 import "../../assets/styles/comment.css";
+import { deleteActions } from "../../store/deleteSlice";
 
 const CommentOptions: React.FC<{
   authorId: string;
   commentId: string;
-  toggleShowEditComment: (value:boolean)=>void;
+  toggleShowEditComment: (value: boolean) => void;
 }> = ({ authorId, commentId, toggleShowEditComment }) => {
   const dispatch = useDispatch();
   const user: UserReduxI = useSelector((state: RootState) => state.user);
-  const ui = useSelector((state: RootState) => state.ui);
-
   const [showOptions, setShowOptions] = useState(false);
   const [userIsAuthor, setUserIsAuthor] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickOutisde = () => {
     setShowOptions(false);
@@ -39,6 +39,7 @@ const CommentOptions: React.FC<{
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
+    setLoading(true);
     try {
       const response = await fetch(serverUrl + `/comments/${commentId}`, {
         method: "DELETE",
@@ -48,16 +49,22 @@ const CommentOptions: React.FC<{
         },
       });
       if (!response.ok) {
-        console.error("deleting comment failed");
+        dispatch(uiActions.setError("deleting comment failed"));
+        setLoading(false);
+      }
+      if (response.ok) {
+        dispatch(deleteActions.deleteComment());
+        setLoading(false);
+        setShowOptions(false);
       }
     } catch (err) {
-      console.error(err);
+      dispatch(uiActions.setError("deleting comment failed"));
     }
   };
 
   const handleDeleteClick = () => {
     handleDelete().catch(() => {
-      console.error("Failed to delete post");
+      dispatch(uiActions.setError("deleting comment failed"));
     });
   };
 
@@ -75,7 +82,9 @@ const CommentOptions: React.FC<{
             <div ref={ref} className="commentoptions">
               <div onClick={() => toggleShowEditComment(true)}>Edit</div>
               <section className="line"></section>
-              <div onClick={handleDeleteClick}>Delete</div>
+              <div onClick={handleDeleteClick}>
+                {loading ? <div className="lds-dual-ring-white"></div> : "Delete"}
+              </div>
             </div>
           )}
         </div>

@@ -80,6 +80,7 @@ button:hover {
 .lds-dual-ring-white:after {
   content: " ";
   display: block;
+  opacity: inherit;
   width: 16px;
   height: 16px;
   border-radius: 50%;

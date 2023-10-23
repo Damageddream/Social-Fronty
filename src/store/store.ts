@@ -3,6 +3,7 @@ import uiSlice from "./uiSlice";
 import userSlice from "./userSlice";
 import modalSlice from "./modalSlice";
 import editSlice from "./editSlice";
+import deleteSlice from "./deleteSlice";
 
 
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
         user: userSlice,
         ui: uiSlice,
         modal: modalSlice,
-        edit: editSlice
+        edit: editSlice,
+        delete: deleteSlice,
     }
 });
 

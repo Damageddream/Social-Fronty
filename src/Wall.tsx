@@ -25,6 +25,8 @@ const Wall: React.FC = () => {
   // custom hook, handling fetching data on liking post or comment
   const [like, likeChanged] = useLike();
 
+  const deleteSlice = useSelector((state: RootState) => state.delete)
+
   // rerender component with new data after like is added to post in wall view
   const newLikeAdded = (componentType: "post" | "comment", id: string) => {
     like({ componentType, id });
@@ -71,7 +73,7 @@ const Wall: React.FC = () => {
     getUsersPosts().catch(() => {
       dispatch(uiActions.setError("Failed to fetch posts"));
     });
-  }, [postAdded, likeChanged]);
+  }, [postAdded, likeChanged, deleteSlice.deletedPost]);
   return (
     <>
       <div className="wall">

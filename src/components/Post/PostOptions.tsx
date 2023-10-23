@@ -7,6 +7,9 @@ import { serverUrl } from "../../utilities/URLs";
 import { modalActions } from "../../store/modalSlice";
 import EditPost from "./EditPost";
 import options from "../../assets/images/options.svg";
+import { uiActions } from "../../store/uiSlice";
+import { deleteActions } from "../../store/deleteSlice";
+import { useNavigate } from "react-router-dom";
 
 const PostOptions: React.FC<{
   authorId: string;
@@ -17,8 +20,11 @@ const PostOptions: React.FC<{
 }> = ({ authorId, postId, orginalText, likes, comments }) => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
 
+  const navigate = useNavigate()
+
   const [showOptions, setShowOptions] = useState(false);
   const [userIsAuthor, setUserIsAuthor] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const modal = useSelector((state: RootState) => state.modal);
@@ -42,6 +48,7 @@ const PostOptions: React.FC<{
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
+    setLoading(true);
     try {
       const response = await fetch(serverUrl + `/posts/${postId}`, {
         method: "DELETE",
@@ -51,16 +58,22 @@ const PostOptions: React.FC<{
         },
       });
       if (!response.ok) {
-        console.error("deleting post failed");
+        setLoading(false);
+        dispatch(uiActions.setError("deleting post failed"));
+      }
+      if (response.ok) {
+        setLoading(false);
+        dispatch(deleteActions.deletePost());
+        navigate("/")
       }
     } catch (err) {
-      console.error(err);
+      dispatch(uiActions.setError("deleting post failed"));
     }
   };
 
   const handleDeleteClick = () => {
     handleDelete().catch(() => {
-      console.error("Failed to delete post");
+      dispatch(uiActions.setError("deleting post failed"));
     });
   };
 
@@ -75,25 +88,30 @@ const PostOptions: React.FC<{
               alt="three dots"
               onClick={toggleOptions}
             />
-                      {showOptions && (
-            <div ref={ref} className="postoptions">
-              <div onClick={() => dispatch(modalActions.showPostModal())}>
-                Edit
+            {showOptions && (
+              <div ref={ref} className="postoptions">
+                <div onClick={() => dispatch(modalActions.showPostModal())}>
+                  Edit
+                </div>
+                <section className="line"></section>
+                {modal.showPost && (
+                  <EditPost
+                    orginalText={orginalText}
+                    postId={postId}
+                    likes={likes}
+                    comments={comments}
+                  />
+                )}
+                <div onClick={handleDeleteClick}>
+                  {loading ? (
+                    <div className="lds-dual-ring-white"></div>
+                  ) : (
+                    "Delete"
+                  )}
+                </div>
               </div>
-              <section className="line"></section>
-              {modal.showPost && (
-                <EditPost
-                  orginalText={orginalText}
-                  postId={postId}
-                  likes={likes}
-                  comments={comments}
-                />
-              )}
-              <div onClick={handleDeleteClick}>Delete</div>
-            </div>
-          )}
+            )}
           </div>
-
         </div>
       )}
     </>

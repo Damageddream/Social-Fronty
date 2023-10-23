@@ -24,6 +24,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [commentsIds, setCommentsIds] = useState<string[]>([]);
   const [commentAdded, setCommentAdded] = useState(0);
   const edit = useSelector((state: RootState) => state.edit);
+  const deleteTarget = useSelector((state: RootState) => state.delete)
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
@@ -44,7 +45,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
     getPost().catch(() => {
       console.error("Failed to fetch post");
     });
-  }, [likeChanged, commentAdded, edit.editedComment, edit.editedPost]);
+  }, [likeChanged, commentAdded, edit.editedComment, edit.editedPost, deleteTarget.deleteComment]);
 
   const handleAddComment = () => {
     setCommentAdded((prev) => prev + 1);
