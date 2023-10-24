@@ -58,7 +58,7 @@ const Register: React.FC<{ backToDefault: () => void }> = ({
     }
     if (response.ok) {
       dispatch(uiActions.endLoading());
-      navigate("/");
+      backToDefault()
     }
   };
 
