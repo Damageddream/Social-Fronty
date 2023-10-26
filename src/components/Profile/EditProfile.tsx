@@ -4,6 +4,7 @@ import { RootState } from "../../store/store";
 import { modalActions } from "../../store/modalSlice";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
+import { useNavigate } from "react-router-dom";
 import { editActions } from "../../store/editSlice";
 
 const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
@@ -13,6 +14,8 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const ui = useSelector((state: RootState) => state.ui);
+
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   // reference to dialog element
@@ -39,11 +42,13 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Editing profile failed"));
-      dispatch(modalActions.hideUserModal());
+      
     }
     if (response.ok) {
+      localStorage.removeItem('token')
       dispatch(modalActions.hideUserModal());
       dispatch(editActions.editProfile())
+      
     }
   };
 
@@ -89,9 +94,13 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
             setName(e.target.value);
           }}
         />
-        <label className="labelphoto" htmlFor="photo">Photo</label>
+        <label className="labelphoto" htmlFor="photo">
+          Photo
+        </label>
         <input type="file" id="photo" onChange={handleFileChange} />
-        <button className="addpostbtn" type="submit">Edit Profile</button>
+        <button className="addpostbtn" type="submit">
+          Edit Profile
+        </button>
       </form>
     </dialog>
   );

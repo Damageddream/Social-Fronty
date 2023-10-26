@@ -50,6 +50,7 @@ const ProfileOptions: React.FC<{
       }
       if (response.ok) {
         dispatch(userActions.logOut());
+        localStorage.removeItem('token')
         navigate("/");
       }
     } catch (err) {

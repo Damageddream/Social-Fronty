@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { serverUrl } from "../../utilities/URLs";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
+import { uiActions } from "../../store/uiSlice";
 
 const Logout: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Logout: React.FC = () => {
         navigate("/");
       }
     } catch (err) {
-      console.error(err);
+      dispatch(uiActions.setError(err))
     }
   };
   const clickHandler = () => {

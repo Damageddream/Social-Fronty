@@ -101,3 +101,9 @@ export interface UserNoObjectID {
     invitesSent: string[];
 
 }
+
+export interface editUser {
+    sucess: boolean;
+    message: string;
+    token: string
+}
