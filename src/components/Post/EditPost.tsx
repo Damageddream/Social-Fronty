@@ -6,6 +6,7 @@ import { addEditPostI } from "../../interfaces/postI";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 import { editActions } from "../../store/editSlice";
+import useLoginAndLogout from "../../customHooks/useLogout";
 
 const EditPost: React.FC<{
   orginalText: string;
@@ -16,7 +17,7 @@ const EditPost: React.FC<{
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const ui = useSelector((state: RootState) => state.ui);
-
+  const [login, logout] = useLoginAndLogout()
   const dispatch = useDispatch();
   // reference to dialog element
   const dialogRef = useRef<HTMLDialogElement>(null);

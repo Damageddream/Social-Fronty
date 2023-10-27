@@ -5,7 +5,7 @@ import { modalActions } from "../../store/modalSlice";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 import { useNavigate } from "react-router-dom";
-import { editActions } from "../../store/editSlice";
+import useLoginAndLogout from "../../customHooks/useLogout";
 
 const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
   orginalName,
@@ -13,7 +13,7 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
 }) => {
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
-  const ui = useSelector((state: RootState) => state.ui);
+  const [logout, login] = useLoginAndLogout()
 
   const navigate = useNavigate()
 
@@ -21,12 +21,15 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
   // reference to dialog element
   const dialogRef = useRef<HTMLDialogElement>(null);
 
+  const ui = useSelector((state:RootState) => state.ui)
+
   //states to fill Post form
   const [name, setName] = useState<string>(orginalName);
   const [file, setFile] = useState<File | null>();
 
   // function for sending POST request, to create new post
   const editProfile = async () => {
+    dispatch(uiActions.startLoading())
     const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("name", name);
@@ -42,13 +45,14 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
     });
     if (!response.ok) {
       dispatch(uiActions.setError("Editing profile failed"));
+      dispatch(uiActions.endLoading())
       
     }
     if (response.ok) {
-      localStorage.removeItem('token')
       dispatch(modalActions.hideUserModal());
-      dispatch(editActions.editProfile())
-      
+      dispatch(uiActions.endLoading())
+      logout()
+      navigate('/')
     }
   };
 
@@ -84,7 +88,8 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
       >
         X
       </div>
-      <form onSubmit={submitHandler}>
+      <form className="editProfileForm" onSubmit={submitHandler}>
+        <div className="info">You will be logout after editing, login to see changes</div>
         <label htmlFor="name">Name:</label>
         <input
           type="text"
@@ -98,8 +103,8 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
           Photo
         </label>
         <input type="file" id="photo" onChange={handleFileChange} />
-        <button className="addpostbtn" type="submit">
-          Edit Profile
+        <button className="editProfbtn" type="submit">
+        {ui.loading ? <div className="lds-dual-ring"></div> : "Edit profile"}
         </button>
       </form>
     </dialog>

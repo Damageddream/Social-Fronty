@@ -22,7 +22,6 @@
 .profileOptions {
     grid-column: 2/3;
     grid-row: 1/2;
-    
 }
 
 .mainWall{
@@ -123,6 +122,14 @@
     padding: 0;
     opacity: inherit;
 }
+.editProfileForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.editProfbtn {
+    width: 150px;
+}
 
 @media (max-width: 600px){
     .wall {
@@ -159,6 +166,5 @@
     .userinfo {
         grid-column: 2/3;
     }
-    
-    
+     
 }
