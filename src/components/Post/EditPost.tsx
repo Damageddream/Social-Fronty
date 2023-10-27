@@ -17,7 +17,7 @@ const EditPost: React.FC<{
   // states from redux
   const modal = useSelector((state: RootState) => state.modal);
   const ui = useSelector((state: RootState) => state.ui);
-  const [login, logout] = useLoginAndLogout()
+
   const dispatch = useDispatch();
   // reference to dialog element
   const dialogRef = useRef<HTMLDialogElement>(null);
