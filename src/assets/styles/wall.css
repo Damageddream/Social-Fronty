@@ -72,6 +72,7 @@
 .profilePhoto {
     max-width: 200px;
     border-radius: 100%;
+    aspect-ratio: 1/1;
 }
 
 .userinfo {

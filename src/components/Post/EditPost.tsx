@@ -6,7 +6,6 @@ import { addEditPostI } from "../../interfaces/postI";
 import { uiActions } from "../../store/uiSlice";
 import { serverUrl } from "../../utilities/URLs";
 import { editActions } from "../../store/editSlice";
-import useLoginAndLogout from "../../customHooks/useLogout";
 
 const EditPost: React.FC<{
   orginalText: string;
@@ -24,32 +23,51 @@ const EditPost: React.FC<{
 
   //states to fill Post form
   const [text, setText] = useState<string>(orginalText);
+  const [file, setFile] = useState<File | null>();
 
   // function for sending POST request, to create new post
   const addPost = async () => {
     dispatch(uiActions.removeError());
     dispatch(uiActions.startLoading());
     const token = localStorage.getItem("token");
-    const formData: addEditPostI = {
-      text,
-      likes,
-      comments,
-    };
+    const formData = new FormData()
+    formData.append('text', text)
+    if (file){
+      formData.append('file',file)
+    }
+    
     const response = await fetch(serverUrl + `/posts/${postId}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token as string}`,
       },
-      body: JSON.stringify(formData),
+      body: formData,
     });
     if (!response.ok) {
       dispatch(uiActions.endLoading());
       dispatch(uiActions.setError("Adding new post failed"));
     } else {
       dispatch(uiActions.endLoading());
-      dispatch(editActions.editPost())
-      dispatch(modalActions.hidePostModal())
+      dispatch(editActions.editPost());
+      dispatch(modalActions.hidePostModal());
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(uiActions.removeError());
+    const selected = e.target.files ? e.target.files[0] : null;
+    //validate
+    if (selected) {
+      const fileExtension = selected.name.split(".").pop()?.toLocaleLowerCase();
+      const validExtensiosn = ["jpg", "jpeg", "png", "gif"];
+      if (fileExtension && validExtensiosn.includes(fileExtension)) {
+        setFile(selected);
+      } else {
+        dispatch(
+          uiActions.setError("only: jpg, jpeg, png, gif file types accepted")
+        );
+        e.target.value = "";
+      }
     }
   };
 
@@ -86,6 +104,10 @@ const EditPost: React.FC<{
         X
       </div>
       <form className="editPost" onSubmit={submitHandler}>
+        <label className="labelphoto" htmlFor="photo">
+          Add image
+        </label>
+        <input type="file" id="photo" onChange={handleFileChange} />
         <label htmlFor="postText">Text:</label>
         <textarea
           id="postText"

@@ -24,7 +24,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [commentsIds, setCommentsIds] = useState<string[]>([]);
   const [commentAdded, setCommentAdded] = useState(0);
   const edit = useSelector((state: RootState) => state.edit);
-  const deleteTarget = useSelector((state: RootState) => state.delete)
+  const deleteTarget = useSelector((state: RootState) => state.delete);
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
@@ -45,7 +45,13 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
     getPost().catch(() => {
       console.error("Failed to fetch post");
     });
-  }, [likeChanged, commentAdded, edit.editedComment, edit.editedPost, deleteTarget.deleteComment]);
+  }, [
+    likeChanged,
+    commentAdded,
+    edit.editedComment,
+    edit.editedPost,
+    deleteTarget.deleteComment,
+  ]);
 
   const handleAddComment = () => {
     setCommentAdded((prev) => prev + 1);
@@ -78,7 +84,16 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
                 {timeFormatter(post.timestamp).yearMonthDay}
               </div>
             </div>
-            <div className="postcardMain">{post.text}</div>
+            <div className="postcardMain">
+              <div>{post.text}</div>
+              {post.photo && (
+                <img
+                  src={post.photo}
+                  alt="image with post"
+                  className="postImage"
+                />
+              )}
+            </div>
             <div className="likePost">
               <img
                 onClick={() => {

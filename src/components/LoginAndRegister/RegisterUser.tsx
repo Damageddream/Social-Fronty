@@ -3,13 +3,11 @@ import { serverUrl } from "../../utilities/URLs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { uiActions } from "../../store/uiSlice";
-import { useNavigate } from "react-router-dom";
-//import '../../assets/styles/login.css'
+
 
 const Register: React.FC<{ backToDefault: () => void }> = ({
   backToDefault,
 }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
 

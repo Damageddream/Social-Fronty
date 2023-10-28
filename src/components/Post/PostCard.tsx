@@ -32,11 +32,12 @@ const PostCard: React.FC<{
           <div className="cardTime">{date.yearMonthDay}</div>
         </div>
         <div className="postcardMain" onClick={clickHandler}>
-          {post.text}
+          <div>{post.text}</div>
+          {post.photo && <img src={post.photo} alt="image with post" className="postImage" />}
         </div>
       </div>
       <div className="postcardfooter">
-        <div className="likePost">
+        <div className="likePost">  
           <img
             onClick={() => {
               newLikeAdded("post", post._id.toString());

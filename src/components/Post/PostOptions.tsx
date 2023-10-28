@@ -17,7 +17,7 @@ const PostOptions: React.FC<{
   orginalText: string;
   likes: string[];
   comments: string[];
-}> = ({ authorId, postId, orginalText, likes, comments }) => {
+}> = ({ authorId, postId, orginalText, likes, comments}) => {
   const user: UserReduxI = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate()
@@ -100,6 +100,7 @@ const PostOptions: React.FC<{
                     postId={postId}
                     likes={likes}
                     comments={comments}
+
                   />
                 )}
                 <div onClick={handleDeleteClick}>

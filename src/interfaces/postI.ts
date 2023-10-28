@@ -8,6 +8,7 @@ export interface  PostI {
     likes: string[]
     _id: number;
     comments: string[];
+    photo?:string;
 }
 
 export interface PostPostI {
@@ -18,6 +19,7 @@ export interface addEditPostI {
     text: string;
     likes: string[];
     comments: string[] | undefined
+    photo?:string;
 }
 
 export interface  PostDisplayI {
@@ -27,6 +29,7 @@ export interface  PostDisplayI {
     likes: string[]
     _id: number;
     comments: CommentDisplayI[];
+    photo?:string;
 }
 
 export interface PostDataFromApi {
