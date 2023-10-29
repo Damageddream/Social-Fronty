@@ -12,7 +12,7 @@ const Invites: React.FC = () => {
   const [inviteAnswered, setInviteAnswered] = useState(0);
 
   const token = localStorage.getItem("token");
-
+  dispatch(uiActions.removeError)
   const onResponseAction = () => {
     setInviteAnswered((prev) => prev + 1);
   };

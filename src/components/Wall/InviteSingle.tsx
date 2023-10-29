@@ -15,6 +15,8 @@ const InviteSingle: React.FC<{
   const [acceptLoading, setAcceptLoading] = useState(false);
   const ui = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
+  dispatch(uiActions.removeError)
+
   const clickAccpeptHandler = () => {
     setAnswer("accept");
   };

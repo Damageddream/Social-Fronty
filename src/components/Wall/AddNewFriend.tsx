@@ -13,6 +13,8 @@ const AddNewFriend: React.FC = () => {
   const [displayStrangers, setDisplayStrangers] = useState<UserI[]>();
   const [inviteSend, setInviteSend] = useState(0);
   const [loading, setLoading] = useState(false)
+
+  dispatch(uiActions.removeError());
   // getting list of users that are not friends with user sending request
   const fetchStrangers = async () => {
     const response = await fetch(serverUrl + "/users/nofriends", {
@@ -27,7 +29,7 @@ const AddNewFriend: React.FC = () => {
   };
 
   const inviteHandler = async (id: string) => {
-    dispatch(uiActions.removeError());
+    
     setLoading(true)
     const response = await fetch(serverUrl + "/users/nofriends", {
       method: "POST",

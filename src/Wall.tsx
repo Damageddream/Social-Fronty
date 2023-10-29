@@ -22,6 +22,7 @@ const Wall: React.FC = () => {
   // custom hook, checking if user is already logged in
   useCheckUser();
 
+
   // custom hook, handling fetching data on liking post or comment
   const [like, likeChanged] = useLike();
 
@@ -45,6 +46,8 @@ const Wall: React.FC = () => {
   const refetch = () => {
     setPostAdded((prev) => prev + 1);
   };
+  dispatch(uiActions.removeError)
+
   // fetch all posts of user and friends of user
   const getUsersPosts = async () => {
     dispatch(uiActions.startLoading());

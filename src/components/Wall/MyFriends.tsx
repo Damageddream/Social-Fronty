@@ -1,14 +1,12 @@
 import { serverUrl } from "../../utilities/URLs";
 import { useEffect, useState } from "react";
 import UserI, { UserWithInvites } from "../../interfaces/userI";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
-import { RootState } from "../../store/store";
 import "../../assets/styles/friends.css";
 
 const MyFriends: React.FC = () => {
   const dispatch = useDispatch();
-  const ui = useSelector((state: RootState) => state.ui);
   const [friends, setFriends] = useState<UserI[]>();
   const token = localStorage.getItem("token");
 

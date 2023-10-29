@@ -1,6 +1,7 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import UserI from "../../interfaces/userI";
+import { uiActions } from "../../store/uiSlice";
 
 const AddNewSingle: React.FC<{
   stranger: UserI;
@@ -8,7 +9,8 @@ const AddNewSingle: React.FC<{
   loading: boolean;
 }> = ({ stranger, submitHandler, loading }) => {
   const ui = useSelector((state: RootState) => state.ui);
-
+  const dispatch = useDispatch()
+  dispatch(uiActions.removeError())
   return (
     <div className="friend" key={stranger._id}>
       <img src={stranger.photo} alt="profile picture" />
