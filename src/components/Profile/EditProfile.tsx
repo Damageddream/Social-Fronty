@@ -23,6 +23,8 @@ const EditProfile: React.FC<{ orginalName: string; userId: string }> = ({
 
   const ui = useSelector((state:RootState) => state.ui)
 
+  dispatch(uiActions.removeError());
+
   //states to fill Post form
   const [name, setName] = useState<string>(orginalName);
   const [file, setFile] = useState<File | null>();

@@ -26,7 +26,10 @@ const PostOptions: React.FC<{
   const [userIsAuthor, setUserIsAuthor] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const ui = useSelector((state:RootState) => state.ui)
+
   const dispatch = useDispatch();
+  dispatch(uiActions.removeError())
   const modal = useSelector((state: RootState) => state.modal);
 
   const handleClickOutisde = () => {
@@ -110,6 +113,7 @@ const PostOptions: React.FC<{
                     "Delete"
                   )}
                 </div>
+                {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
               </div>
             )}
           </div>

@@ -9,8 +9,9 @@ import "../../assets/styles/post.css";
 import timeFormatter from "../../utilities/timeFormatter";
 import likeIcon from "../../assets/images/like.svg";
 import { LayoutGroup, motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { uiActions } from "../../store/uiSlice";
 
 const spring = {
   type: "spring",
@@ -25,6 +26,10 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
   const [commentAdded, setCommentAdded] = useState(0);
   const edit = useSelector((state: RootState) => state.edit);
   const deleteTarget = useSelector((state: RootState) => state.delete);
+  const dispatch = useDispatch()
+  dispatch(uiActions.removeError())
+
+  const ui = useSelector((state:RootState) => state.ui)
 
   const getPost = async () => {
     const token = localStorage.getItem("token");
@@ -43,7 +48,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
 
   useEffect(() => {
     getPost().catch(() => {
-      console.error("Failed to fetch post");
+      dispatch(uiActions.setError('getting post failed'))
     });
   }, [
     likeChanged,
@@ -104,6 +109,7 @@ const Post: React.FC<{ postId: string }> = ({ postId }) => {
               />
               {post.likes.length}
             </div>
+            {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
           </div>
           <LayoutGroup>
             <AddComment

@@ -19,6 +19,7 @@ const AddComment: React.FC<{
   ] = useToggle(false);
   const ui = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
+  dispatch(uiActions.removeError())
   const [text, setText] = useState<string>("");
   const addComment = async () => {
     const token = localStorage.getItem("token");

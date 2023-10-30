@@ -8,6 +8,8 @@ const Logout: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
+  dispatch(uiActions.removeError())
+
   const logout = async () => {
     const token = localStorage.getItem("token");
     try {

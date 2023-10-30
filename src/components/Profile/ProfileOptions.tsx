@@ -15,6 +15,7 @@ const ProfileOptions: React.FC<{
   userId: string;
 }> = ({ userId }) => {
   const dispatch = useDispatch();
+  dispatch(uiActions.removeError())
   const user: UserReduxI = useSelector((state: RootState) => state.user);
   const ui = useSelector((state: RootState) => state.ui);
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const ProfileOptions: React.FC<{
 
   const handleDeleteClick = () => {
     handleDelete().catch(() => {
-      console.error("Failed to delete user");
+      dispatch(uiActions.setError('deleting profile failed'))
     });
   };
 
@@ -77,6 +78,7 @@ const ProfileOptions: React.FC<{
           <div onClick={() => dispatch(modalActions.showUserModal())}>Edit</div>
           <section className="line"></section>
           <div onClick={handleDeleteClick}>Delete</div>
+          {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
         </div>
       )}
     </>

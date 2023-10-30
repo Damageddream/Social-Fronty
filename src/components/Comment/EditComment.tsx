@@ -17,6 +17,8 @@ const EditComment: React.FC<{
   const [text, setText] = useState<string>(orginalText);
   const ui = useSelector((state: RootState) => state.ui);
 
+  dispatch(uiActions.removeError())
+
   const editComment = async () => {
     dispatch(uiActions.removeError());
     dispatch(uiActions.startLoading());

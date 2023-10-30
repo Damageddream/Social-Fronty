@@ -11,6 +11,8 @@ const GuestLogin: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  dispatch(uiActions.removeError())
+
   const ui = useSelector((state: RootState) => state.ui);
 
   const [loading, setLoading] = useState(false);

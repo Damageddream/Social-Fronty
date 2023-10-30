@@ -14,6 +14,7 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
   const dispatch = useDispatch();
   // reference to dialog element
   const dialogRef = useRef<HTMLDialogElement>(null);
+  dispatch(uiActions.removeError())
 
   //states to fill Post form
   const [text, setText] = useState<string>("");

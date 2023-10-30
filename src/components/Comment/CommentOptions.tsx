@@ -20,6 +20,8 @@ const CommentOptions: React.FC<{
   const [userIsAuthor, setUserIsAuthor] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  dispatch(uiActions.removeError())
+
   const handleClickOutisde = () => {
     setShowOptions(false);
   };

@@ -11,6 +11,8 @@ const Register: React.FC<{ backToDefault: () => void }> = ({
   const dispatch = useDispatch();
   const ui = useSelector((state: RootState) => state.ui);
 
+  dispatch(uiActions.removeError())
+
   const [name, setName] = useState("");
   const [file, setFile] = useState<File | null>();
   const [password, setPassword] = useState("");
