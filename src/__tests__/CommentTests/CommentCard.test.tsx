@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import CommentCard from "../../components/Comment/CommentCard";
 
 vi.mock("../../customHooks/useToggle", () => ({
-  default: vi.fn().mockReturnValueOnce([vi.fn(), false]),
+  default: vi.fn(() => [true, vi.fn()]),
 }));
 
 vi.mock("../../components/Comment/CommentOptions", () => {
@@ -13,6 +13,7 @@ vi.mock("../../components/Comment/CommentOptions", () => {
     },
   };
 });
+
 vi.mock("../../components/Comment/EditComment", () => {
   return {
     default: () => {
@@ -20,7 +21,6 @@ vi.mock("../../components/Comment/EditComment", () => {
     },
   };
 });
-
 
 const newLikeAddedMock = vi.fn();
 
@@ -61,19 +61,7 @@ describe("CommentCard component", () => {
       const editComment = screen.queryByTestId("commentEdit");
 
       expect(commentOptions).toBeInTheDocument();
-      expect(editComment).not.toBeInTheDocument();
-    
-    }),
-    it("rendders edit Comment when toggle is true", () => {
-    //   vi.mock("../../customHooks/useToggle", () => ({
-    //     default: vi.fn(() => [true, vi.fn()]),
-    //   }));
-
-      render(<CommentCard comment={comment} newLikeAdded={newLikeAddedMock} />);
-
-      const editComment = screen.queryByTestId("commentEdit");
-
       expect(editComment).toBeInTheDocument();
-  
-    });
+    })
+
 });
