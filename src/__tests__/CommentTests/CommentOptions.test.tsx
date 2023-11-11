@@ -3,15 +3,16 @@ import "@testing-library/jest-dom";
 import CommentOptions from "../../components/Comment/CommentOptions";
 import { Provider } from "react-redux";
 import store from "../../store/store";
+import { renderWithProviders } from "../../utilities/utilsForTest";
 
 vi.mock("../../customHooks/useOutsideClick", () => ({
   current: document.createElement("div"),
 }));
 
-vi.mock("react-redux", () => ({
-  useDispatch: vi.fn(),
-  useSelector: vi.fn(),
-}));
+// vi.mock("react-redux", () => ({
+//   useDispatch: vi.fn(),
+//   useSelector: vi.fn(),
+// }));
 
 const mockProps = {
   authorId: "id1",
@@ -21,11 +22,7 @@ const mockProps = {
 
 describe("CommentOptions component", () => {
   it("renders comment options detials", () => {
-    render(
-      <Provider store={store}>
-        <CommentOptions {...mockProps} />
-      </Provider>
-    );
+    renderWithProviders(<CommentOptions {...mockProps} />);
 
     const dots = screen.getAllByAltText("three dots");
 
