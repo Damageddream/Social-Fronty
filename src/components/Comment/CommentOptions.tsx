@@ -82,9 +82,9 @@ const CommentOptions: React.FC<{
           />
           {showOptions && (
             <div ref={ref} className="commentoptions">
-              <div onClick={() => toggleShowEditComment(true)}>Edit</div>
+              <div role="button" onClick={() => toggleShowEditComment(true)}>Edit</div>
               <section className="line"></section>
-              <div onClick={handleDeleteClick}>
+              <div role="button" onClick={handleDeleteClick}>
                 {loading ? <div className="lds-dual-ring-white"></div> : "Delete"}
               </div>
             </div>

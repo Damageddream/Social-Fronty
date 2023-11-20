@@ -2,11 +2,22 @@ import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CommentOptions from "../../components/Comment/CommentOptions";
 import { renderWithProviders } from "../../utilities/utilsForTest";
+import userEvent from "@testing-library/user-event";
 
+interface JsonResolve {
+  sucess: boolean;
+  message: string;
+}
 
 vi.mock('../../customHooks/useOutsideClick.tsx',() => ({
   default: vi.fn(),
 }) )
+
+global.fetch = vi.fn()
+
+function createFetchResponse(data:JsonResolve) {
+  return { json: () => new Promise((resolve) => resolve(data)) }
+}
 
 
 const mockProps = {
@@ -48,11 +59,8 @@ delete: {
 },}
 
 describe("CommentOptions component", () => {
-  it("renders comment options detials", () => {
-
-    const toggleShowEditCommentSpy = vi.spyOn(mockProps, "toggleShowEditComment")
-
-    
+  it("renders comment options detials", async () => {
+    const user =  userEvent.setup()
     renderWithProviders(
         <CommentOptions {...mockProps} />, {
           preloadedState: initialState
@@ -60,8 +68,23 @@ describe("CommentOptions component", () => {
     );
 
     const dots = screen.getAllByAltText("three dots");
-    console.log("Dots:", dots);
-
     expect(dots[0]).toBeInTheDocument();
-  });
+
+    await user.click(dots[0])
+    const editBtn = screen.getByRole('button', {name: "Edit"})
+    const deleteBtn = screen.getByRole('button', {name: "Delete"})
+
+    expect(editBtn).toBeInTheDocument()
+    expect(deleteBtn).toBeInTheDocument()
+    expect(deleteBtn.firstChild)
+
+  }),
+  it("fetches deleting comment request", () => {
+    const token = "token"
+    const response = {
+      sucess: true,
+      message: "deleted comment"
+    }
+ 
+  })
 });
