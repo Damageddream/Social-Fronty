@@ -6,10 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 
-interface JsonResolve {
-  sucess: boolean;
-  message: string;
-}
+
 
 const response = {
   sucess: true,
