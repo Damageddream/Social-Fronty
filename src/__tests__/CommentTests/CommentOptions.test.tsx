@@ -6,9 +6,6 @@ import userEvent from "@testing-library/user-event";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 
-
-
-
 const response = {
   sucess: true,
   message: "success",
