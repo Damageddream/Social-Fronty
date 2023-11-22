@@ -87,7 +87,7 @@ const AddComment: React.FC<{
             />
             {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}asd</div>}
             <button className="subbmitcomment" type="submit">
-            {ui.loading ? <div className="lds-dual-ring"></div> : "Add comment"}
+            {ui.loading ? <div className="lds-dual-ring"></div> : "Submit comment"}
             </button>
           </motion.form>
           
