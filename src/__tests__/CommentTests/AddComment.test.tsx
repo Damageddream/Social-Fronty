@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 import initialState from "../testUtilities/initialState";
 import userEvent from "@testing-library/user-event";
 import { serverUrl } from "../../utilities/URLs";
-import 'isomorphic-fetch'
+
 
 const mockProps = {
     postID: "id1",
