@@ -6,6 +6,8 @@ import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
 import initialState from "../testUtilities/initialState";
 import userEvent from "@testing-library/user-event";
+import { serverUrl } from "../../utilities/URLs";
+import 'isomorphic-fetch'
 
 const mockProps = {
     postID: "id1",
@@ -14,16 +16,13 @@ const mockProps = {
 
 const response = {
     sucess: true,
-    message: "success",
-  };
+    message: "sucess",
+  }
 
-const restHandlers = [
-http.delete("https://rest-endpoint.example/path/to/comment", () => {
-    return HttpResponse.json(response);
-}),
-];
 
-const server = setupServer(...restHandlers);
+
+const server = setupServer(http.post(serverUrl + `/posts/${mockProps.postID}/comments`, () => {
+    return HttpResponse.json(response)}))
 
 // Start server before all tests
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
@@ -69,7 +68,9 @@ describe("Add Comment component", () => {
         
         expect(textInput).toHaveValue("test comment")
 
-        
+        await user.click(submitCommentBtn)
+
+        expect(submitCommentBtn).not.toBeInTheDocument()
 
     })
 })
