@@ -14,10 +14,12 @@ const mockProps = {
             name: "name",
             photo: "path/photo",
             _id: "authorId1",
-            friends: [""],
+            friends: ["friends"],
             invites: ["invite1", "invite2"],
             invitesSent: ["inviteSent1", "inviteSent2"]
-        }
+        },
+        
+
     },
     newLikeAdded: vi.fn(),
     setNav: vi.fn(),

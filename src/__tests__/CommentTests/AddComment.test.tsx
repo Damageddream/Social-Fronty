@@ -56,7 +56,6 @@ describe("Add Comment component", () => {
         renderWithProviders(<AddComment {...mockProps} />, {
             preloadedState: initialState,
         })
-        console.log(screen.debug());
         const addCommentBtn = screen.getByText("Add comment")
         expect(addCommentBtn).toBeInTheDocument()
         await user.click(addCommentBtn)
