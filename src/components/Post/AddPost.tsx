@@ -91,7 +91,7 @@ const AddPost: React.FC<{onAddedPost:()=>void}> = ({onAddedPost}) => {
 
   return (
     <dialog ref={dialogRef}>
-      <div className="exitbutton"
+      <div role='button' className="exitbutton"
         onClick={() => {
           dispatch(modalActions.hidePostModal());
           dispatch(uiActions.removeError());
