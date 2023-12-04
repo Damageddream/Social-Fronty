@@ -7,3 +7,67 @@ import { setupServer } from "msw/node";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
+const mockProps = {
+    orginalText: 'text',
+    postId: 'post1Id',
+    likes: ["1","2"],
+    comments: ["comment1", "comment2"]
+}
+
+const response = {
+    editetPost: true
+}
+
+const server = setupServer(
+    http.post("path/post.com", () => {
+      return HttpResponse.json(response);
+    })
+  );
+  
+  // Start server before all tests
+  beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+  
+  //  Close server after all tests
+  afterAll(() => server.close());
+  
+  // Reset handlers after each test `important for test isolation`
+  afterEach(() => server.resetHandlers());
+
+  describe('Testing EditPost component', () => {
+    it('check if all detials render correctly', () => {
+        renderWithProviders(<EditPost {...mockProps} />, {
+            preloadedState: initialState
+        })
+        
+        const exitButton = screen.getByText(/x/i)
+        const photoInput = screen.getByLabelText('Add image')
+        const textInput = screen.getByLabelText('Text:')
+        const submitEditBtn = screen.getByText(/edit post/i)
+
+        expect(exitButton).toBeInTheDocument()
+        expect(photoInput).toBeInTheDocument()
+        expect(textInput).toBeInTheDocument()
+        expect(submitEditBtn).toBeInTheDocument()
+    }),
+    it('submitting edit post form correctly', async () => {
+        const user = userEvent.setup()
+        renderWithProviders(<EditPost {...mockProps} />, {
+            preloadedState: initialState
+        })
+
+        const file = new File(["test file"], "text.txt", {
+            type: "text/plain"
+        })
+
+        const photoInput = screen.getByLabelText('Add image')
+        const textInput = screen.getByLabelText('Text:')
+        const submitEditBtn = screen.getByText(/edit post/i)
+
+        await user.type(textInput, "edited post")
+        await user.upload(photoInput, file)
+        await user.click(submitEditBtn)
+
+        expect(submitEditBtn).not.toBeInTheDocument()
+
+    })
+  })
