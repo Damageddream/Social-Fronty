@@ -5,8 +5,6 @@ import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
 import initialState from "../testUtilities/initialState";
-import userEvent from "@testing-library/user-event";
-import { serverUrl } from "../../utilities/URLs";
 import { describe } from "vitest";
 
 vi.mock("../../components/Comment/AddComment", () => {

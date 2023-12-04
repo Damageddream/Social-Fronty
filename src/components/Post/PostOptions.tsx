@@ -93,7 +93,7 @@ const PostOptions: React.FC<{
             />
             {showOptions && (
               <div ref={ref} className="postoptions">
-                <div onClick={() => dispatch(modalActions.showPostModal())}>
+                <div role='button' onClick={() => dispatch(modalActions.showPostModal())}>
                   Edit
                 </div>
                 <section className="line"></section>
@@ -108,7 +108,7 @@ const PostOptions: React.FC<{
                 )}
                 <div onClick={handleDeleteClick}>
                   {loading ? (
-                    <div className="lds-dual-ring-white"></div>
+                    <div role="button" className="lds-dual-ring-white"></div>
                   ) : (
                     "Delete"
                   )}
