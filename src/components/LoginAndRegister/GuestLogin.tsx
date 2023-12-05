@@ -56,7 +56,7 @@ const GuestLogin: React.FC = () => {
         {loading ? (
           <div className="lds-dual-ring-white"></div>
         ) : (
-          " Visit as guest"
+          "Visit as guest"
         )}
       </button>
       {ui.error.errorStatus && (

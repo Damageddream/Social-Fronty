@@ -77,7 +77,6 @@ const LogInNoFacebook: React.FC<{ backToDefault: () => void }> = ({
 
   return (
     <div className="login">
-      
       <form onSubmit={submitHandler}>
         <label htmlFor="username">Username</label>
         <input
@@ -102,7 +101,7 @@ const LogInNoFacebook: React.FC<{ backToDefault: () => void }> = ({
           <button className="login-btn" type="submit">
             {ui.loading ? <div className="lds-dual-ring"></div> : "Log in"}
           </button>
-          <div className="back" onClick={() => backToDefault()}>
+          <div role='button' className="back" onClick={() => backToDefault()}>
             back
           </div>
         </div>

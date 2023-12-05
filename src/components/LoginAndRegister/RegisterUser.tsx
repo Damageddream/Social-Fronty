@@ -124,7 +124,7 @@ const Register: React.FC<{ backToDefault: () => void }> = ({
           <button type="submit">
             {ui.loading ? <div className="lds-dual-ring"></div>  : "Register"}
           </button>
-          <div className="back" onClick={() => backToDefault()}>
+          <div role="button" className="back" onClick={() => backToDefault()}>
             back
           </div>
           {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}

@@ -37,7 +37,7 @@ const Logout: React.FC = () => {
     });
   };
 
-  return <div className="logout" onClick={clickHandler}>logout</div>;
+  return <div role="button" className="logout" onClick={clickHandler}>logout</div>;
 };
 
 export default Logout;

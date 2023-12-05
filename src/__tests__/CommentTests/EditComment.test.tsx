@@ -30,7 +30,6 @@ const server = setupServer(
   })
 );
 
-beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 
 // Start server before all tests
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
