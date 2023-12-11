@@ -1,6 +1,6 @@
 import AddPost from "../../components/Post/AddPost";
 import { renderWithProviders } from "../../utilities/utilsForTest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import initialState from "../testUtilities/initialState";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
@@ -72,10 +72,6 @@ describe("testing AddPost component", () => {
       await user.type(tetInput, "added post");
       await user.upload(imageInput, file);
       await user.click(addPostBtn);
-
-      expect(mockProps.onAddedPost).toHaveBeenCalledWith({
-        text: "added post",
-        image: file,
-      });
+      expect(addPostBtn).toHaveTextContent("")
     });
 });

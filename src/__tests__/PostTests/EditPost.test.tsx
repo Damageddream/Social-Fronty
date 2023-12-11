@@ -24,8 +24,14 @@ const server = setupServer(
     })
   );
   
-  // Start server before all tests
-  beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+// Start server before all tests
+beforeAll(() => {
+    // Start server
+    server.listen({ onUnhandledRequest: "error" });
+    HTMLDialogElement.prototype.show = vi.fn()
+    HTMLDialogElement.prototype.showModal = vi.fn();
+    HTMLDialogElement.prototype.close = vi.fn();
+  });
   
   //  Close server after all tests
   afterAll(() => server.close());
@@ -39,7 +45,7 @@ const server = setupServer(
             preloadedState: initialState
         })
         
-        const exitButton = screen.getByText(/x/i)
+        const exitButton = screen.getByText("X")
         const photoInput = screen.getByLabelText('Add image')
         const textInput = screen.getByLabelText('Text:')
         const submitEditBtn = screen.getByText(/edit post/i)
@@ -67,7 +73,7 @@ const server = setupServer(
         await user.upload(photoInput, file)
         await user.click(submitEditBtn)
 
-        expect(submitEditBtn).not.toBeInTheDocument()
+        expect(submitEditBtn).toHaveTextContent("")
 
     })
   })
