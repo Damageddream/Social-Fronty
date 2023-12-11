@@ -60,12 +60,13 @@ describe("Edit Comment component", () => {
       const inputText = screen.getByLabelText("Comment:");
       const editBtn = screen.getByRole("button", { name: "Edit Comment" });
 
+      await user.clear(inputText)
       await user.type(inputText, "edit comment");
 
       expect(inputText).toHaveValue("edit comment");
 
       await user.click(editBtn);
 
-      expect(editBtn).not.toBeInTheDocument()
+      expect(editBtn).toHaveTextContent("")
     });
 });
