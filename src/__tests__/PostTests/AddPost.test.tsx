@@ -1,6 +1,6 @@
 import AddPost from "../../components/Post/AddPost";
 import { renderWithProviders } from "../../utilities/utilsForTest";
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import initialState from "../testUtilities/initialState";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
