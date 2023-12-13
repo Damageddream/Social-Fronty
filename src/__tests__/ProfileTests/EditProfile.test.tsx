@@ -36,5 +36,17 @@ describe("test for edit profile component", () => {
         renderWithProviders(<EditProfile {...mockProps}/>, {
             preloadedState: initialState
         })
+    
+        const exitBtn = screen.getByRole("button", {name: "X"})
+        const info = screen.getByText(/You will be logout after editing, login to see changes/i)
+        const textInput = screen.getByLabelText(/name:/i)
+        const photoInput = screen.getByLabelText(/photo/i)
+        const editBtn = screen.getByRole("button", {name: "Edit profile"})
+
+        expect(exitBtn).toBeInTheDocument()
+        expect(info).toBeInTheDocument()
+        expect(textInput).toBeInTheDocument()
+        expect(photoInput).toBeInTheDocument()
+        expect(editBtn).toBeInTheDocument()
     })
 })
