@@ -19,7 +19,7 @@ const response = {
 
 
 
-const server = setupServer(http.post(serverUrl + `/posts/${mockProps.postID}/comments`, () => {
+const server = setupServer(http.post(`/posts/comments`, () => {
     return HttpResponse.json(response)}))
 
 // Start server before all tests
