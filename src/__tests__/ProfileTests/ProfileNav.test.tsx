@@ -1,5 +1,5 @@
 import ProfileNav from "../../components/Profile/ProfileNav";
-import { screen } from "@testing-library/react";
+import { getByText, screen } from "@testing-library/react";
 import { renderWithProviders } from "../../utilities/utilsForTest";
 import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
@@ -23,6 +23,14 @@ vi.mock("../../components/Profile/ProfileOptions.tsx", () => {
     }
 })
 
+vi.mock("../../components/LoginAndRegister/Logout.tsx", () => {
+    return {
+        default: () => {
+            return <div data-testid="logout" />
+        }
+    }
+})
+
 const inital = {...initialState}
 inital.user.loggedIn = true
 inital.modal.showUser = true
@@ -32,7 +40,18 @@ describe("test profile nav component", ()=>{
         renderWithProviders(<ProfileNav />,{
             preloadedState: inital
         } )
-            
+        
+        const profilePhoto = screen.getByAltText("user profile picture")
+        const userName = screen.getByText(inital.user.name)
+        const logoutComponent = screen.getByTestId("logout")
+        const profileOptionsComponent = screen.getByTestId("profileoptions")
+        const editProfileComponent = screen.getByTestId("editprofile")
+        
+        expect(profilePhoto).toBeInTheDocument()
+        expect(userName).toBeInTheDocument()
+        expect(logoutComponent).toBeInTheDocument()
+        expect(profileOptionsComponent).toBeInTheDocument()
+        expect(editProfileComponent).toBeInTheDocument()
         
     })
 })
