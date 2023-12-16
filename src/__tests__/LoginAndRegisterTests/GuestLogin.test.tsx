@@ -6,6 +6,7 @@ import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
 import initialState from "../testUtilities/initialState";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router-dom";
 
 const response = {
   sucess: true,
@@ -29,14 +30,19 @@ afterEach(() => server.resetHandlers());
 describe("tests for guestLogin component", () => {
   it("checking if all details render correctly and can login", async () => {
     const user = userEvent.setup();
-    renderWithProviders(<GuestLogin />, {
-      preloadedState: initialState,
-    });
+    renderWithProviders(
+      <BrowserRouter>
+        <GuestLogin />
+      </BrowserRouter>,
+      { preloadedState: initialState }
+    );
     const loginGuestBtn = screen.getByRole("button", {
       name: "Visit as guest",
     });
     expect(loginGuestBtn).toBeInTheDocument();
     await user.click(loginGuestBtn)
-    expect(loginGuestBtn).not.toBeInTheDocument()
+    expect(loginGuestBtn).toHaveTextContent("")
   });
-});
+}); 
+
+

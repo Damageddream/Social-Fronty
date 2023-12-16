@@ -32,7 +32,7 @@ afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
 
 describe("test for edit profile component", () => {
-    it("checking if all detials renders", () => {
+    it("should render the component correctly", () => {
         renderWithProviders(<EditProfile {...mockProps}/>, {
             preloadedState: initialState
         })
