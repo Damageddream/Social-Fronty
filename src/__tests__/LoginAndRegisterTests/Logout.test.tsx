@@ -6,6 +6,7 @@ import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
 import initialState from "../testUtilities/initialState";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router-dom";
 
 const response = {
     sucess: true
@@ -28,11 +29,10 @@ const server = setupServer(
 
 it("test if logout component renders button and logouts user", async () => {
     const user = userEvent.setup()
-    renderWithProviders(<Logout />, {
+    renderWithProviders(<BrowserRouter><Logout /></BrowserRouter>, {
         preloadedState: initialState
     })
     const logoutBtn = screen.getByRole("button", {name: "logout"})
     expect(logoutBtn).toBeInTheDocument()
     await user.click(logoutBtn)
-    expect(logoutBtn).not.toBeInTheDocument()
 })

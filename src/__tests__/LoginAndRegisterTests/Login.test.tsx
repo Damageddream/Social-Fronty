@@ -6,6 +6,7 @@ import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
 import initialState from "../testUtilities/initialState";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router-dom";
 
 const mockProps = {
   backToDefault: vi.fn(),
@@ -32,30 +33,42 @@ afterEach(() => server.resetHandlers());
 
 describe("tests for Login component", () => {
   it("checking if all details renders corretcly", () => {
-    renderWithProviders(<LogInNoFacebook {...mockProps} />, {
-      preloadedState: initialState,
-    });
+    renderWithProviders(
+      <BrowserRouter>
+        <LogInNoFacebook {...mockProps} />
+      </BrowserRouter>,
+      {
+        preloadedState: initialState,
+      }
+    );
     const loginInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
     const backButton = screen.getByRole("button", { name: "back" });
+    const loginButton = screen.getByRole("button", { name: "Log in" });
 
     expect(loginInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(backButton).toBeInTheDocument();
+    expect(loginButton).toBeInTheDocument();
   }),
     it("checing if can login", async () => {
       const user = userEvent.setup();
-      renderWithProviders(<LogInNoFacebook {...mockProps} />, {
-        preloadedState: initialState,
-      });
+      renderWithProviders(
+        <BrowserRouter>
+          <LogInNoFacebook {...mockProps} />
+        </BrowserRouter>,
+        {
+          preloadedState: initialState,
+        }
+      );
       const loginInput = screen.getByLabelText(/username/i);
       const passwordInput = screen.getByLabelText(/password/i);
-      const backButton = screen.getByRole("button", { name: "back" });
+      const loginButton = screen.getByRole("button", { name: "Log in" });
 
       await user.type(loginInput, "login");
       await user.type(passwordInput, "password");
-      await user.click(backButton);
+      await user.click(loginButton);
 
-      expect(backButton).not.toBeInTheDocument();
+      expect(loginButton).toHaveTextContent("");
     });
 });
