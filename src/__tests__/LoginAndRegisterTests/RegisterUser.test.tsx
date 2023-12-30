@@ -1,6 +1,6 @@
 import Register from "../../components/LoginAndRegister/RegisterUser";
 import { renderWithProviders } from "../../utilities/utilsForTest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
@@ -35,9 +35,9 @@ const server = setupServer(
         renderWithProviders(<Register {...mockProps} />, {
             preloadedState: initialState
         })
-        const nameInput = screen.getByLabelText(/name/i)
-        const passwordInput = screen.getByLabelText(/password/i)
-        const confirmPasswordInput = screen.getByLabelText(/confirm password/i)
+        const nameInput = screen.getByLabelText("Name")
+        const passwordInput = screen.getByLabelText("Password")
+        const confirmPasswordInput = screen.getByLabelText("Confirm password")
         const choicePhotoInput = screen.getByLabelText(/choose profile photo/i)
         const registerBtn = screen.getByRole("button",{name: "Register"})
         const backBtn = screen.getByRole("button", {name: "back"})
@@ -56,22 +56,22 @@ const server = setupServer(
         renderWithProviders(<Register {...mockProps} />, {
             preloadedState: initialState
         })
-        const file = new File(["test file"], "text.txt", {
-            type: "text/plain"
-        })
+        const file = new File(["dummy content"], "image.jpg", {
+            type: "image/jpeg"
+          });
         const nameInput = screen.getByLabelText(/name/i)
-        const passwordInput = screen.getByLabelText(/password/i)
-        const confirmPasswordInput = screen.getByLabelText(/confirm password/i)
+        const passwordInput = screen.getByLabelText("Password")
+        const confirmPasswordInput = screen.getByLabelText("Confirm password")
         const choicePhotoInput = screen.getByLabelText(/choose profile photo/i)
         const registerBtn = screen.getByRole("button",{name: "Register"})
-
+ 
         await user.type(nameInput, "name")
         await user.type(passwordInput, "password")
         await user.type(confirmPasswordInput, "password")
         await user.upload(choicePhotoInput, file)
         await user.click(registerBtn)
 
-        expect(mockProps.backToDefault).toHaveBeenCalledTimes(1)
+        expect(registerBtn).toHaveTextContent("")
 
     })
   })

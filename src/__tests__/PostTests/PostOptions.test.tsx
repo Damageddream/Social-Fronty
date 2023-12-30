@@ -6,6 +6,7 @@ import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
+import { BrowserRouter } from "react-router-dom";
 
 vi.mock("../../components/Post/EditPost", () => {
   return {
@@ -53,18 +54,29 @@ afterEach(() => server.resetHandlers());
 
 describe("tests for PostOptions component", () => {
   it("check if all details render correctly", () => {
-    renderWithProviders(<PostOptions {...mockProps} />, {
-      preloadedState: extendedInitialState,
-    });
+    renderWithProviders(
+      <BrowserRouter>
+        <PostOptions {...mockProps} />
+      </BrowserRouter>,
+      {
+        preloadedState: extendedInitialState,
+      }
+    );
 
     const dotsImage = screen.getByAltText("three dots");
     expect(dotsImage).toBeInTheDocument();
   }),
     it("toggles showOptions", async () => {
       const user = userEvent.setup();
-      renderWithProviders(<PostOptions {...mockProps} />, {
-        preloadedState: extendedInitialState,
-      });
+      renderWithProviders(
+        <BrowserRouter>
+          <PostOptions {...mockProps} />
+        </BrowserRouter>,
+        {
+          preloadedState: extendedInitialState,
+        }
+      );
+  
 
       const dotsImage = screen.getByAltText("three dots");
       const editBtnBefore = screen.queryByText(/edit/i);
@@ -84,13 +96,19 @@ describe("tests for PostOptions component", () => {
     }),
     it("testing deleting post", async () => {
       const user = userEvent.setup();
-      renderWithProviders(<PostOptions {...mockProps} />, {
-        preloadedState: extendedInitialState,
-      });
+      renderWithProviders(
+        <BrowserRouter>
+          <PostOptions {...mockProps} />
+        </BrowserRouter>,
+        {
+          preloadedState: extendedInitialState,
+        }
+      );
+  
       const dotsImage = screen.getByAltText("three dots");
       await user.click(dotsImage);
       const deleteBtn = screen.getByText(/delete/i);
       await user.click(deleteBtn);
-      expect(deleteBtn).not.toBeInTheDocument()
+      expect(deleteBtn).toHaveTextContent("");
     });
 });

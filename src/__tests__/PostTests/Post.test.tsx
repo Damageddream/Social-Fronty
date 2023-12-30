@@ -1,6 +1,6 @@
 import Post from "../../components/Post/Post";
 import { renderWithProviders } from "../../utilities/utilsForTest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
@@ -30,10 +30,11 @@ vi.mock("../../components/Post/PostOptions", () => {
 });
 
 const mockProps = {
-  postId: "1id",
+  postId: "1",
 };
 const response = {
   text: "text",
+  photo: "path/photo2",
   author: {
     name: "name",
     photo: "path/photo",
@@ -45,7 +46,7 @@ const response = {
   timestamp: "01.01.1900",
   likes: ["1", "2"],
   _id: 1,
-  comments: {
+  comments: [{
     text: "textComment",
     author: {
       name: "nameCom",
@@ -59,11 +60,11 @@ const response = {
     likes: ["2com", "3com"],
     _id: 2,
     post: "post1",
-  },
+  }],
 };
 
 const server = setupServer(
-  http.post("path/post.com", () => {
+  http.get("/posts/1/comments", () => {
     return HttpResponse.json(response);
   })
 );
@@ -78,10 +79,11 @@ afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
 
 describe("tests for Post component", () => {
-  it("checking if all details render correctly", () => {
+  it("checking if all details render correctly", async () => {
     renderWithProviders(<Post {...mockProps} />, {
       preloadedState: initialState,
     });
+    await waitFor(() => expect(screen.getByText(/name/i)).toBeInTheDocument());
     const postAuthorName = screen.getByText(/name/i);
     const imgAvatar = screen.getByAltText("author photo");
     const postText = screen.getByText(/text/i);
@@ -95,11 +97,11 @@ describe("tests for Post component", () => {
     expect(likeIcon).toBeInTheDocument();
     expect(numberOfLikes).toBeInTheDocument();
   }),
-    it("renders child components", () => {
+    it("renders child components", async () => {
       renderWithProviders(<Post {...mockProps} />, {
         preloadedState: initialState,
       });
-
+      await waitFor(() => expect(screen.getByText(/name/i)).toBeInTheDocument());
       const addComment = screen.getByTestId("addComment");
       const commentCard = screen.getByTestId("commentCard");
       const postOptions = screen.getByTestId("postOptions");
