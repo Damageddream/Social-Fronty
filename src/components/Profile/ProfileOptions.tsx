@@ -77,7 +77,7 @@ const ProfileOptions: React.FC<{
         <div ref={ref} className="profileoptions">
           <div onClick={() => dispatch(modalActions.showUserModal())}>Edit</div>
           <section className="line"></section>
-          <div onClick={handleDeleteClick}>Delete</div>
+          <div role="button" onClick={handleDeleteClick}>Delete</div>
           {ui.error.errorStatus && <div className="warning">{ui.error.errorInfo}</div>}
         </div>
       )}

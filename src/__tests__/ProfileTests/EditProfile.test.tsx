@@ -63,5 +63,30 @@ describe("test for edit profile component", () => {
     expect(textInput).toBeInTheDocument();
     expect(photoInput).toBeInTheDocument();
     expect(editBtn).toBeInTheDocument();
-  });
+  }),
+  it("test if editing profile works correctly", async () => {
+    const user = userEvent.setup();
+    renderWithProviders(
+      <BrowserRouter>
+        <EditProfile {...mockProps} />
+      </BrowserRouter>,
+      {
+        preloadedState: initialState,
+      }
+    );
+
+    const textInput = screen.getByLabelText(/name:/i);
+    const photoInput = screen.getByLabelText(/photo/i);
+    const editBtn = screen.getByText("Edit profile");
+
+    const file = new File(["test file"], "text.txt", {
+      type: "text/plain"
+  })
+
+    await user.type(textInput, "newName");
+    await user.upload(photoInput, file);
+    await user.click(editBtn);
+
+    expect(editBtn).toHaveTextContent("");
+  })
 });
