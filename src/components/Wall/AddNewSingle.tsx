@@ -16,7 +16,7 @@ const AddNewSingle: React.FC<{
       <img src={stranger.photo} alt="profile picture" />
       <div>{stranger.name}</div>
       <form onSubmit={submitHandler}>
-        <input type="hidden" name="id" value={stranger._id} />
+        <input type="hidden" name="id" value={stranger._id} data-testid="hidden-input"  />
         <button className="invitebtn" type="submit">
           {loading ? (
             <div className="lds-dual-ring"></div>

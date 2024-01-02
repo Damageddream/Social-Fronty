@@ -76,8 +76,9 @@ const InviteSingle: React.FC<{
           e.preventDefault();
           void submitHandler(e);
         }}
+        data-testid="form"
       >
-        <input name="id" type="hidden" value={id} />
+        <input name="id" type="hidden" value={id} data-testid="hidden-input" />
         <div className="inviteButtons">
           <button type="submit" onClick={clickAccpeptHandler}>
             {acceptLoading ? <div className="lds-dual-ring"></div> : "Accept"}
