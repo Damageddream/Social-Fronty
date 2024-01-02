@@ -62,12 +62,12 @@ describe("test for InviteSingle component", () => {
     //     });
     //     const acceptBtn = screen.getByRole("button", { name: "Accept" });
     //     const declineBtn = screen.getByRole("button", { name: "Decline" });
-    //     await user.click(acceptBtn);
+    //     const form = screen.getByTestId("hidden-input");
+        
+    //     await waitFor(async () => {await user.click(acceptBtn)
+    //     const form = screen.getByTestId("hidden-input");
+    //     })
 
-    //     const form = screen.getByTestId('form');
-    //     fireEvent.submit(form);
-    //     await waitFor(() => {
-    //         expect(mockProps.onResponseAction).toHaveBeenCalled();
-    //       });
+
     // });
 });
