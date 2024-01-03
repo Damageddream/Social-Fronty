@@ -46,6 +46,7 @@ const LogIn: React.FC = () => {
           <div className="login-nav">
             <h1>Log in to your account</h1>
             <div
+            role="button"
               className="register-nav"
               onClick={() => {
                 setRenderLoginForm("Register");
@@ -62,7 +63,7 @@ const LogIn: React.FC = () => {
             </button>
             {ui.error.errorStatus && (
               <div className="warning">
-                {ui.error.errorInfo}something went wrongs
+                {ui.error.errorInfo}something went wrong
               </div>
             )}
             <button onClick={() => setRenderLoginForm("Login")}>Log In</button>

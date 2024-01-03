@@ -29,6 +29,7 @@ const Search: React.FC<{
           className="searchInput"
           type="text"
           value={searchTarget}
+          id='search'
         />
       </div>
     </form>
